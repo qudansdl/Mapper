@@ -37,7 +37,7 @@ import java.util.List;
 public interface SelectAllMapper<T> {
 
     /**
-     * 查询全部结果
+     * 모든 결과 조회
      *
      * @return
      */

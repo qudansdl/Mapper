@@ -91,7 +91,7 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
         for (Class<?> clazz : annoAttrs.getClassArray("basePackageClasses")) {
             basePackages.add(ClassUtils.getPackageName(clazz));
         }
-        //优先级 mapperHelperRef > properties > springboot
+        //우선 순위 mapperHelperRef > properties > springboot
         String mapperHelperRef = annoAttrs.getString("mapperHelperRef");
         String[] properties = annoAttrs.getStringArray("properties");
         if (StringUtils.hasText(mapperHelperRef)) {
@@ -102,9 +102,9 @@ public class MapperScannerRegistrar implements ImportBeanDefinitionRegistrar, Re
             try {
                 scanner.setMapperProperties(this.environment);
             } catch (Exception e) {
-                LOGGER.warn("只有 Spring Boot 环境中可以通过 Environment(配置文件,环境变量,运行参数等方式) 配置通用 Mapper，" +
-                    "其他环境请通过 @MapperScan 注解中的 mapperHelperRef 或 properties 参数进行配置!" +
-                    "如果你使用 tk.mybatis.mapper.session.Configuration 配置的通用 Mapper，你可以忽略该错误!", e);
+                LOGGER.warn("只有 Spring Boot 环境中可以通过 Environment(配置文件,环境变量,运行参数等方式) 일반 구성 Mapper，" +
+                    "다른 환경의 경우 @MapperScan 주석의 mapperHelperRef 또는 속성 매개 변수를 통해 구성하십시오!" +
+                    "tk.mybatis.mapper.session.Configuration으로 구성된 범용 매퍼를 사용하는 경우이 오류를 무시할 수 있습니다!", e);
             }
         }
         scanner.registerFilters();

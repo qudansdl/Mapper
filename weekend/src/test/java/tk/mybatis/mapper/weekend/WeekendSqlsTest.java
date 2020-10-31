@@ -38,7 +38,7 @@ import tk.mybatis.mapper.weekend.mapper.CountryMapper;
 import java.util.List;
 
 /**
- * 测试WeekendSql构建者模式类
+ * WeekendSql 빌더 패턴 클래스 테스트
  *
  * @author XuYin
  */
@@ -59,7 +59,7 @@ public class WeekendSqlsTest {
             List<Country> selectByExample = mapper.selectByExample(
                     new Example.Builder(Country.class).where(Sqls.custom().andLike("countryname", "China")).build());
 
-            //判断两个结果数组内容是否相同
+            //두 결과 배열의 내용이 동일한 지 확인
             Assert.assertArrayEquals(selectByExample.toArray(), selectByWeekendSql.toArray());
         } finally {
             sqlSession.close();
@@ -81,7 +81,7 @@ public class WeekendSqlsTest {
             List<Country> selectByExample = mapper.selectByExample(new Example.Builder(Country.class)
                     .where(Sqls.custom().andLike("countryname", "%a%").andGreaterThan("countrycode", "123")).build());
 
-            // 判断两个结果数组内容是否相同
+            // 두 결과 배열의 내용이 동일한 지 확인
             Assert.assertArrayEquals(selectByExample.toArray(), selectByWeekendSql.toArray());
         } finally {
             sqlSession.close();

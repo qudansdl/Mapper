@@ -29,7 +29,7 @@ import tk.mybatis.mapper.entity.Config;
 
 
 /**
- * 这个类存在的主要目的是方便 IDE 自动提示 mapper. 开头的配置
+ * 이 클래스의 주요 목적은 IDE가 mapper. 초기 구성
  *
  * @author liuzh
  * @since 2017/1/2.

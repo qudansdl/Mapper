@@ -35,7 +35,7 @@ import tk.mybatis.mapper.util.StringUtil;
 import java.util.Set;
 
 /**
- * SpecialProvider实现类，特殊方法实现类
+ * SpecialProvider 구현 클래스, 특수 메서드 구현 클래스
  *
  * @author liuzh
  */
@@ -46,23 +46,23 @@ public class SpecialProvider extends MapperTemplate {
     }
 
     /**
-     * 批量插入
+     * 대량 Insert
      *
      * @param ms
      */
     public String insertList(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //开始拼sql
+        //맞춤법 SQL 시작
         StringBuilder sql = new StringBuilder();
-        sql.append("<bind name=\"listNotEmptyCheck\" value=\"@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, '" + ms.getId() + " 方法参数为空')\"/>");
+        sql.append("<bind name=\"listNotEmptyCheck\" value=\"@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, '" + ms.getId() + " 메소드 매개 변수가 비어 있습니다.')\"/>");
         sql.append(SqlHelper.insertIntoTable(entityClass, tableName(entityClass), "list[0]"));
         sql.append(SqlHelper.insertColumns(entityClass, true, false, false));
         sql.append(" VALUES ");
         sql.append("<foreach collection=\"list\" item=\"record\" separator=\",\" >");
         sql.append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnList) {
             if (!column.isId() && column.isInsertable()) {
                 sql.append(column.getColumnHolder("record") + ",");
@@ -71,26 +71,26 @@ public class SpecialProvider extends MapperTemplate {
         sql.append("</trim>");
         sql.append("</foreach>");
 
-        // 反射把MappedStatement中的设置主键名
+        // 리플렉션은 MappedStatement에서 기본 키 이름을 설정합니다.
         EntityHelper.setKeyProperties(EntityHelper.getPKColumns(entityClass), ms);
 
         return sql.toString();
     }
 
     /**
-     * 插入，主键id，自增
+     * Insert, 기본 키 ID, 증분
      *
      * @param ms
      */
     public String insertUseGeneratedKeys(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //开始拼sql
+        //맞춤법 SQL 시작
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.insertIntoTable(entityClass, tableName(entityClass)));
         sql.append(SqlHelper.insertColumns(entityClass, true, false, false));
         sql.append(SqlHelper.insertValuesColumns(entityClass, true, false, false));
 
-        // 反射把MappedStatement中的设置主键名
+        // 리플렉션은 MappedStatement에서 기본 키 이름을 설정합니다.
         EntityHelper.setKeyProperties(EntityHelper.getPKColumns(entityClass), ms);
 
         return sql.toString();

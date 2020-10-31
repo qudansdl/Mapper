@@ -146,7 +146,7 @@ public class SpringAnnotationTest {
     @Configuration
     @MapperScan(value = "tk.mybatis.mapper.annotation",
         properties = {
-                //参数配置错误
+                //매개 변수 구성 오류
                 "mapperstk.mybatis.mapper.common.Mapper",
                 "notEmpty=true"
         }

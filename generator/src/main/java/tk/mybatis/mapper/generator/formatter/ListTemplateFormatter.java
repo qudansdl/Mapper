@@ -36,7 +36,7 @@ import java.util.Set;
 public interface ListTemplateFormatter {
 
     /**
-     * 获取根据模板生成的数据
+     * 템플릿에 따라 생성 된 데이터 가져 오기
      *
      * @param tableClassSet
      * @param properties

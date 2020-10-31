@@ -34,7 +34,7 @@ import tk.mybatis.mapper.model.Country;
 import java.util.List;
 
 /**
- * 通过 ids 进行操作
+ * ID를 통해 작동
  *
  * @author liuzh
  */
@@ -46,7 +46,7 @@ public class TestIds {
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             List<Country> countryList = mapper.selectByIds("1,2,3");
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(3, countryList.size());
         } finally {
             sqlSession.close();
@@ -59,7 +59,7 @@ public class TestIds {
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             int count = mapper.deleteByIds("1,2,3");
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(3, count);
             Assert.assertEquals(180, mapper.selectCount(null));
         } finally {

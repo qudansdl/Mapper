@@ -29,9 +29,9 @@ import tk.mybatis.mapper.common.base.insert.InsertMapper;
 import tk.mybatis.mapper.common.base.insert.InsertSelectiveMapper;
 
 /**
- * 通用Mapper接口,基础查询
+ * 일반 매퍼 인터페이스, 기본 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper

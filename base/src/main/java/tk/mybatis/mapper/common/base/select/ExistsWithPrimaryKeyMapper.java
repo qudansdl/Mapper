@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseSelectProvider;
 
 /**
- * 通用Mapper接口,查询
+ * 일반 매퍼 인터페이스, 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface ExistsWithPrimaryKeyMapper<T> {
 
     /**
-     * 根据主键字段查询总数，方法参数必须包含完整的主键属性，查询条件使用等号
+     * 기본 키 필드 조회의 총 수에 따라 메서드 매개 변수는 전체 기본 키 속성을 포함해야하며 조회 조건은 등호를 사용합니다.
      *
      * @param key
      * @return

@@ -48,7 +48,7 @@ import java.util.*;
 public class FieldTest {
 
     /**
-     * 通过方法获取属性
+     * 메서드를 통해 속성 가져 오기
      *
      * @param entityClass
      * @return
@@ -90,9 +90,9 @@ public class FieldTest {
         if (entityClass == Object.class) {
             return genericMap;
         }
-        //获取父类和泛型信息
+        //부모 및 일반 정보 얻기
         Class<?> superClass = entityClass.getSuperclass();
-        //判断superClass
+        //심판superClass
         if (superClass != null
                 && !superClass.equals(Object.class)
                 && (superClass.isAnnotationPresent(Entity.class)
@@ -126,7 +126,7 @@ public class FieldTest {
             EntityField entityField = new EntityField(field, null);
             if (field.getGenericType() != null && field.getGenericType() instanceof TypeVariable) {
                 if (genericMap == null || !genericMap.containsKey(((TypeVariable) field.getGenericType()).getName())) {
-                    throw new RuntimeException(entityClass + "字段" + field.getName() + "的泛型类型无法获取!");
+                    throw new RuntimeException(entityClass + "들" + field.getName() + "일반 유형을 얻을 수 없습니다!");
                 } else {
                     entityField.setJavaType(genericMap.get(((TypeVariable) field.getGenericType()).getName()));
                 }

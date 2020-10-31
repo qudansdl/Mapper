@@ -13,7 +13,7 @@ import java.net.URL;
 public class UpdateByDifferMapperTest extends BaseTest {
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */

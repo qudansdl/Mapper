@@ -5,16 +5,16 @@ import tk.mybatis.mapper.base.Country;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
- * 这个例子中，在 XML 配置了缓存，这里使用注解引用 XML 中的缓存配置
+ * 이 예에서 캐시는 XML로 구성되고 여기에서 주석은 XML의 캐시 구성을 참조하는 데 사용됩니다.
  *
- * namespace 有两种配置方法，参考下面两行注解
+ * 네임 스페이스를 구성하는 방법에는 두 가지가 있습니다. 다음 두 줄의 주석을 참조하십시오.
  */
 @CacheNamespaceRef(CountryCacheRefMapper.class)
 //@CacheNamespaceRef(name = "tk.mybatis.mapper.cache.CountryCacheRefMapper")
 public interface CountryCacheRefMapper extends Mapper<Country> {
 
     /**
-     * 定义在 XML 中的方法
+     * XML로 정의 된 메서드
      *
      * @param id
      * @return

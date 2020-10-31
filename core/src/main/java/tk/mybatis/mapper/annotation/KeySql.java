@@ -35,7 +35,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 主键策略，用于替换 JPA 中的复杂用法
+ * JPA의 복잡한 사용을 대체하는 데 사용되는 기본 키 전략
  *
  * @author liuzh
  * @since 2015-10-29 22:00
@@ -45,42 +45,42 @@ import java.lang.annotation.Target;
 public @interface KeySql {
 
     /**
-     * 是否使用 JDBC 方式获取主键，优先级最高，设置为 true 后，不对其他配置校验
+     * JDBC 메소드를 사용하여 기본 키를 가져올 지 여부, 우선 순위가 가장 높으며 true로 설정되면 다른 구성이 확인되지 않습니다.
      *
      * @return
      */
     boolean useGeneratedKeys() default false;
 
     /**
-     * 优先级第二，根据配置的数据库类型取回主键，忽略其他配置
+     * 두 번째 우선 순위는 구성된 데이터베이스 유형에 따라 기본 키를 검색하고 다른 구성을 무시하는 것입니다.
      *
      * @return
      */
     IdentityDialect dialect() default IdentityDialect.NULL;
 
     /**
-     * 取主键的 SQL
+     * 기본 키를 가져 오는 SQL
      *
      * @return
      */
     String sql() default "";
 
     /**
-     * 生成 SQL，初始化时执行，优先级低于 sql
+     * SQL 생성, 초기화 중 실행, 우선 순위가 다음보다 낮음 sql
      *
      * @return
      */
     Class<? extends GenSql> genSql() default GenSql.NULL.class;
 
     /**
-     * 和 sql 可以配合使用，默认使用全局配置中的 ORDER
+     * SQL과 함께 사용할 수 있으며 전역 구성의 ORDER가 기본적으로 사용됩니다.
      *
      * @return
      */
     ORDER order() default ORDER.DEFAULT;
 
     /**
-     * Java 方式生成主键，可以和发号器一类的服务配合使用
+     * Java 발급 기관과 같은 서비스에서 사용할 수있는 기본 키 생성 방법
      *
      * @return
      */

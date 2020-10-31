@@ -6,7 +6,7 @@ import tk.mybatis.mapper.weekend.reflection.Reflections;
 import java.util.Optional;
 
 /**
- * sql 条件语句
+ * sql 조건문
  * @author Cheng.Wei
  * @date 2019-04-15 10:26
  */
@@ -44,7 +44,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      *  AND column = value
-     *  当value=null则不参与查询
+     *  value = null이면 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -57,8 +57,8 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
      *  AND column = value
      * @param fn
      * @param value
-     * @param required  false 当value=null 则不参与查询 ;
-     *                  true 当value = null 则转 is null 查询： AND column is null
+     * @param required  false value = null이면 조회에 참여하지 않습니다.
+     *                  값이 null 인 경우 true이고 null 조회로 전환： AND column is null
      * @return
      */
     public SqlCriteriaHelper<T> andEqualTo(Fn<T, Object> fn, Object value, boolean required) {
@@ -66,7 +66,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
             this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), value, "=", "and"));
         }else {
             if(required){
-                // null属性查询 转 is null
+                // 의 Null 속성 조회가 null입니다.
                 this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), "is null", "and"));
             }
         }
@@ -75,7 +75,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column != value
-     * 默认 value=null 则不参与查询
+     * 기본값 = null은 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -88,8 +88,8 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
      *  AND column != value
      * @param fn
      * @param value
-     * @param required false 当value=null 则不参与查询 ;
-     *                 true 当value = null 则转 is not null 查询 ： AND column is not null
+     * @param required false value = null이면 조회에 참여하지 않습니다.
+     *                 값이 null이면 true이고 null이 아닌 조회로 전환 ： AND column is not null
      *
      * @return
      */
@@ -98,7 +98,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
             this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), value, "<>", "and"));
         }else {
             if(required){
-                //转非空查询
+                //비어 있지 않은 조회로
                 this.andIsNotNull(fn);
             }
         }
@@ -107,7 +107,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      *  AND column > value
-     *  当 value = null 则当前属性不参与查询
+     *  value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -121,7 +121,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      *  AND  column >= value
-     *  当 value = null 则当前属性不参与查询
+     *  value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -135,7 +135,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND  column < value
-     *  当 value = null 则当前属性不参与查询
+     *  value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -149,7 +149,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND  column <= value
-     *  当 value = null 则当前属性不参与查询
+     *  value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -163,7 +163,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND  column IN (#{item.value})
-     *  当 values = null 则当前属性不参与查询
+     *  값이 null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param values
      * @return
@@ -177,7 +177,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND  column NOT IN (#{item.value})
-     *  当 values = null 则当前属性不参与查询
+     *  값이 null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param values
      * @return
@@ -191,7 +191,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND  column BETWEEN  value1 AND value2
-     * 当 value1 或 value2 为空 则当前属性不参与查询
+     * value1 또는 value2가 비어 있으면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value1
      * @param value2
@@ -206,7 +206,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column  NOT BETWEEN value1 AND value2
-     * 当 value1 或 value2 为空 则当前属性不参与查询
+     * value1 또는 value2가 비어 있으면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value1
      * @param value2
@@ -221,7 +221,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column LIKE %value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -237,7 +237,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column LIKE %value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -252,7 +252,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column LIKE value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -267,7 +267,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column NOT LIKE %value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -282,7 +282,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column NOT LIKE %value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -297,7 +297,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * AND column NOT LIKE value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -312,7 +312,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column IS NULL
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @return
      */
@@ -323,7 +323,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column IS NOT NULL
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @return
      */
@@ -335,7 +335,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      *  OR column = value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -346,7 +346,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column = value
-     * 当request = true 且  value = null时 转 #{@link #orIsNull(Fn)}
+     * 요청이 참이고 값이 null 일 때 전환 #{@link #orIsNull(Fn)}
      * @param fn
      * @param value
      * @param required
@@ -357,7 +357,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
             this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), value, "=", "or"));
         }else {
             if(required){
-                //转 or null
+                //회전 or null
                 this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), "is null", "or"));
             }
         }
@@ -366,7 +366,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column <> value
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -377,7 +377,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column <> value
-     *  当request = true 且  value = null时 转 #{@link #orIsNotNull(Fn)}
+     *  요청이 참이고 값이 null 일 때 전환 #{@link #orIsNotNull(Fn)}
      * @param fn
      * @param value
      * @param required
@@ -388,7 +388,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
             this.criteria.getCriterions().add(new Sqls.Criterion(Reflections.fnToFieldName(fn), value, "<>", "or"));
         }else {
             if(required){
-                // 转 or is not null
+                // 회전 or is not null
                 this.orIsNotNull(fn);
             }
         }
@@ -397,7 +397,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column > value
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -411,7 +411,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column >= value
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -425,7 +425,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column < value
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -439,7 +439,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column <= value
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -453,7 +453,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column IN (#{item.value})
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param values
      * @return
@@ -467,7 +467,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column NOT IN (#{item.value})
-     * 当value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param values
      * @return
@@ -481,7 +481,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column BETWEEN  value1 AND value2
-     * 当 value1 或 value2 为空 则当前属性不参与查询
+     * value1 또는 value2가 비어 있으면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value1
      * @param value2
@@ -496,7 +496,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column NOT BETWEEN  value1 AND value2
-     * 当 value1 或 value2 为空 则当前属性不参与查询
+     * value1 또는 value2가 비어 있으면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value1
      * @param value2
@@ -512,7 +512,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column LIKE value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -528,7 +528,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column LIKE %value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -546,7 +546,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column LIKE value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -562,7 +562,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column NOT LIKE value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -579,7 +579,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column NOT LIKE %value
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return
@@ -594,7 +594,7 @@ public class SqlCriteriaHelper<T> implements tk.mybatis.mapper.entity.SqlsCriter
 
     /**
      * OR column NOT LIKE value%
-     * 当 value = null 则当前属性不参与查询
+     * value = null이면 현재 속성이 조회에 참여하지 않습니다.
      * @param fn
      * @param value
      * @return

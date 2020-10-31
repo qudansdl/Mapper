@@ -2,23 +2,22 @@
 
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-weekend/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-weekend)
 
-作者：[liuyuyu](https://github.com/liuyuyu)
+작성자：[liuyuyu](https://github.com/liuyuyu)
 
-# 支持 jdk 8+
+# jdk 8+ 지원
 
-## 说明
+## 기술
 
-在经过作者同意后，对项目包名和 Maven 的GAV信息进行修改，将该项目打包上传到 Maven 官方仓库。
+작성자의 동의 후 프로젝트 패키지 이름과 Maven GAV 정보가 수정되고 프로젝트가 패키지되어 공식 Maven Repository에 업로드되었습니다.
 
-虽然这个是一个独立的项目，但是大家在使用过程中，不需要引用这个项目。
+이 프로젝트는 독립적 인 프로젝트이지만 사용할 때이 프로젝트를 참조 할 필요가 없습니다.
 
-这个独立项目是以 jdk 8 进行打包的，打包后的 class 会被集成到通用 Mapper 中（主代码使用 jdk 6 编译）。
+이 독립적 인 프로젝트는 jdk 8로 패키징되고 패키징 된 클래스는 일반 Mapper에 통합됩니다 (주 코드는 jdk 6으로 컴파일 됨).
 
-## 基于 https://github.com/abel533/Mapper 做的增强
+## https://github.com/abel533/Mapper 기반 개선 사항
 
-可以在 `Example.Criteria` 的条件方法里传 lambada(再也不用担心改数据库了......)。
+Example.Criteria메서드의 pass lambada를 조건화 할 수 있습니다 (더 이상 데이터베이스 변경에 대해 걱정할 필요가 없습니다 ...).
 
-栗子：
 ```java
 UserMapper    userMapper = sqlSession.getMapper(UserMapper.class);
 Weekend<User> weekend    = Weekend.of(User.class);
@@ -28,7 +27,7 @@ weekend.weekendCriteria()
       .andIn(User::getUserName, Arrays.asList("a","b","c"));
 ```
 
-和（作者： [XuYin](https://github.com/chinaerserver)） 
+작성자： [XuYin](https://github.com/chinaerserver)） 
 
 ```java
 CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);

@@ -46,7 +46,7 @@ public class UserMapperTest {
     public TestRule runJava8 = new UseJava8Rule();
 
     /**
-     * 执行，然后看日志打出来的SQL
+     * 실행 한 다음 로그에 입력 된 SQL을 확인합니다.
      */
     @Test
     public void testSelectIdIsNull(){
@@ -69,13 +69,13 @@ public class UserMapperTest {
         CountryMapper countryMapper = sqlSession.getMapper(CountryMapper.class);
         Weekend<Country> weekend1 = Weekend.of(Country.class);
         weekend1.excludeProperties(Country::getId,Country::getCountryname);
-        //查看日志执行的sql
+        //SQL 실행 로그보기
         countryMapper.selectByExample(weekend1);
         Weekend<Country> weekend2 = Weekend.of(Country.class);
         weekend2.selectProperties(Country::getId);
-        //查看日志执行的sql
+        //SQL 실행 로그보기
         countryMapper.selectByExample(weekend2);
-      //count 查询
+      //count 조회
       weekend2.withCountProperty(Country::getCountryname);
       countryMapper.selectCountByExample(weekend2);
 

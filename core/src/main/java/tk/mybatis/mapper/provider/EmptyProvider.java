@@ -28,9 +28,9 @@ import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 
 /**
- * 空方法Mapper接口默认MapperTemplate
+ * 빈 메서드 매퍼 인터페이스 기본 MapperTemplate
  * <p/>
- * 如BaseSelectMapper，接口纯继承，不包含任何方法
+ * BaseSelectMapper와 같은 인터페이스는 순전히 상속되며 메소드를 포함하지 않습니다.
  */
 public class EmptyProvider extends MapperTemplate {
 

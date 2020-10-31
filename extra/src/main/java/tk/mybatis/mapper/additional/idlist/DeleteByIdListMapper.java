@@ -30,16 +30,16 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * 通用Mapper接口,根据idList删除
+ * 일반 매퍼 인터페이스, idList에 따라 삭제
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface DeleteByIdListMapper<T, PK> {
 
     /**
-     * 根据主键字符串进行删除，类中只有存在一个带有@Id注解的字段
+     * 기본 키 문자열에 따라 삭제합니다. 클래스에는 @Id로 주석이 달린 필드가 하나만 있습니다.
      *
      * @param idList
      * @return

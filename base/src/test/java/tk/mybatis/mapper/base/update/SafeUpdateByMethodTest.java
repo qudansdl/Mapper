@@ -15,7 +15,7 @@ public class SafeUpdateByMethodTest extends BaseTest {
     protected Config getConfig() {
         Config config = super.getConfig();
         config.setSafeUpdate(true);
-        //和 SafeUpdateByFieldTest 测试的区别在此，这里将会使后面调用 EntityField.getValue 时，使用 getter 方法获取值
+        //SafeUpdateByFieldTest와 SafeUpdateByFieldTest의 차이점은 여기에 있습니다. 나중에 EntityField.getValue를 호출 할 때 getter 메서드를 사용하여 값을 가져옵니다.
         config.setEnableMethodAnnotation(true);
         return config;
     }

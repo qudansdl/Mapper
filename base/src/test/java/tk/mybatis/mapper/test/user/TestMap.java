@@ -33,7 +33,7 @@ import tk.mybatis.mapper.model.UserInfoMap;
 import java.util.List;
 
 /**
- * 测试增删改查 - 不在直接支持Map
+ * 테스트 추가, 삭제, 수정 및지도 확인은 더 이상 직접 지원되지 않습니다.
  *
  * @author liuzh
  */
@@ -41,7 +41,7 @@ public class TestMap {
 
 
     /**
-     * 新增
+     * 더하다
      */
 //    @Test
     public void testInsert() {
@@ -65,24 +65,24 @@ public class TestMap {
     }
 
     /**
-     * 主要测试删除
+     * 메인 테스트 삭제
      */
 //    @Test
     public void testDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             UserInfoMapMapper mapper = sqlSession.getMapper(UserInfoMapMapper.class);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(5, mapper.selectCount(new UserInfoMap()));
-            //查询100
+            //조회100
             UserInfoMap userInfoMap = mapper.selectByPrimaryKey(1);
 
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(1));
 
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(4, mapper.selectCount(new UserInfoMap()));
-            //插入
+            //끼워 넣다
             Assert.assertEquals(1, mapper.insert(userInfoMap));
         } finally {
             sqlSession.close();
@@ -91,7 +91,7 @@ public class TestMap {
 
 
     /**
-     * 查询
+     * 조회
      */
 //    @Test
     public void testSelect() {
@@ -108,7 +108,7 @@ public class TestMap {
     }
 
     /**
-     * 根据主键全更新
+     * 기본 키를 기반으로 전체 업데이트
      */
 //    @Test
     public void testUpdateByPrimaryKey() {
@@ -119,7 +119,7 @@ public class TestMap {
             Assert.assertNotNull(userInfoMap);
             userInfoMap.setUserType(null);
             userInfoMap.setRealName("liuzh");
-            //不会更新user_type
+            //업데이트되지 않음user_type
             Assert.assertEquals(1, mapper.updateByPrimaryKey(userInfoMap));
 
             userInfoMap = mapper.selectByPrimaryKey(userInfoMap);
@@ -131,7 +131,7 @@ public class TestMap {
     }
 
     /**
-     * 根据主键更新非null
+     * 비 업데이트null
      */
 //    @Test
     public void testUpdateByPrimaryKeySelective() {
@@ -142,7 +142,7 @@ public class TestMap {
             Assert.assertNotNull(userInfoMap);
             userInfoMap.setUserType(null);
             userInfoMap.setRealName("liuzh");
-            //不会更新user_type
+            //업데이트되지 않음user_type
             Assert.assertEquals(1, mapper.updateByPrimaryKeySelective(userInfoMap));
 
             userInfoMap = mapper.selectByPrimaryKey(1);

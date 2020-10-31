@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class TestTransient {
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testDynamicInsert() {
@@ -48,18 +48,18 @@ public class TestTransient {
             CountryT country = new CountryT();
             country.setId(10086);
             country.setCountrycode("CN");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             Assert.assertEquals(1, mapper.insert(country));
 
-            //查询CN结果
+            //CN 결과 조회
             country = new CountryT();
             country.setCountrycode("CN");
             List<CountryT> list = mapper.select(country);
 
             Assert.assertEquals(2, list.size());
-            //屏蔽的数据是null
+            //차단 된 데이터는null
             Assert.assertNull(list.get(0).getCountrycode());
-            //删除插入的数据,以免对其他测试产生影响
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(10086));
         } finally {
             sqlSession.close();
@@ -67,7 +67,7 @@ public class TestTransient {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicUpdateByPrimaryKey() {
@@ -76,14 +76,14 @@ public class TestTransient {
             CountryTMapper mapper = sqlSession.getMapper(CountryTMapper.class);
             CountryT country = new CountryT();
             country.setId(174);
-            country.setCountryname("美国");
+            country.setCountryname("미국");
             country.setCountrycode("US");
             Assert.assertEquals(1, mapper.updateByPrimaryKey(country));
 
             country = mapper.selectByPrimaryKey(174);
             Assert.assertNotNull(country);
             Assert.assertEquals(174, (int) country.getId());
-            Assert.assertEquals("美国",country.getCountryname());
+            Assert.assertEquals("미국",country.getCountryname());
             Assert.assertNull(country.getCountrycode());
         } finally {
             sqlSession.close();
@@ -91,7 +91,7 @@ public class TestTransient {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicSelect() {

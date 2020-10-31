@@ -51,52 +51,52 @@ public class MybatisHelper {
 
     static {
         try {
-            //创建SqlSessionFactory
+            //SqlSessionFactory 만들기
             Reader reader = Resources.getResourceAsReader("mybatis-java.xml");
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             reader.close();
-            //创建数据库
+            //데이터베이스 생성
             SqlSession session = null;
             try {
                 session = sqlSessionFactory.openSession();
-                //创建一个MapperHelper
+                //MapperHelper 만들기
                 MapperHelper mapperHelper = new MapperHelper();
-                //特殊配置
+                //특수 구성
                 Config config = new Config();
-                // 设置UUID生成策略
-                // 配置UUID生成策略需要使用OGNL表达式
-                // 默认值32位长度:@java.util.UUID@randomUUID().toString().replace("-", "")
+                // UUID 생성 전략 설정
+                // UUID 생성 전략을 구성하려면 OGNL 표현식이 필요합니다.
+                // 기본값 32 비트 길이:@java.util.UUID@randomUUID().toString().replace("-", "")
                 //config.setUUID("");
-                // 主键自增回写方法,默认值MYSQL,详细说明请看文档
+                // 기본 키 자동 증가 및 쓰기 되돌림 방법, 기본값은 MYSQL입니다. 자세한 내용은 문서를 참조하십시오.
                 config.setIDENTITY("HSQLDB");
-                // 支持方法上的注解
-                // 3.3.1版本增加
+                // 지원 방법 주석
+                // 3.3.1 버전 증가
                 config.setEnableMethodAnnotation(true);
                 config.setNotEmpty(true);
-                //校验Example中的类型是否一致
+                //예제의 유형이 일치하는지 확인
                 config.setCheckExampleEntityClass(true);
-                //启用简单类型
+                //단순 유형 활성화
                 config.setUseSimpleType(true);
-                // 序列的获取规则,使用{num}格式化参数，默认值为{0}.nextval，针对Oracle
-                // 可选参数一共3个，对应0,1,2,分别为SequenceName，ColumnName, PropertyName
+                // 시퀀스 획득 규칙, {num} 형식 지정 매개 변수 사용, Oracle의 경우 기본값은 {0} .nextval입니다.
+                // 각각 0,1,2에 해당하는 3 개의 선택적 매개 변수가 있습니다.SequenceName，ColumnName, PropertyName
                 //config.setSeqFormat("NEXT VALUE FOR {0}");
-                // 设置全局的catalog,默认为空，如果设置了值，操作表时的sql会是catalog.tablename
+                // 글로벌 카탈로그를 설정합니다. 기본값은 비어 있고 값이 설정되면 테이블을 작동 할 때 SQL이 catalog.tablename이됩니다.
                 //config.setCatalog("");
-                // 设置全局的schema,默认为空，如果设置了值，操作表时的sql会是schema.tablename
-                // 如果同时设置了catalog,优先使用catalog.tablename
+                // 전역 스키마를 설정합니다. 기본값은 비어 있습니다. 값이 설정되면 테이블 작동시 SQL이schema.tablename
+                // 카탈로그가 동시에 설정된 경우 먼저 사용catalog.tablename
                 //config.setSchema("");
-                // 主键自增回写方法执行顺序,默认AFTER,可选值为(BEFORE|AFTER)
+                // 기본 키 자동 증가 및 쓰기 되돌림 방법의 실행 순서, 기본값은 AFTER, 선택적 값(BEFORE|AFTER)
                 //config.setOrder("AFTER");
-                //设置配置
+                //구성 설정
                 mapperHelper.setConfig(config);
-                // 注册通用Mapper接口 - 可以自动注册继承的接口
+                // 일반 Mapper 인터페이스 등록-상속 된 인터페이스 자동 등록 가능
                 mapperHelper.registerMapper(Mapper.class);
                 mapperHelper.registerMapper(MySqlMapper.class);
                 mapperHelper.registerMapper(SqlServerMapper.class);
                 mapperHelper.registerMapper(IdsMapper.class);
-                //配置完成后，执行下面的操作
+                //구성이 완료된 후 다음 작업을 수행하십시오.
                 mapperHelper.processConfiguration(session.getConfiguration());
-                //OK - mapperHelper的任务已经完成，可以不管了
+                //OK - mapperHelper의 작업이 완료되었으며 무시할 수 있습니다.
 
                 Connection conn = session.getConnection();
                 reader = Resources.getResourceAsReader("CreateDB.sql");
@@ -115,7 +115,7 @@ public class MybatisHelper {
     }
 
     /**
-     * 获取Session
+     * 세션 받기
      * @return
      */
     public static SqlSession getSqlSession(){

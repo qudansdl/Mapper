@@ -44,26 +44,26 @@ public class HsqldbProvider extends MapperTemplate {
     }
 
     /**
-     * 分页查询
+     * 페이징 조회
      * @param ms
      * @return
      */
     public SqlNode selectPage(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
-        //修改返回值类型为实体类型
+        //반환 값 유형을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
 
         List<SqlNode> sqlNodes = new ArrayList<SqlNode>();
-        //静态的sql部分:select column ... from table
+        //정적 SQL 부분:select column ... from table
         sqlNodes.add(new StaticTextSqlNode("SELECT "
                 + EntityHelper.getSelectColumns(entityClass)
                 + " FROM "
                 + tableName(entityClass)));
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
         List<SqlNode> ifNodes = new ArrayList<SqlNode>();
         boolean first = true;
-        //对所有列循环，生成<if test="property!=null">[AND] column = #{property}</if>
+        //모든 열을 반복하여 생성<if test="property!=null">[AND] column = #{property}</if>
         for (EntityColumn column : columnList) {
             StaticTextSqlNode columnNode
                     = new StaticTextSqlNode((first ? "" : " AND ") + column.getColumn() + " = #{entity." + column.getProperty() + "} ");
@@ -74,11 +74,11 @@ public class HsqldbProvider extends MapperTemplate {
             }
             first = false;
         }
-        //增加entity判断
+        //엔터티 판단 향상
         IfSqlNode ifSqlNode = new IfSqlNode(new MixedSqlNode(ifNodes),"entity!=null");
-        //将if添加到<where>
+        //추가<where>
         sqlNodes.add(new WhereSqlNode(ms.getConfiguration(), ifSqlNode));
-        //处理分页
+        //페이징 처리
         sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit}"),"offset==0"));
         sqlNodes.add(new IfSqlNode(new StaticTextSqlNode(" LIMIT #{limit} OFFSET #{offset} "),"offset>0"));
         return new MixedSqlNode(sqlNodes);

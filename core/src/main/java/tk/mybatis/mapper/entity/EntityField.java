@@ -31,7 +31,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
- * 封装字段和方法，统一调用某些方法
+ * 필드와 메서드를 캡슐화하고 특정 메서드를 균일하게 호출
  *
  * @author liuzh
  */
@@ -43,10 +43,10 @@ public class EntityField {
     private Method getter;
 
     /**
-     * 构造方法
+     * 시공 방법
      *
-     * @param field              字段
-     * @param propertyDescriptor 字段name对应的property
+     * @param field              들
+     * @param propertyDescriptor 필드 이름에 해당하는 속성
      */
     public EntityField(Field field, PropertyDescriptor propertyDescriptor) {
         if (field != null) {
@@ -63,7 +63,7 @@ public class EntityField {
     }
 
     /**
-     * 先创建field，然后可以通过该方法获取property等属性
+     * 먼저 필드를 만든 다음이 메서드를 통해 속성 및 기타 속성을 가져올 수 있습니다.
      *
      * @param other
      */
@@ -75,7 +75,7 @@ public class EntityField {
     }
 
     /**
-     * 是否有该注解
+     * 그런 주석이 있습니까
      *
      * @param annotationClass
      * @return
@@ -95,7 +95,7 @@ public class EntityField {
     }
 
     /**
-     * 获取指定的注解
+     * 지정된 주석 가져 오기
      *
      * @param annotationClass
      * @param <T>
@@ -116,7 +116,7 @@ public class EntityField {
     }
 
     /**
-     * 反射获取值
+     * 가치를 얻기위한 반성
      *
      * @param object
      * @return
@@ -153,7 +153,7 @@ public class EntityField {
     }
 
     /**
-     * 获取javaType
+     * javaType 가져 오기
      *
      * @return
      */
@@ -162,7 +162,7 @@ public class EntityField {
     }
 
     /**
-     * 设置javaType
+     * javaType 설정
      *
      * @param javaType
      */
@@ -171,7 +171,7 @@ public class EntityField {
     }
 
     /**
-     * 字段属性名
+     * 필드 속성 이름
      *
      * @return
      */

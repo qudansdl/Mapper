@@ -57,7 +57,7 @@ public class TestSelectByExample {
             example.createCriteria().andGreaterThan("id", 100).andLessThan("id",151);
             example.or().andLessThan("id", 41);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(90, countries.size());
         } finally {
             sqlSession.close();
@@ -87,7 +87,7 @@ public class TestSelectByExample {
             example.createCriteria().andGreaterThan("id", 100).andLessThan("id",151);
             example.or().andLessThan("id", 41);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(90, countries.size());
         } finally {
             sqlSession.close();
@@ -104,7 +104,7 @@ public class TestSelectByExample {
                     .andCondition("countryname like 'C%' and id < 100")
                     .andCondition("length(countryname) = ", 5);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(3, countries.size());
         } finally {
             sqlSession.close();
@@ -122,7 +122,7 @@ public class TestSelectByExample {
             example.createCriteria().andIn("id", set)
                     .andNotIn("id", Arrays.asList(new Object[]{11}));
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, countries.size());
         } finally {
             sqlSession.close();
@@ -138,7 +138,7 @@ public class TestSelectByExample {
             example.createCriteria().andIn("id", Arrays.asList(new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}))
                     .andNotIn("id", Arrays.asList(new Object[]{11}));
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, countries.size());
         } finally {
             sqlSession.close();
@@ -155,7 +155,7 @@ public class TestSelectByExample {
             example.or().andGreaterThan("id", 100);
             example.            setDistinct(true);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(true, countries.size() > 83);
         } finally {
             sqlSession.close();
@@ -172,7 +172,7 @@ public class TestSelectByExample {
             example.or().andIdGreaterThan(100);
             example.setDistinct(true);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(true, countries.size() > 83);
         } finally {
             sqlSession.close();
@@ -190,7 +190,7 @@ public class TestSelectByExample {
             Example example = new Example(Country.class);
             example.createCriteria().andGreaterThan("id", 20).andEqualTo(ct);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             System.out.println(countries.get(0).toString());
             Assert.assertEquals(1, countries.size());
         } finally {
@@ -202,7 +202,7 @@ public class TestSelectByExample {
     @Test
     public void testSelectColumnsByExample() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'hehe'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'hehe'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -211,7 +211,7 @@ public class TestSelectByExample {
             example.or().andLessThan("id", 41);
             example.selectProperties("id", "countryname", "hehe");
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(90, countries.size());
         } finally {
             sqlSession.close();
@@ -228,7 +228,7 @@ public class TestSelectByExample {
             example.or().andLessThan("id", 41);
             example.excludeProperties("id");
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(90, countries.size());
         } finally {
             sqlSession.close();
@@ -244,16 +244,16 @@ public class TestSelectByExample {
             example.createCriteria().andGreaterThan("id", 100).andLessThan("id", 151);
             example.or().andLessThan("id", 41);
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(90, countries.size());
 
-            //当不使用条件时，也不能出错
+            //조건을 사용하지 않으면 오류가 발생하지 않습니다.
             example = new Example(Country.class);
             example.createCriteria();
             example.or();
             example.and();
             countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, countries.size());
         } finally {
             sqlSession.close();
@@ -269,7 +269,7 @@ public class TestSelectByExample {
 //            example.setOrderByClause("id desc");
             example.orderBy("id").desc().orderBy("countryname").orderBy("countrycode").asc();
             List<Country> countries = mapper.selectByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, (int) countries.get(0).getId());
         } finally {
             sqlSession.close();
@@ -277,7 +277,7 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定查询字段正确
+     * 지정된 조회 필드가 정확합니다.
      */
     @Test
     public void testSelectPropertisCheckCorrect() {
@@ -297,12 +297,12 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定查询字段拼写错误或不存在
+     * 지정된 조회 필드의 철자가 틀렸거나 존재하지 않습니다.
      */
     @Test
     public void testSelectPropertisCheckSpellWrong() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'countrymame'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'countrymame'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -319,12 +319,12 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定查询字段为@Transient注释字段
+     * 조회 필드를 @Transient 주석 필드로 지정
      */
     @Test
     public void testSelectPropertisCheckTransient1() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'name'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'name'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -338,12 +338,12 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定查询字段为@Transient注释字段
+     * 조회 필드를 @Transient 주석 필드로 지정
      */
     @Test
     public void testSelectPropertisCheckTransient2() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'dynamicTableName123'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'dynamicTableName123'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -357,12 +357,12 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定排除的查询字段不存在或拼写错误
+     * 지정한 제외 된 조회 필드가 존재하지 않거나 철자가 틀립니다.
      */
     @Test
     public void testExcludePropertisCheckWrongSpell() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'countrymame'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'countrymame'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -376,12 +376,12 @@ public class TestSelectByExample {
     }
 
     /**
-     * 指定排除的查询字段为@Transient注释字段
+     * 제외 된 조회 필드를 @Transient 주석 필드로 지정
      */
     @Test
     public void testExcludePropertisCheckTransient() {
         exception.expect(MapperException.class);
-        exception.expectMessage("类 Country 不包含属性 'dynamicTableName123'，或该属性被@Transient注释！");
+        exception.expectMessage("클래스 국가에 속이 없습니다.性 'dynamicTableName123'，또는 속성은 @Transient!");
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);

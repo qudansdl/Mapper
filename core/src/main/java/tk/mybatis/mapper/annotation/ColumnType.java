@@ -34,7 +34,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 针对列的复杂属性配置
+ * 열에 대한 복잡한 속성 구성
  *
  * @author liuzh
  * @since 2015-10-29 22:00
@@ -45,7 +45,7 @@ public @interface ColumnType {
     String column() default "";
 
     /**
-     * 是否为 BLOB 字段
+     * BLOB 필드입니까
      *
      * @return
      */

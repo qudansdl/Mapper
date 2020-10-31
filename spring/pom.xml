@@ -34,7 +34,7 @@
     <packaging>jar</packaging>
 
     <name>mapper-spring</name>
-    <description>Mybatis 通用 Mapper 和 Spring 集成</description>
+    <description>Mybatis General Mapper 및 Spring 통합</description>
 
     <properties>
         <spring.version>4.3.8.RELEASE</spring.version>

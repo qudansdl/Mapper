@@ -28,9 +28,9 @@ import tk.mybatis.mapper.common.ids.DeleteByIdsMapper;
 import tk.mybatis.mapper.common.ids.SelectByIdsMapper;
 
 /**
- * 通用Mapper接口,根据ids操作
+ * 일반 매퍼 인터페이스, ID에 따라 작동
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

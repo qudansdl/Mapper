@@ -23,7 +23,7 @@ public class DeletePropertyProvider extends MapperTemplate {
     }
 
     /**
-     * 根据属性删除，条件使用等号
+     * 속성에 따라 삭제, 조건에 등호 사용
      *
      * @param ms
      * @return
@@ -32,7 +32,7 @@ public class DeletePropertyProvider extends MapperTemplate {
         String propertyHelper = DeletePropertyProvider.class.getName();
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        // 如果是逻辑删除，则修改为更新表，修改逻辑删除字段的值
+        // 삭제 표시 인 경우 수정하여 테이블을 업데이트하고 삭제 표시 필드의 값을 수정합니다.
         if (SqlHelper.hasLogicDeleteColumn(entityClass)) {
             sql.append(SqlHelper.updateTable(entityClass, tableName(entityClass)));
             sql.append("<set>");
@@ -51,7 +51,7 @@ public class DeletePropertyProvider extends MapperTemplate {
         sql.append(")");
         sql.append("\">\n");
         String entityClassName = entityClass.getName();
-        //通过实体类名获取运行时属性对应的字段
+        //엔티티 클래스 이름으로 런타임 속성에 해당하는 필드를 가져옵니다.
         String ognl = new StringBuilder("${@")
                 .append(propertyHelper)
                 .append("@getColumnByProperty(@java.lang.Class@forName(\"")
@@ -64,7 +64,7 @@ public class DeletePropertyProvider extends MapperTemplate {
     }
 
      /**
-     * 根据属性删除，条件使用等号
+     * 속성에 따라 삭제, 조건에 등호 사용
      *
      * @param ms
      * @return
@@ -73,7 +73,7 @@ public class DeletePropertyProvider extends MapperTemplate {
         String propertyHelper = DeletePropertyProvider.class.getName();
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        // 如果是逻辑删除，则修改为更新表，修改逻辑删除字段的值
+        // 삭제 표시 인 경우 수정하여 테이블을 업데이트하고 삭제 표시 필드의 값을 수정합니다.
         if (SqlHelper.hasLogicDeleteColumn(entityClass)) {
             sql.append(SqlHelper.updateTable(entityClass, tableName(entityClass)));
             sql.append("<set>");
@@ -92,14 +92,14 @@ public class DeletePropertyProvider extends MapperTemplate {
                         +      "#{obj}\n"
                         +   "</foreach>\n";
         sql.append(sqlSegment);
-        // 逻辑删除的未删除查询条件
+        // 삭제 표시되지 않은 조회 조건
         sql.append(SqlHelper.whereLogicDelete(entityClass, false));
         sql.append("</where>");
         return sql.toString();
     }
 
     /**
-     * 根据属性删除，删除条件使用 between
+     * 속성에 따라 삭제, 삭제 조건에 사용
      *
      * @param ms
      * @return
@@ -108,7 +108,7 @@ public class DeletePropertyProvider extends MapperTemplate {
         String propertyHelper = DeletePropertyProvider.class.getName();
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        // 如果是逻辑删除，则修改为更新表，修改逻辑删除字段的值
+        // 삭제 표시 인 경우 수정하여 테이블을 업데이트하고 삭제 표시 필드의 값을 수정합니다.
         if (SqlHelper.hasLogicDeleteColumn(entityClass)) {
             sql.append(SqlHelper.updateTable(entityClass, tableName(entityClass)));
             sql.append("<set>");
@@ -125,16 +125,16 @@ public class DeletePropertyProvider extends MapperTemplate {
                         + "@tk.mybatis.mapper.weekend.reflection.Reflections@fnToFieldName(fn))} "
                         + "between #{begin} and #{end}";
         sql.append(sqlSegment);
-        // 逻辑删除的未删除查询条件
+        // 삭제 표시되지 않은 조회 조건
         sql.append(SqlHelper.whereLogicDelete(entityClass, false));
         sql.append("</where>");
         return sql.toString();
     }
 
     /**
-     * 根据实体Class和属性名获取对应的表字段名
-     * @param entityClass 实体Class对象
-     * @param property 属性名
+     * 엔티티 클래스 및 속성 이름에 따라 해당 테이블 필드 이름을 얻습니다.
+     * @param entityClass 엔티티 클래스 객체
+     * @param property 속성 이름
      * @return
      */
     public static String getColumnByProperty(Class<?> entityClass, String property) {
@@ -147,7 +147,7 @@ public class DeletePropertyProvider extends MapperTemplate {
         boolean isNull = false;
         if (safeDelete) {
             if (null == value) {
-                throw new MapperException("安全删除模式下，不允许执行不带查询条件的 delete 方法");
+                throw new MapperException("안전하게 삭제模式下，不允许수행不带조회条件의 delete 方法");
             }
         } else {
             if (null == value) {

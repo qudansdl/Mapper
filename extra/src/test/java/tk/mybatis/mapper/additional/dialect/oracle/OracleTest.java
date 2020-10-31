@@ -37,13 +37,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Oracle测试类
+ * Oracle테스트 클래스
  */
-@Ignore("需要Oracle数据源")
+@Ignore("Oracle 데이터 소스가 필요합니다.")
 public class OracleTest extends BaseTest {
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */

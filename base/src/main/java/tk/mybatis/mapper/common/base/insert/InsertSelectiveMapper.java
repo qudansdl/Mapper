@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseInsertProvider;
 
 /**
- * 通用Mapper接口,插入
+ * 범용 매퍼 인터페이스, Insert
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface InsertSelectiveMapper<T> {
 
     /**
-     * 保存一个实体，null的属性不会保存，会使用数据库默认值
+     * 엔티티를 저장하면 null 속성이 저장되지 않고 데이터베이스 기본값이 사용됩니다.
      *
      * @param record
      * @return

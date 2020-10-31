@@ -29,16 +29,16 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import tk.mybatis.mapper.provider.ExampleProvider;
 
 /**
- * 通用Mapper接口,Example查询
+ * 일반 매퍼 인터페이스, 예제 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface UpdateByExampleMapper<T> {
 
     /**
-     * 根据Example条件更新实体`record`包含的全部属性，null值会被更新
+     * Example 조건에 따라 엔티티`record`에 포함 된 모든 속성을 업데이트하면 null 값이 업데이트됩니다.
      *
      * @param record
      * @param example

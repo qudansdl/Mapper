@@ -28,9 +28,9 @@ import tk.mybatis.mapper.common.special.InsertListMapper;
 import tk.mybatis.mapper.common.special.InsertUseGeneratedKeysMapper;
 
 /**
- * 通用Mapper接口,MySql独有的通用方法
+ * MySql의 고유 한 일반 방법 인 General Mapper 인터페이스
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

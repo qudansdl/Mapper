@@ -36,7 +36,7 @@ import java.io.Writer;
 import java.util.*;
 
 /**
- * 基于 freemarker 的实现
+ * freemarker 기반 구현
  *
  * @author liuzh
  * @since 3.4.5
@@ -53,7 +53,7 @@ public class FreemarkerTemplateFormatter implements TemplateFormatter, ListTempl
     }
 
     /**
-     * 根据模板处理
+     * 템플릿 처리에 따라
      *
      * @param templateName
      * @param templateSource

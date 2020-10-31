@@ -30,9 +30,9 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import java.util.List;
 
 /**
- * 通用Mapper接口,特殊方法，批量插入，支持批量插入的数据库都可以使用，例如mysql,h2等
+ * 일반 Mapper 인터페이스, 특수 메소드, 배치 Insert, 배치 Insert을 지원하는 데이터베이스 (예 : mysql, h2 등)를 사용할 수 있습니다.
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  * @since 3.5.0
  */
@@ -40,11 +40,11 @@ import java.util.List;
 public interface InsertListMapper<T> {
 
     /**
-     * 批量插入，支持批量插入的数据库可以使用，例如MySQL,H2等
+     * 대량 Insert, MySQL, H2 등과 같이 대량 Insert을 지원하는 데이터베이스를 사용할 수 있습니다.
      * <p>
-     * 不支持主键策略，插入前需要设置好主键的值
+     * 기본 키 전략을 지원하지 않습니다. Insert하기 전에 기본 키의 값을 설정해야합니다.
      * <p>
-     * 特别注意：2018-04-22 后，该方法支持 @KeySql 注解的 genId 方式
+     * 주의：2018-04-22 나중에이 메서드는 @KeySql 주석이 달린 genId 메서드를 지원합니다.
      *
      * @param recordList
      * @return

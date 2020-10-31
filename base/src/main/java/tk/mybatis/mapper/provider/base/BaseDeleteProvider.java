@@ -33,7 +33,7 @@ import tk.mybatis.mapper.mapperhelper.SqlHelper;
 import tk.mybatis.mapper.util.MetaObjectUtil;
 
 /**
- * BaseDeleteMapper实现类，基础方法实现类
+ * BaseDeleteMapper 구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -44,7 +44,7 @@ public class BaseDeleteProvider extends MapperTemplate {
     }
 
     /**
-     * 通过条件删除
+     * 조건으로 삭제
      *
      * @param ms
      * @return
@@ -52,11 +52,11 @@ public class BaseDeleteProvider extends MapperTemplate {
     public String delete(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        //如果设置了安全删除，就不允许执行不带查询条件的 delete 方法
+        //안전한 삭제가 설정된 경우 조회 조건이없는 삭제 방법은 허용되지 않습니다.
         if (getConfig().isSafeDelete()) {
             sql.append(SqlHelper.notAllNullParameterCheck("_parameter", EntityHelper.getColumns(entityClass)));
         }
-        // 如果是逻辑删除，则修改为更新表，修改逻辑删除字段的值
+        // 삭제 표시 인 경우 수정하여 테이블을 업데이트하고 삭제 표시 필드의 값을 수정합니다.
         if (SqlHelper.hasLogicDeleteColumn(entityClass)) {
             sql.append(SqlHelper.updateTable(entityClass, tableName(entityClass)));
             sql.append("<set>");
@@ -71,7 +71,7 @@ public class BaseDeleteProvider extends MapperTemplate {
     }
 
     /**
-     * 通过主键删除
+     * 기본 키로 삭제
      *
      * @param ms
      */

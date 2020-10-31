@@ -29,20 +29,20 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseSelectProvider;
 
 /**
- * 通用Mapper接口,其他接口继承该接口即可
+ * 일반 매퍼 인터페이스, 다른 인터페이스는이 인터페이스를 상속 할 수 있습니다.
  * <p/>
- * <p>这是一个例子，自己扩展时可以参考</p>
+ * <p>이것은 예입니다. 자신을 확장 할 때 참조 할 수 있습니다.</p>
  * <p/>
- * <p>项目地址 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
+ * <p> 프로젝트 주소 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface SelectByPrimaryKeyMapper<T> {
 
     /**
-     * 根据主键字段进行查询，方法参数必须包含完整的主键属性，查询条件使用等号
+     * 기본 키 필드를 기반으로하는 조회, 메소드 매개 변수는 완전한 기본 키 속성을 포함해야하며 조회 조건은 등호를 사용합니다.
      *
      * @param key
      * @return

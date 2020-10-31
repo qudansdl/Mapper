@@ -63,13 +63,13 @@ public abstract class SpringBootBindUtil {
     }
 
     /**
-     * 使用 Spring Boot 1.x 方式绑定
+     * Spring Boot 1.x를 사용하여 바인딩
      */
     public static class SpringBoot1Bind implements IBind {
         @Override
         public <T> T bind(Environment environment, Class<T> targetClass, String prefix) {
             /**
-             为了方便以后直接依赖 Spring Boot 2.x 时不需要改动代码，这里也使用反射
+             코드를 변경하지 않고 Spring Boot 2.x에 대한 향후 직접적인 의존성을 용이하게하기 위해 여기서 리플렉션도 사용됩니다.
              try {
              RelaxedPropertyResolver resolver = new RelaxedPropertyResolver(environment);
              Map<String, Object> properties = resolver.getSubProperties("");
@@ -80,22 +80,22 @@ public abstract class SpringBootBindUtil {
              } catch (Exception e) {
              throw new RuntimeException(e);
              }
-             下面是这段代码的反射实现
+             다음은이 코드의 반영 구현입니다.
              */
             try {
-                //反射提取配置信息
+                //구성 정보 추출 반영
                 Class<?> resolverClass = Class.forName("org.springframework.boot.bind.RelaxedPropertyResolver");
                 Constructor<?> resolverConstructor = resolverClass.getDeclaredConstructor(PropertyResolver.class);
                 Method getSubPropertiesMethod = resolverClass.getDeclaredMethod("getSubProperties", String.class);
                 Object resolver = resolverConstructor.newInstance(environment);
                 Map<String, Object> properties = (Map<String, Object>) getSubPropertiesMethod.invoke(resolver, "");
-                //创建结果类
+                //결과 클래스 만들기
                 T target = targetClass.newInstance();
-                //反射使用 org.springframework.boot.bind.RelaxedDataBinder
+                //반사 사용 org.springframework.boot.bind.RelaxedDataBinder
                 Class<?> binderClass = Class.forName("org.springframework.boot.bind.RelaxedDataBinder");
                 Constructor<?> binderConstructor = binderClass.getDeclaredConstructor(Object.class, String.class);
                 Method bindMethod = binderClass.getMethod("bind", PropertyValues.class);
-                //创建 binder 并绑定数据
+                //바인더 생성 및 데이터 바인딩
                 Object binder = binderConstructor.newInstance(target, prefix);
                 bindMethod.invoke(binder, new MutablePropertyValues(properties));
                 return target;
@@ -106,16 +106,16 @@ public abstract class SpringBootBindUtil {
     }
 
     /**
-     * 使用 Spring Boot 2.x 方式绑定
+     * Spring Boot 2.x를 사용하여 바인딩
      */
     public static class SpringBoot2Bind implements IBind {
         @Override
         public <T> T bind(Environment environment, Class<T> targetClass, String prefix) {
             /**
-             由于不能同时依赖不同的两个版本，所以使用反射实现下面的代码
+             동시에 두 개의 다른 버전에 의존 할 수 없으므로 리플렉션을 사용하여 다음 코드를 구현하십시오.
              Binder binder = Binder.get(environment);
              return binder.bind(prefix, targetClass).get();
-             下面是这两行代码的完全反射版本
+             아래는이 두 줄의 코드를 완전히 반영한 버전입니다.
              */
             try {
                 Class<?> bindClass = Class.forName("org.springframework.boot.context.properties.bind.Binder");

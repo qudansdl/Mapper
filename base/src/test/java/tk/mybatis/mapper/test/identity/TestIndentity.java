@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class TestIndentity {
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testINDENTITYInsert() {
@@ -48,9 +48,9 @@ public class TestIndentity {
             CountryI country = new CountryI();
             country.setCountrycode("CN");
             Assert.assertEquals(1, mapper.insert(country));
-            //ID会回写
+            //ID가 다시 작성됩니다
             Assert.assertNotNull(country.getId());
-            //删除插入的数据,以免对其他测试产生影响
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(country.getId()));
         } finally {
             sqlSession.close();
@@ -58,7 +58,7 @@ public class TestIndentity {
     }
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testINDENTITYInsert2() {
@@ -68,18 +68,18 @@ public class TestIndentity {
             CountryI country = new CountryI();
             country.setId(10086);
             country.setCountrycode("CN");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             Assert.assertEquals(1, mapper.insert(country));
 
-            //查询CN结果
+            //CN 결과 조회
             country = new CountryI();
             country.setCountrycode("CN");
             List<CountryI> list = mapper.select(country);
 
             Assert.assertEquals(1, list.size());
             Assert.assertNotNull(list.get(0).getCountryname());
-            Assert.assertEquals("天朝", list.get(0).getCountryname());
-            //删除插入的数据,以免对其他测试产生影响
+            Assert.assertEquals("천상의 왕조", list.get(0).getCountryname());
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(10086));
         } finally {
             sqlSession.close();
@@ -87,7 +87,7 @@ public class TestIndentity {
     }
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testINDENTITYInsertSelective() {
@@ -96,14 +96,14 @@ public class TestIndentity {
             CountryIMapper mapper = sqlSession.getMapper(CountryIMapper.class);
             CountryI country = new CountryI();
             Assert.assertEquals(1, mapper.insertSelective(country));
-            //ID会回写
+            //ID가 다시 작성됩니다
             Assert.assertNotNull(country.getId());
-            //带有默认值的其他的属性不会自动回写,需要手动查询
+            //기본값이있는 기타 속성은 자동으로 다시 기록되지 않으며 수동으로 조회해야합니다.
             country = mapper.selectByPrimaryKey(country);
-            //查询后,默认值不为null
+            //조회 후 기본값은null
             Assert.assertNotNull(country.getCountrycode());
             Assert.assertEquals("HH", country.getCountrycode());
-            //删除插入的数据,以免对其他测试产生影响
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(country.getId()));
         } finally {
             sqlSession.close();
@@ -111,7 +111,7 @@ public class TestIndentity {
     }
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testINDENTITYInsertSelective2() {
@@ -121,18 +121,18 @@ public class TestIndentity {
             CountryI country = new CountryI();
             country.setId(10086);
             country.setCountrycode("CN");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             Assert.assertEquals(1, mapper.insertSelective(country));
 
-            //查询CN结果
+            //CN 결과 조회
             country = new CountryI();
             country.setCountrycode("CN");
             List<CountryI> list = mapper.select(country);
 
             Assert.assertEquals(1, list.size());
             Assert.assertNotNull(list.get(0).getCountryname());
-            Assert.assertEquals("天朝", list.get(0).getCountryname());
-            //删除插入的数据,以免对其他测试产生影响
+            Assert.assertEquals("천상의 왕조", list.get(0).getCountryname());
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(10086));
         } finally {
             sqlSession.close();

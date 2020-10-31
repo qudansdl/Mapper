@@ -10,7 +10,7 @@ import tk.mybatis.mapper.mapperhelper.SqlHelper;
 import java.util.Set;
 
 /**
- * @description: Oracle实现类
+ * @description: Oracle구현 클래스
  * @author: qrqhuangcy
  * @date: 2018-11-15
  **/
@@ -21,7 +21,7 @@ public class OracleProvider extends MapperTemplate {
     }
 
     /**
-     * <bind name="listNotEmptyCheck" value="@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, 'tk.mybatis.mapper.additional.dialect.oracle.DemoCountryMapper.insertList 方法参数为空')"/>
+     * <bind name="listNotEmptyCheck" value="@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, 'tk.mybatis.mapper.additional.dialect.oracle.DemoCountryMapper.insertList 메소드 매개 변수가 비어 있습니다.')"/>
      * INSERT ALL
      * <foreach collection="list" item="record">
      *     INTO demo_country
@@ -39,9 +39,9 @@ public class OracleProvider extends MapperTemplate {
      */
     public String insertList(MappedStatement ms){
         final Class<?> entityClass = getEntityClass(ms);
-        //开始拼sql
+        //맞춤법 SQL 시작
         StringBuilder sql = new StringBuilder();
-        sql.append("<bind name=\"listNotEmptyCheck\" value=\"@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, '" + ms.getId() + " 方法参数为空')\"/>\n");
+        sql.append("<bind name=\"listNotEmptyCheck\" value=\"@tk.mybatis.mapper.util.OGNL@notEmptyCollectionCheck(list, '" + ms.getId() + " 메소드 매개 변수가 비어 있습니다.')\"/>\n");
 
         sql.append("INSERT ALL\n");
         sql.append("<foreach collection=\"list\" item=\"record\">\n");
@@ -54,7 +54,7 @@ public class OracleProvider extends MapperTemplate {
         sql.append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
 
         Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
-        //单独增加对 genId 方式的支持
+        //genId 메서드에 대한 지원을 별도로 추가
         for (EntityColumn column : columnList) {
             if(column.getGenIdClass() != null){
                 sql.append("<bind name=\"").append(column.getColumn()).append("GenIdBind\" value=\"@tk.mybatis.mapper.genid.GenIdUtil@genId(");
@@ -65,7 +65,7 @@ public class OracleProvider extends MapperTemplate {
                 sql.append("\"/>");
             }
         }
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnList) {
             if (column.isInsertable()) {
                 sql.append(column.getColumnHolder("record") + ",");

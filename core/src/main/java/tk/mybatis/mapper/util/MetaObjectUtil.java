@@ -30,7 +30,7 @@ import tk.mybatis.mapper.MapperException;
 import java.lang.reflect.Method;
 
 /**
- * 来自 分页插件 PageHelper
+ * 페이징 플러그인 PageHelper에서
  *
  * @author liuzh
  */

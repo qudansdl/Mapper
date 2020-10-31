@@ -43,7 +43,7 @@ public class GenIdUtil {
     public static final ReentrantLock LOCK = new ReentrantLock();
 
     /**
-     * 生成 Id
+     * 일으키다 Id
      *
      * @param target
      * @param property
@@ -74,7 +74,7 @@ public class GenIdUtil {
                 metaObject.setValue(property, id);
             }
         } catch (Exception e) {
-            throw new MapperException("生成 ID 失败!", e);
+            throw new MapperException("ID를 생성하지 못했습니다!", e);
         }
     }
 

@@ -39,7 +39,7 @@ import java.net.URL;
 import java.sql.Connection;
 
 /**
- * 测试基类
+ * 테스트 기본 클래스
  *
  * @author liuzh
  */
@@ -52,9 +52,9 @@ public abstract class BaseTest {
             Reader reader = getConfigFileAsReader();
             sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
             reader.close();
-            //配置通用 Mapper
+            //일반 구성 Mapper
             configMapperHelper();
-            //执行初始化 SQL
+            //초기화 수행 SQL
             runSql(getSqlFileAsReader());
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -62,16 +62,16 @@ public abstract class BaseTest {
     }
 
     /**
-     * 配置通用 Mapper
+     * 일반 구성 Mapper
      */
     protected void configMapperHelper(){
         SqlSession session = getSqlSession();
         try {
-            //创建一个MapperHelper
+            //MapperHelper 만들기
             MapperHelper mapperHelper = new MapperHelper();
-            //设置配置
+            //구성 설정
             mapperHelper.setConfig(getConfig());
-            //配置完成后，执行下面的操作
+            //구성이 완료된 후 다음 작업을 수행하십시오.
             mapperHelper.processConfiguration(session.getConfiguration());
         } finally {
             session.close();
@@ -79,7 +79,7 @@ public abstract class BaseTest {
     }
 
     /**
-     * 执行 Sql
+     * 수행 Sql
      *
      * @param reader
      */
@@ -102,7 +102,7 @@ public abstract class BaseTest {
     }
 
     /**
-     * 获取 Mapper 配置
+     * 매퍼 구성 가져 오기
      *
      * @return
      */
@@ -111,7 +111,7 @@ public abstract class BaseTest {
     }
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */
@@ -121,7 +121,7 @@ public abstract class BaseTest {
     };
 
     /**
-     * 获取初始化 sql
+     * 초기화 가져 오기 sql
      *
      * @return
      */
@@ -131,7 +131,7 @@ public abstract class BaseTest {
     };
 
     /**
-     * 转为 Reader
+     * 로 변하다 Reader
      *
      * @param url
      * @return
@@ -142,7 +142,7 @@ public abstract class BaseTest {
     }
 
     /**
-     * 获取Session
+     * 세션 받기
      *
      * @return
      */

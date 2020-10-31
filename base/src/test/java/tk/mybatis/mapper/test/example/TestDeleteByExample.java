@@ -46,7 +46,7 @@ public class TestDeleteByExample {
             Example example = new Example(Country.class);
             example.createCriteria().andGreaterThan("id", 100);
             int count = mapper.deleteByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(83, count);
         } finally {
             sqlSession.rollback();
@@ -64,7 +64,7 @@ public class TestDeleteByExample {
             example.or().andGreaterThan("id", 100);
             example.setDistinct(true);
             int count = mapper.deleteByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(true, count > 83);
         } finally {
             sqlSession.rollback();
@@ -82,7 +82,7 @@ public class TestDeleteByExample {
             example.or().andIdGreaterThan(100);
             example.setDistinct(true);
             int count = mapper.deleteByExample(example);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(true, count > 83);
         } finally {
             sqlSession.rollback();

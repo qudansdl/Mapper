@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.ConditionProvider;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface DeleteByConditionMapper<T> {
 
     /**
-     * 根据Condition条件删除数据
+     * 조건에 따라 데이터 삭제
      *
      * @param condition
      * @return

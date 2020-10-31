@@ -34,16 +34,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 通过实体类属性进行插入
+ * 엔티티 클래스 속성을 통해 Insert
  *
  * @author liuzh
  */
 public class TestMysql {
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
-    //该方法测试需要mysql或者h2数据库，所以这里注释掉
+    //이 메서드 테스트에는 mysql 또는 h2 데이터베이스가 필요하므로 여기에 주석을 추가하십시오.
     //@Test
     public void testInsertList() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
@@ -53,7 +53,7 @@ public class TestMysql {
             for (int i = 0; i < 10; i++) {
                 Country country = new Country();
                 country.setCountrycode("CN" + i);
-                country.setCountryname("天朝" + i);
+                country.setCountryname("천상의 왕조" + i);
                 countryList.add(country);
             }
             int count = mapper.insertList(countryList);
@@ -68,9 +68,9 @@ public class TestMysql {
     }
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
-    //该方法测试需要mysql或者h2数据库，所以这里注释掉
+    //이 메서드 테스트에는 mysql 또는 h2 데이터베이스가 필요하므로 여기에 주석을 추가하십시오.
     //@Test
     public void testInsert() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
@@ -78,7 +78,7 @@ public class TestMysql {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             Country country = new Country();
             country.setCountrycode("CN");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             int count = mapper.insertUseGeneratedKeys(country);
             Assert.assertEquals(1, count);
             Assert.assertNotNull(country.getId());

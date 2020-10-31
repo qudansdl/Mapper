@@ -37,7 +37,7 @@ public class User implements Serializable {
     private Long              id;
     private String            name;
     private String            role;
-    //存储聚合函数值
+    //집계 함수 값 저장
     @Transient
     private Long aggregation;
 

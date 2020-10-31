@@ -32,14 +32,14 @@ import tk.mybatis.mapper.mapper.UserInfoAbleMapper;
 import tk.mybatis.mapper.model.UserInfoAble;
 
 /**
- * 测试增删改查
+ * 추가, 삭제, 수정 및 확인 테스트
  *
  * @author liuzh
  */
 public class TestBasicAble {
 
     /**
-     * 新增
+     * 더하다
      */
     @Test
     public void testInsert() {
@@ -58,7 +58,7 @@ public class TestBasicAble {
             Assert.assertEquals(6, (int) userInfo.getId());
 
             userInfo = mapper.selectByPrimaryKey(userInfo.getId());
-            //email没有插入
+            //이메일이 Insert되지 않았습니다
             Assert.assertNull(userInfo.getEmail());
         } finally {
             sqlSession.rollback();
@@ -67,7 +67,7 @@ public class TestBasicAble {
     }
 
     /**
-     * 根据主键全更新
+     * 기본 키를 기반으로 전체 업데이트
      */
     @Test
     public void testUpdateByPrimaryKey() {
@@ -78,13 +78,13 @@ public class TestBasicAble {
             Assert.assertNotNull(userInfo);
             userInfo.setUsertype(null);
             userInfo.setEmail("abel533@gmail.com");
-            userInfo.setAddress("这个地址不会更新进去");//update=false
-            //不会更新username
+            userInfo.setAddress("이 주소는 업데이트되지 않습니다.");//update=false
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKey(userInfo));
 
             userInfo = mapper.selectByPrimaryKey(userInfo);
             Assert.assertNull(userInfo.getUsertype());
-            Assert.assertNotEquals("这个地址不会更新进去", userInfo.getAddress());
+            Assert.assertNotEquals("이 주소는 업데이트되지 않습니다.", userInfo.getAddress());
             Assert.assertEquals("abel533@gmail.com", userInfo.getEmail());
         } finally {
             sqlSession.rollback();
@@ -93,7 +93,7 @@ public class TestBasicAble {
     }
 
     /**
-     * 根据主键更新非null
+     * 비 업데이트null
      */
     @Test
     public void testUpdateByPrimaryKeySelective() {
@@ -104,14 +104,14 @@ public class TestBasicAble {
             Assert.assertNotNull(userInfo);
             userInfo.setUsertype(null);
             userInfo.setPassword(null);
-            userInfo.setAddress("这个地址不会更新进去");
-            //不会更新username
+            userInfo.setAddress("이 주소는 업데이트되지 않습니다.");
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKeySelective(userInfo));
 
             userInfo = mapper.selectByPrimaryKey(1);
             Assert.assertEquals("1", userInfo.getUsertype());
             Assert.assertEquals("12345678", userInfo.getPassword());
-            Assert.assertNotEquals("这个地址不会更新进去", userInfo.getAddress());
+            Assert.assertNotEquals("이 주소는 업데이트되지 않습니다.", userInfo.getAddress());
         } finally {
             sqlSession.rollback();
             sqlSession.close();

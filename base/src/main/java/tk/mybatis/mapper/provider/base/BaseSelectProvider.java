@@ -30,7 +30,7 @@ import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
 /**
- * BaseSelectProvider实现类，基础方法实现类
+ * BaseSelectProvider 구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -41,14 +41,14 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 查询
+     * 조회
      *
      * @param ms
      * @return
      */
     public String selectOne(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
-        //修改返回值类型为实体类型
+        //반환 값 유형을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.selectAllColumns(entityClass));
@@ -58,14 +58,14 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 查询
+     * 조회
      *
      * @param ms
      * @return
      */
     public String select(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
-        //修改返回值类型为实体类型
+        //반환 값 유형을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.selectAllColumns(entityClass));
@@ -76,7 +76,7 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 查询
+     * 조회
      *
      * @param ms
      * @return
@@ -86,13 +86,13 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 根据主键进行查询
+     * 기본 키를 기반으로하는 조회
      *
      * @param ms
      */
     public String selectByPrimaryKey(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //将返回值修改为实体类型
+        //반환 값을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.selectAllColumns(entityClass));
@@ -102,7 +102,7 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 查询总数
+     * 총 조회 수
      *
      * @param ms
      * @return
@@ -117,7 +117,7 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 根据主键查询总数
+     * 기본 키를 기반으로 총 수 조회
      *
      * @param ms
      * @return
@@ -132,20 +132,20 @@ public class BaseSelectProvider extends MapperTemplate {
     }
 
     /**
-     * 查询全部结果
+     * 모든 결과 조회
      *
      * @param ms
      * @return
      */
     public String selectAll(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //修改返回值类型为实体类型
+        //반환 값 유형을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.selectAllColumns(entityClass));
         sql.append(SqlHelper.fromTable(entityClass, tableName(entityClass)));
 
-        // 逻辑删除的未删除查询条件
+        // 삭제 표시되지 않은 조회 조건
         sql.append("<where>");
         sql.append(SqlHelper.whereLogicDelete(entityClass, false));
         sql.append("</where>");

@@ -19,13 +19,13 @@ public class IdListMapperTest extends BaseTest {
     @Override
     protected Config getConfig() {
         Config config = super.getConfig();
-        //安全删除
+        //안전하게 삭제
         config.setSafeDelete(true);
         return config;
     }
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */
@@ -45,9 +45,9 @@ public class IdListMapperTest extends BaseTest {
             Assert.assertEquals(1L, (long) countryList.get(0).getId());
             Assert.assertEquals(2L, (long) countryList.get(1).getId());
             Assert.assertEquals(3L, (long) countryList.get(2).getId());
-            //删除
+            //지우다
             Assert.assertEquals(3, mapper.deleteByIdList(idList));
-            //查询结果0
+            //검색 결과 0
             Assert.assertEquals(0, mapper.selectByIdList(idList).size());
         } finally {
             sqlSession.close();

@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseSelectProvider;
 
 /**
- * 通用Mapper接口,查询
+ * 일반 매퍼 인터페이스, 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface SelectOneMapper<T> {
 
     /**
-     * 根据实体中的属性进行查询，只能有一个返回值，有多个结果是抛出异常，查询条件使用等号
+     * 엔터티의 속성을 기반으로하는 조회, 하나의 반환 값만있을 수 있으며 예외를 발생시키는 여러 결과가 있으며 조회 조건은 등호를 사용합니다.
      *
      * @param record
      * @return

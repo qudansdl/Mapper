@@ -28,13 +28,13 @@ import tk.mybatis.mapper.common.rowbounds.SelectByExampleRowBoundsMapper;
 import tk.mybatis.mapper.common.rowbounds.SelectRowBoundsMapper;
 
 /**
- * 通用Mapper接口,带RowBounds参数的查询
+ * 일반 매퍼 인터페이스, RowBounds 매개 변수를 사용한 조회
  * <p/>
- * 配合分页插件PageHelper可以实现物理分页
+ * 페이징 플러그인 PageHelper를 사용하여 물리적 페이징을 실현할 수 있습니다.
  * <p/>
  * PageHelper - http://git.oschina.net/free/Mybatis_PageHelper
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

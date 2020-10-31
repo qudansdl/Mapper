@@ -34,14 +34,14 @@ import tk.mybatis.mapper.model.Country2;
 import java.util.List;
 
 /**
- * 通过实体类属性进行插入不为null的数据
+ * 엔티티 클래스 속성을 통해 널이 아닌 데이터 Insert
  *
  * @author liuzh
  */
 public class TestInsertSelective {
 
     /**
-     * 插入空数据,id不能为null,会报错
+     * 빈 데이터를 Insert하세요. ID는 null 일 수 없습니다. 오류가보고됩니다.
      */
     @Test
     public void testDynamicInsertAll() {
@@ -62,7 +62,7 @@ public class TestInsertSelective {
     }
 
     /**
-     * 不能插入null
+     * Insert 할 수 없습니다.null
      */
     @Test//(expected = PersistenceException.class)
     public void testDynamicInsertSelectiveAllByNull() {
@@ -76,7 +76,7 @@ public class TestInsertSelective {
     }
 
     /**
-     * 插入完整数据
+     * 완전한 데이터 Insert
      */
     @Test
     public void testDynamicInsertSelective() {
@@ -86,16 +86,16 @@ public class TestInsertSelective {
             Country2 country = new Country2();
             country.setId(10086);
             country.setCountrycode("CN");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             Assert.assertEquals(1, mapper.insertSelective(country));
 
-            //查询CN结果2个
+            //2 CN 결과
             country = new Country2();
             country.setCountrycode("CN");
             List<Country2> list = mapper.select(country);
 
             Assert.assertEquals(1, list.size());
-            //删除插入的数据,以免对其他测试产生影响
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(10086));
         } finally {
             sqlSession.close();
@@ -103,7 +103,7 @@ public class TestInsertSelective {
     }
 
     /**
-     * Country2code默认值HH
+     * Country2code 기본값 HH
      */
     @Test
     public void testDynamicInsertSelectiveNull() {
@@ -112,19 +112,19 @@ public class TestInsertSelective {
             Country2Mapper mapper = sqlSession.getMapper(Country2Mapper.class);
             Country2 country = new Country2();
             country.setId(10086);
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             Assert.assertEquals(1, mapper.insertSelective(country));
 
-            //查询CN结果2个
+            //2 CN 결과
             country = new Country2();
             country.setId(10086);
             List<Country2> list = mapper.select(country);
 
             Assert.assertEquals(1, list.size());
-            //默认值
+            //기본값
             Assert.assertNotNull(list.get(0).getCountrycode());
             Assert.assertEquals("HH",list.get(0).getCountrycode());
-            //删除插入的数据,以免对其他测试产生影响
+            //다른 테스트에 영향을주지 않도록 Insert 된 데이터 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(10086));
         } finally {
             sqlSession.close();

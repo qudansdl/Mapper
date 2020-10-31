@@ -3,7 +3,7 @@ package tk.mybatis.mapper.base.genid;
 import tk.mybatis.mapper.genid.GenId;
 
 /**
- * 一个简单的实现，不考虑任何特殊情况，不要用于生产环境
+ * 특별한 상황에 관계없이 간단한 구현은 프로덕션 환경에서 사용해서는 안됩니다.
  *
  * @author liuzh
  */

@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @description: 字段排序
+ * @description: 필드 정렬
  * @author: qrqhuangcy
  * @date: 2018-11-11
  **/
@@ -14,13 +14,13 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Order {
     /**
-     * 升降序
+     * 오름차순
      * @return
      */
     String value() default "ASC";
 
     /**
-     * 优先级, 值小的优先
+     * 우선 순위, 낮은 값 우선
      * @return
      */
     int priority() default 1;

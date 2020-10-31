@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
 
     <name>mapper-parent</name>
-    <description>Mybatis 通用 Mapper 聚合模块</description>
+    <description>Mybatis 일반 매퍼 집계 모듈</description>
     <url>https://mybatis.io</url>
 
     <licenses>

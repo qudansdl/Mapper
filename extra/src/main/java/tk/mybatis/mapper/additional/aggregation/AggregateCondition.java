@@ -9,19 +9,19 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 聚合查询条件
+ * 집계 조회 조건
  *
  * @author liuchan
  * @author liuzh
  */
 public class AggregateCondition implements Serializable {
     private static final long          serialVersionUID = 1L;
-    // 聚合属性
+    // 집계 속성
     private              String        aggregateProperty;
     private              String        aggregateAliasName;
-    // groupBy 查询列
+    // groupBy 조회 열
     private              List<String>  groupByProperties;
-    // 聚合函数
+    // 집계 함수
     private              AggregateType aggregateType;
 
     public AggregateCondition() {
@@ -29,26 +29,26 @@ public class AggregateCondition implements Serializable {
     }
 
     /**
-     * 默认查询count计数，不分组
+     * 기본 조회 수, 그룹화 없음
      *
-     * @param aggregateProperty 聚合查询属性，不能为空；为保证返回结果key与传入值相同 方法不会去除前后空格
+     * @param aggregateProperty 집계 조회 속성은 필수.반환 된 결과 키가 전달 된 값과 동일한 지 확인하기 위해 메서드는 선행 및 후행 공백을 제거하지 않습니다.
      */
     public AggregateCondition(String aggregateProperty) {
         this(aggregateProperty, AggregateType.COUNT, null);
     }
 
     /**
-     * 默认查询count计数
+     * 기본 조회 수
      *
-     * @param aggregateProperty 聚合查询属性，不能为空；为保证返回结果key与传入值相同 方法不会去除前后空格
-     * @param groupByProperties 为保证返回结果key与传入值相同 方法不会去除每一项前后空格
+     * @param aggregateProperty 집계 조회 속성은 필수.반환 된 결과 키가 전달 된 값과 동일한 지 확인하기 위해 메서드는 선행 및 후행 공백을 제거하지 않습니다.
+     * @param groupByProperties 반환 된 결과 키가 전달 된 값과 동일한 지 확인하기 위해 메서드는 각 항목 앞뒤의 공백을 제거하지 않습니다.
      */
     public AggregateCondition(String aggregateProperty, String[] groupByProperties) {
         this(aggregateProperty, AggregateType.COUNT, groupByProperties);
     }
 
     /**
-     * 按指定聚合方法查询，不分组
+     * 그룹화없이 지정된 집계 방법으로 조회
      *
      * @param aggregateProperty
      * @param aggregateType
@@ -58,14 +58,14 @@ public class AggregateCondition implements Serializable {
     }
 
     /**
-     * @param aggregateProperty 不能为空，为保证返回结果key与传入值相同 方法不会去除前后空格
+     * @param aggregateProperty는 필수. 반환 된 결과 키가 전달 된 값과 동일한 지 확인하기 위해 메서드는 선행 및 후행 공백을 제거하지 않습니다.
      * @param aggregateType
-     * @param groupByProperties 为保证返回结果key与传入值相同 方法不会去除每一项前后空格
+     * @param groupByProperties 반환 된 결과 키가 전달 된 값과 동일한 지 확인하기 위해 메서드는 각 항목 앞뒤의 공백을 제거하지 않습니다.
      */
     public AggregateCondition(String aggregateProperty, AggregateType aggregateType,
                               String[] groupByProperties) {
         this.groupByProperties = new ArrayList<String>();
-        // 需要放在propertyMap初始化完成后执行
+        // propertyMap 초기화가 완료된 후 실행해야합니다.
         aggregateType(aggregateType);
         if (StringUtil.isNotEmpty(aggregateProperty)) {
             aggregateBy(aggregateProperty);

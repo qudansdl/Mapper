@@ -25,7 +25,7 @@
 package tk.mybatis.mapper.entity;
 
 /**
- * 实现动态表名时，实体类需要实现该接口
+ * 동적 테이블 이름을 구현할 때 엔티티 클래스는이 인터페이스를 구현해야합니다.
  *
  * @author liuzh
  * @since 2015-10-28 22:20
@@ -33,7 +33,7 @@ package tk.mybatis.mapper.entity;
 public interface IDynamicTableName {
 
     /**
-     * 获取动态表名 - 只要有返回值，不是null和''，就会用返回值作为表名
+     * null이 아닌 반환 값이있는 한 동적 테이블 이름을 가져옵니다.''，반환 값을 테이블 이름으로 사용합니다.
      *
      * @return
      */

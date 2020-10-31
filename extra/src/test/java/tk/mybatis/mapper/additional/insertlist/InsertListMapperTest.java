@@ -52,7 +52,7 @@ public class InsertListMapperTest extends BaseTest {
     };
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */
@@ -64,7 +64,7 @@ public class InsertListMapperTest extends BaseTest {
     ;
 
     /**
-     * 获取初始化 sql
+     * 초기화 가져 오기 sql
      *
      * @return
      */

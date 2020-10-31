@@ -1,17 +1,16 @@
-# Mybatis 通用 Mapper Jar 集成
+# Mybatis Universal Mapper 통합 Jar 
 
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper)
 
-本项目默认集成了 mapper-core, mapper-extra, mapper-generator, mapper-spring, mapper-weekend 项目。
+mapper-core, mapper-extra, mapper-generator, mapper-spring, mapper-weekend 프로젝트 통합.
 
-使用时，只需要添加 mapper 的依赖即可。
+사용할 때 매퍼 종속성 만 추가하면됩니다。
 
 ```xml
 <dependency>
     <groupId>tk.mybatis</groupId>
     <artifactId>mapper</artifactId>
-    <version>版本号</version>
+    <version>버전</version>
 </dependency>
 ```
 
-引入该依赖时不会引入传递依赖。

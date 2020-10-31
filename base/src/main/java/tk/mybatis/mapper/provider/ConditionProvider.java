@@ -29,7 +29,7 @@ import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 
 /**
- * ConditionProvider实现类，基础方法实现类
+ * ConditionProvider구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -43,7 +43,7 @@ public class ConditionProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Condition查询总数
+     * 조건에 따라 총 수 조회
      *
      * @param ms
      * @return
@@ -53,7 +53,7 @@ public class ConditionProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Condition删除
+     * 조건에 따라 삭제
      *
      * @param ms
      * @return
@@ -64,7 +64,7 @@ public class ConditionProvider extends MapperTemplate {
 
 
     /**
-     * 根据Condition查询
+     * 조건에 따른 조회
      *
      * @param ms
      * @return
@@ -74,7 +74,7 @@ public class ConditionProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Condition查询
+     * 조건에 따른 조회
      *
      * @param ms
      * @return
@@ -84,7 +84,7 @@ public class ConditionProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example更新非null字段
+     * 예제에 따라 널이 아닌 필드 업데이트
      *
      * @param ms
      * @return
@@ -94,7 +94,7 @@ public class ConditionProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Condition更新
+     * 조건에 따라 업데이트
      *
      * @param ms
      * @return

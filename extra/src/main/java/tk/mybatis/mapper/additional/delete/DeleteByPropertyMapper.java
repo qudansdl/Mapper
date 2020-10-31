@@ -9,7 +9,7 @@ import tk.mybatis.mapper.weekend.Fn;
 import java.util.List;
 
 /**
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author jingkaihui
  * @date 2020/3/30
  */
@@ -17,31 +17,31 @@ import java.util.List;
 public interface DeleteByPropertyMapper<T> {
 
     /**
-     * 根据实体中的属性删除，条件使用等号
+     * 엔티티의 속성에 따라 삭제하고 조건에 등호를 사용하십시오.
      *
-     * @param fn 属性
-     * @param value    属性值
+     * @param fn 속성
+     * @param value    속성 값
      * @return
      */
     @DeleteProvider(type = DeletePropertyProvider.class, method = "dynamicSQL")
     int deleteByProperty(@Param("fn") Fn<T, ?> fn, @Param("value") Object value);
 
     /**
-     * 根据实体中的属性删除，条件使用 in
+     * 엔티티의 속성에 따라 삭제, 조건에서 사용
      *
-     * @param fn 属性
-     * @param value    属性值
+     * @param fn 속성
+     * @param value    속성 값
      * @return
      */
     @DeleteProvider(type = DeletePropertyProvider.class, method = "dynamicSQL")
     int deleteInByProperty(@Param("fn") Fn<T, ?> fn, @Param("values") Object value);
 
     /**
-     * 根据属性及对应值进行删除，删除条件使用 between
+     * 속성 및 해당 값에 따라 삭제, 삭제 조건 사용 between
      *
-     * @param fn 属性
-     * @param begin 开始值
-     * @param end 开始值
+     * @param fn 속성
+     * @param begin 시작 값
+     * @param end 시작 값
      * @return
      */
     @SelectProvider(type = DeletePropertyProvider.class, method = "dynamicSQL")

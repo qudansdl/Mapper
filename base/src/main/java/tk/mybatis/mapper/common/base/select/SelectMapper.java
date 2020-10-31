@@ -31,16 +31,16 @@ import tk.mybatis.mapper.provider.base.BaseSelectProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,查询
+ * 일반 매퍼 인터페이스, 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface SelectMapper<T> {
 
     /**
-     * 根据实体中的属性值进行查询，查询条件使用等号
+     * 엔터티의 속성 값을 기반으로 조회하고 조회 조건에 등호를 사용합니다.
      *
      * @param record
      * @return

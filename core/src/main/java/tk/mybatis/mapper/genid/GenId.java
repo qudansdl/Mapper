@@ -1,18 +1,18 @@
 package tk.mybatis.mapper.genid;
 
 /**
- * 不提供具体的实现，这里提供一个思路。<br/>
+ * 구체적인 구현은 제공되지 않으며 여기에 아이디어가 있습니다.<br/>
  *
- * 在 Spring 集成环境中，可以通过配置静态方式获取 Spring 的 context 对象。<br/>
+ * Spring 통합 환경에서는 정적으로 구성하여 Spring의 컨텍스트 객체를 얻을 수 있습니다.<br/>
  *
- * 如果使用 vesta(https://gitee.com/robertleepeak/vesta-id-generator) 来生成 ID，假设已经提供了 vesta 的 idService。<br/>
+ * 사용하는 경우 vesta(https://gitee.com/robertleepeak/vesta-id-generator) ID를 생성하려면 vesta의 idService가 제공되었다고 가정합니다.<br/>
  *
- * 那么可以在实现中获取该类，然后生成 Id 返回，示例代码如下：
+ * 그런 다음 구현에서 클래스를 가져온 다음 반환 할 Id를 생성 할 수 있습니다. 샘플 코드는 다음과 같습니다.：
  *
  * <pre>
  * public class VestaGenId implement GenId<Long> {
  *    public Long genId(String table, String column){
- *        //ApplicationUtil.getBean 需要自己实现
+ *        //ApplicationUtil.getBean 직접 구현해야합니다.
  *        IdService idService = ApplicationUtil.getBean(IdService.class);
  *        return idService.genId();
  *    }

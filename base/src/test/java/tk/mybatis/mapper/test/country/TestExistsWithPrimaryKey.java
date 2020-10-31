@@ -32,14 +32,14 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.Country;
 
 /**
- * 通过主键查询
+ * 기본 키로 조회
  *
  * @author liuzh
  */
 public class TestExistsWithPrimaryKey {
 
     /**
-     * 根据PK进行查询
+     * PK 기반 조회
      */
     @Test
     public void testDynamicExistsWithPrimaryKey() {

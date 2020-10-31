@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * 初始化完成后，清空类信息的缓存
+ * 초기화가 완료된 후 클래스 정보 캐시를 지 웁니다.
  *
  * @author liuzh
  */
@@ -27,7 +27,7 @@ public class MapperCacheDisabler implements InitializingBean {
 
     private void disableCaching() {
         try {
-            //因为jar包的类都是 AppClassLoader 加载的，所以此处获取的就是 AppClassLoader
+            //jar 패키지의 클래스는 모두 AppClassLoader에 의해로드되기 때문에 여기서 얻은 것은 다음과 같습니다. AppClassLoader
             ClassLoader appClassLoader = getClass().getClassLoader();
             removeStaticCache(ClassUtils.forName("tk.mybatis.mapper.util.MsUtil", appClassLoader), "CLASS_CACHE");
             removeStaticCache(ClassUtils.forName("tk.mybatis.mapper.genid.GenIdUtil", appClassLoader));
@@ -71,11 +71,11 @@ public class MapperCacheDisabler implements InitializingBean {
             if (cacheField != null) {
                 ReflectionUtils.makeAccessible(cacheField);
                 Map cache = (Map) ReflectionUtils.getField(cacheField, null);
-                //如果使用了 Devtools，这里获取的就是当前的 RestartClassLoader
+                //Devtools를 사용하는 경우 여기에서 얻는 것은 현재 RestartClassLoader
                 ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
                 for (Object key : new ArrayList(cache.keySet())) {
                     Class entityClass = (Class) key;
-                    //清理老的ClassLoader缓存的数据，避免测试环境溢出
+                    //테스트 환경의 오버플로를 방지하기 위해 이전 ClassLoader에 의해 캐시 된 데이터를 정리합니다.
                     if (!(entityClass.getClassLoader().equals(classLoader) || entityClass.getClassLoader().equals(classLoader.getParent()))) {
                         cache.remove(entityClass);
                     }

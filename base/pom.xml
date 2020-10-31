@@ -34,11 +34,11 @@
     <packaging>jar</packaging>
 
     <name>mapper-base</name>
-    <description>Mybatis 通用 Mapper 基础方法实现</description>
+    <description>Mybatis 일반 매퍼 기본 방법 구현</description>
     <url>https://mybatis.io</url>
 
     <dependencies>
-        <!--必须依赖-->
+        <!--의존해야 함-->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
@@ -51,7 +51,7 @@
             <optional>true</optional>
         </dependency>
 
-        <!--可选依赖-->
+        <!--선택적 종속성-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>

@@ -28,16 +28,16 @@ import org.apache.ibatis.annotations.SelectProvider;
 import tk.mybatis.mapper.provider.ConditionProvider;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectCountByConditionMapper<T> {
 
     /**
-     * 根据Condition条件进行查询总数
+     * 조건에 따른 총 조회 수
      *
      * @param condition
      * @return

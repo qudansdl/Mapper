@@ -53,7 +53,7 @@
         <mapper class="tk.mybatis.mapper.base.CountryMapper"/>
         <mapper class="tk.mybatis.mapper.cache.CountryCacheMapper"/>
         <mapper class="tk.mybatis.mapper.cache.CountryCacheRefMapper"/>
-        <!--TODO 下面这种配置用法有 BUG，已提交给 MyBatis-->
+        <!--TODO 다음 구성 사용에 BUG가 있으며 MyBatis에 제출되었습니다->
         <!--<mapper class="tk.mybatis.mapper.cache.CountryCacheWithXmlMapper"/>-->
     </mappers>
 

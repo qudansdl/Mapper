@@ -29,9 +29,9 @@ import tk.mybatis.mapper.common.sqlserver.InsertMapper;
 import tk.mybatis.mapper.common.sqlserver.InsertSelectiveMapper;
 
 /**
- * 通用Mapper接口,SqlServerMapper独有的通用方法
+ * 일반 매퍼 인터페이스, SqlServerMapper 고유의 일반적인 방법
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

@@ -36,9 +36,9 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * 通过 ids 字符串的各种操作
+ * ID 문자열을 통한 다양한 작업
  * <p/>
- * ids 如 "1,2,3"
+ * ids 같은 "1,2,3"
  *
  * @author liuzh
  */
@@ -49,7 +49,7 @@ public class IdListProvider extends MapperTemplate {
     }
 
     /**
-     * 保证 idList 不能为空
+     * idList는 필수.
      *
      * @param list
      * @param errorMsg
@@ -61,7 +61,7 @@ public class IdListProvider extends MapperTemplate {
     }
 
     /**
-     * 根据主键字符串进行删除，类中只有存在一个带有@Id注解的字段
+     * 기본 키 문자열에 따라 삭제합니다. 클래스에는 @Id로 주석이 달린 필드가 하나만 있습니다.
      *
      * @param ms
      * @return
@@ -75,14 +75,14 @@ public class IdListProvider extends MapperTemplate {
     }
 
     /**
-     * 根据主键字符串进行查询，类中只有存在一个带有@Id注解的字段
+     * 기본 키 문자열을 기반으로하는 조회, 클래스에 @Id로 주석이 달린 필드가 하나만 있습니다.
      *
      * @param ms
      * @return
      */
     public String selectByIdList(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //将返回值修改为实体类型
+        //반환 값을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.selectAllColumns(entityClass));
@@ -92,7 +92,7 @@ public class IdListProvider extends MapperTemplate {
     }
 
     /**
-     * 拼接条件
+     * 접합 조건
      *
      * @param sql
      * @param entityClass
@@ -103,7 +103,7 @@ public class IdListProvider extends MapperTemplate {
             EntityColumn column = columnList.iterator().next();
             if(notEmpty){
                 sql.append("<bind name=\"notEmptyListCheck\" value=\"@tk.mybatis.mapper.additional.idlist.IdListProvider@notEmpty(");
-                sql.append("idList, 'idList 不能为空')\"/>");
+                sql.append("idList, 'idList 필수')\"/>");
             }
             sql.append("<where>");
             sql.append("<foreach collection=\"idList\" item=\"id\" separator=\",\" open=\"");
@@ -114,7 +114,7 @@ public class IdListProvider extends MapperTemplate {
             sql.append("</foreach>");
             sql.append("</where>");
         } else {
-            throw new MapperException("继承 ByIdList 方法的实体类[" + entityClass.getCanonicalName() + "]中必须只有一个带有 @Id 注解的字段");
+            throw new MapperException("继承 ByIdList 方法의엔티티 클래스[" + entityClass.getCanonicalName() + "]中必须只有一个带有 @Id 注解의들");
         }
     }
 }

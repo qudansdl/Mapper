@@ -37,7 +37,7 @@ import tk.mybatis.mapper.version.VersionException;
 import java.util.Set;
 
 /**
- * @Description:  通用Mapper接口,更新,强制，实现
+ * @Description:  일반 매퍼 인터페이스, 업데이트, 필수, 구현
  * @author qrqhuangcy
  * @date 2018-06-26
  */
@@ -61,26 +61,26 @@ public class UpdateByPrimaryKeySelectiveForceProvider extends MapperTemplate {
     }
 
     /**
-     * update set列
+     * update set기둥
      *
      * @param entityClass
-     * @param entityName  实体映射名
-     * @param notNull     是否判断!=null
-     * @param notEmpty    是否判断String类型!=''
+     * @param entityName  엔티티 매핑 이름
+     * @param notNull     판단할지 여부!=null
+     * @param notEmpty    String 타입 판단 여부!=''
      * @return
      */
     public String updateSetColumnsForce(Class<?> entityClass, String entityName, boolean notNull, boolean notEmpty) {
         StringBuilder sql = new StringBuilder();
         sql.append("<set>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        //对乐观锁的支持
+        //낙관적 잠금 지원
         EntityColumn versionColumn = null;
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(Version.class)) {
                 if (versionColumn != null) {
-                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解的字段，一个类中只能存在一个带有 @Version 注解的字段!");
+                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解의들，一个수업中只能存在一个带有 @Version 注解의들!");
                 }
                 versionColumn = column;
             }
@@ -105,7 +105,7 @@ public class UpdateByPrimaryKeySelectiveForceProvider extends MapperTemplate {
     }
 
     /**
-     * 判断自动!=null的条件结构
+     * 자동 판단!=널 조건부 구조
      *
      * @param entityName
      * @param column
@@ -132,7 +132,7 @@ public class UpdateByPrimaryKeySelectiveForceProvider extends MapperTemplate {
         sql.append(contents);
         sql.append("</when>");
 
-        //指定的字段会被强制更新
+        //지정된 필드가 강제로 업데이트됩니다.
         sql.append("<when test=\"");
         sql.append(FORCE_UPDATE_PROPERTIES).append(" != null and ").append(FORCE_UPDATE_PROPERTIES).append(".contains('");
         sql.append(column.getProperty());

@@ -46,12 +46,12 @@ public class TestUpdateByExampleSelective {
             Example example = new Example(Country.class);
             example.createCriteria().andGreaterThan("id", 100);
             Country country = new Country();
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             int count = mapper.updateByExampleSelective(country, example);
             Assert.assertEquals(83, count);
 
             example = new Example(Country.class);
-            example.createCriteria().andEqualTo("countryname","天朝");
+            example.createCriteria().andEqualTo("countryname","천상의 왕조");
             count = mapper.selectCountByExample(example);
             Assert.assertEquals(83, count);
         } finally {
@@ -70,12 +70,12 @@ public class TestUpdateByExampleSelective {
             example.or().andGreaterThan("id", 100);
             example.setDistinct(true);
             Country country = new Country();
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             int count = mapper.updateByExampleSelective(country, example);
             Assert.assertEquals(true, count > 83);
 
             example = new Example(Country.class);
-            example.createCriteria().andEqualTo("countryname","天朝");
+            example.createCriteria().andEqualTo("countryname","천상의 왕조");
             count = mapper.selectCountByExample(example);
             Assert.assertEquals(true, count > 83);
         } finally {
@@ -94,12 +94,12 @@ public class TestUpdateByExampleSelective {
             example.or().andIdGreaterThan(100);
             example.setDistinct(true);
             Country country = new Country();
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             int count = mapper.updateByExampleSelective(country, example);
             Assert.assertEquals(true, count > 83);
 
             example = new CountryExample();
-            example.createCriteria().andCountrynameEqualTo("天朝");
+            example.createCriteria().andCountrynameEqualTo("천상의 왕조");
             count = mapper.selectCountByExample(example);
             Assert.assertEquals(true, count > 83);
         } finally {

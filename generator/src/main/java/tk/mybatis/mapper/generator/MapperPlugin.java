@@ -34,7 +34,7 @@ import org.mybatis.generator.internal.util.StringUtility;
 import java.util.*;
 
 /**
- * 通用Mapper生成器插件
+ * 일반 매퍼 생성기 플러그인
  *
  * @author liuzh
  */
@@ -42,36 +42,36 @@ public class MapperPlugin extends FalseMethodPlugin {
     private Set<String> mappers = new HashSet<String>();
     private boolean caseSensitive = false;
     private boolean useMapperCommentGenerator = true;
-    //开始的分隔符，例如mysql为`，sqlserver为[
+    //예를 들어, mysql은`, sqlserver는[
     private String beginningDelimiter = "";
-    //结束的分隔符，例如mysql为`，sqlserver为]
+    //예를 들어, mysql은`, sqlserver는]
     private String endingDelimiter = "";
-    //数据库模式
+    //데이터베이스 스키마
     private String schema;
-    //注释生成器
+    //주석 생성기
     private CommentGeneratorConfiguration commentCfg;
-    //强制生成注解
+    //강제 주석
     private boolean forceAnnotation;
 
-    //是否需要生成Data注解
+    //데이터 주석을 생성해야합니까?
     private boolean needsData = false;
-    //是否需要生成Getter注解
+    //Getter 주석 생성 여부
     private boolean needsGetter = false;
-    //是否需要生成Setter注解
+    //Setter 주석을 생성해야합니까?
     private boolean needsSetter = false;
-    //是否需要生成ToString注解
+    //ToString 주석을 생성해야합니까?
     private boolean needsToString = false;
-    //是否需要生成Accessors(chain = true)注解
+    //접근 자 (chain = true) 주석을 생성해야합니까?
     private boolean needsAccessors = false;
-    //是否需要生成EqualsAndHashCode注解
+    //EqualsAndHashCode 주석 생성 여부
     private boolean needsEqualsAndHashCode = false;
-    //是否需要生成EqualsAndHashCode注解，并且“callSuper = true”
+    //EqualsAndHashCode 주석을 생성해야합니까?“callSuper = true”
     private boolean needsEqualsAndHashCodeAndCallSuper = false;
-    //是否生成字段名常量
+    //필드 이름 상수 생성 여부
     private boolean generateColumnConsts = false;
-    //是否生成默认的属性的静态方法
+    //기본 속성의 정적 메서드 생성 여부
     private boolean generateDefaultInstanceMethod = false;
-    //是否生成swagger注解,包括 @ApiModel和@ApiModelProperty
+    //@ApiModel 및@ApiModelProperty
     private boolean needsSwagger = false;
 
     public String getDelimiterName(String name) {
@@ -87,7 +87,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成的Mapper接口
+     * 생성 된 매퍼 인터페이스
      *
      * @param interfaze
      * @param topLevelClass
@@ -96,84 +96,84 @@ public class MapperPlugin extends FalseMethodPlugin {
      */
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //获取实体类
+        //엔티티 클래스 가져 오기
         FullyQualifiedJavaType entityType = new FullyQualifiedJavaType(introspectedTable.getBaseRecordType());
-        //import接口
+        //import상호 작용
         for (String mapper : mappers) {
             interfaze.addImportedType(new FullyQualifiedJavaType(mapper));
             interfaze.addSuperInterface(new FullyQualifiedJavaType(mapper + "<" + entityType.getShortName() + ">"));
         }
-        //import实体类
+        //import엔티티 클래스
         interfaze.addImportedType(entityType);
         return true;
     }
 
     /**
-     * 处理实体类的包和@Table注解
+     * 엔티티 클래스의 패키지 및 @Table 주석 처리
      *
      * @param topLevelClass
      * @param introspectedTable
      */
     private void processEntityClass(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        //引入JPA注解
+        //JPA 주석 소개
         topLevelClass.addImportedType("javax.persistence.*");
-        //lombok扩展开始
-        //如果需要Data，引入包，代码增加注解
+        //lombok확장 시작
+        //데이터가 필요한 경우 패키지를 가져오고 코드에 주석을 추가합니다.
         if (this.needsData) {
             topLevelClass.addImportedType("lombok.Data");
             topLevelClass.addAnnotation("@Data");
         }
-        //如果需要Getter，引入包，代码增加注解
+        //Getter가 필요한 경우 패키지를 가져와 코드에 주석을 추가하십시오.
         if (this.needsGetter) {
             topLevelClass.addImportedType("lombok.Getter");
             topLevelClass.addAnnotation("@Getter");
         }
-        //如果需要Setter，引入包，代码增加注解
+        //Setter가 필요한 경우 패키지를 가져와 코드에 주석을 추가하십시오.
         if (this.needsSetter) {
             topLevelClass.addImportedType("lombok.Setter");
             topLevelClass.addAnnotation("@Setter");
         }
-        //如果需要ToString，引入包，代码增加注解
+        //ToString이 필요한 경우 패키지를 가져와 코드에 주석을 추가하십시오.
         if (this.needsToString) {
             topLevelClass.addImportedType("lombok.ToString");
             topLevelClass.addAnnotation("@ToString");
         }
-        // 如果需要EqualsAndHashCode，并且“callSuper = true”，引入包，代码增加注解
+        // 같은果需要EqualsAndHashCode，并且“callSuper = true”，引入包，代码댓글 추가
         if (this.needsEqualsAndHashCodeAndCallSuper) {
             topLevelClass.addImportedType("lombok.EqualsAndHashCode");
             topLevelClass.addAnnotation("@EqualsAndHashCode(callSuper = true)");
         } else {
-            // 如果需要EqualsAndHashCode，引入包，代码增加注解
+            // EqualsAndHashCode가 필요한 경우 패키지를 가져오고 코드에 주석을 추가합니다.
             if (this.needsEqualsAndHashCode) {
                 topLevelClass.addImportedType("lombok.EqualsAndHashCode");
                 topLevelClass.addAnnotation("@EqualsAndHashCode");
             }
         }
-        // 如果需要Accessors，引入包，代码增加注解
+        // 접근자가 필요한 경우 패키지를 가져오고 코드에 주석을 추가합니다.
         if (this.needsAccessors) {
             topLevelClass.addImportedType("lombok.experimental.Accessors");
             topLevelClass.addAnnotation("@Accessors(chain = true)");
         }
-        // lombok扩展结束
-        // region swagger扩展
+        // lombok확장 종료
+        // 지역 스웨거 확장
         if (this.needsSwagger) {
-            //导包
+            //가이드 패키지
             topLevelClass.addImportedType("io.swagger.annotations.ApiModel");
             topLevelClass.addImportedType("io.swagger.annotations.ApiModelProperty");
-            //增加注解(去除注释中的转换符)
+            //댓글 추가(주석에서 변환 문자 제거)
             String remarks = introspectedTable.getRemarks();
             if (remarks == null) {
                 remarks = "";
             }
             topLevelClass.addAnnotation("@ApiModel(\"" + remarks.replaceAll("\r", "").replaceAll("\n", "") + "\")");
         }
-        // endregion swagger扩展
+        // endregion swagger 확장
         String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
 
-        //region 文档注释
+        //지역 문서 참고
         String remarks = introspectedTable.getRemarks();
         topLevelClass.addJavaDocLine("/**");
-        topLevelClass.addJavaDocLine(" * 表名：" + tableName);
+        topLevelClass.addJavaDocLine(" * 테이블 이름：" + tableName);
         if (remarks != null) {
             remarks = remarks.trim();
         }
@@ -182,7 +182,7 @@ public class MapperPlugin extends FalseMethodPlugin {
             for (int i = 0; i < lines.length; i++) {
                 String line = lines[i];
                 if (i == 0) {
-                    topLevelClass.addJavaDocLine(" * 表注释：" + line);
+                    topLevelClass.addJavaDocLine(" * 테이블 노트：" + line);
                 } else {
                     topLevelClass.addJavaDocLine(" *         " + line);
                 }
@@ -190,13 +190,13 @@ public class MapperPlugin extends FalseMethodPlugin {
         }
         topLevelClass.addJavaDocLine("*/");
         //endregion
-        //如果包含空格，或者需要分隔符，需要完善
+        //공백이 포함되어 있거나 구분 기호가 필요한 경우 개선해야합니다.
         if (StringUtility.stringContainsSpace(tableName)) {
             tableName = context.getBeginningDelimiter()
                     + tableName
                     + context.getEndingDelimiter();
         }
-        //是否忽略大小写，对于区分大小写的数据库，会有用
+        //대소 문자를 무시할지 여부는 대소 문자를 구분하는 데이터베이스에 유용합니다.
         if (caseSensitive && !topLevelClass.getType().getShortName().equals(tableName)) {
             topLevelClass.addAnnotation("@Table(name = \"" + getDelimiterName(tableName) + "\")");
         } else if (!topLevelClass.getType().getShortName().equalsIgnoreCase(tableName)) {
@@ -219,7 +219,7 @@ public class MapperPlugin extends FalseMethodPlugin {
                 field.setInitializationString("\"" + introspectedColumn.getJavaProperty() + "\"");
                 context.getCommentGenerator().addClassComment(topLevelClass, introspectedTable);
                 topLevelClass.addField(field);
-                //增加字段名常量,用于pageHelper
+                //pageHelper에 대한 필드 이름 상수 추가
                 Field columnField = new Field();
                 columnField.setVisibility(JavaVisibility.PUBLIC);
                 columnField.setStatic(true);
@@ -231,14 +231,14 @@ public class MapperPlugin extends FalseMethodPlugin {
             }
         }
         if (generateDefaultInstanceMethod) {
-            //注意基本类型和包装的index要一致,方便后面使用
+            //패키지의 기본 유형과 색인은 향후 사용을 용이하게하기 위해 일관성이 있어야합니다.
             List<String> baseClassName = Arrays.asList("byte", "short", "char", "int", "long", "float", "double", "boolean");
             List<String> wrapperClassName = Arrays.asList("Byte", "Short", "Character", "Integer", "Long", "Float", "Double", "Boolean");
             List<String> otherClassName = Arrays.asList("String", "BigDecimal", "BigInteger");
             Method defaultMethod = new Method();
-            //增加方法注释
+            //메서드 메모 추가
             defaultMethod.addJavaDocLine("/**");
-            defaultMethod.addJavaDocLine(" * 带默认值的实例");
+            defaultMethod.addJavaDocLine(" * 기본값이있는 예");
             defaultMethod.addJavaDocLine("*/");
             defaultMethod.setStatic(true);
             defaultMethod.setName("defaultInstance");
@@ -252,12 +252,12 @@ public class MapperPlugin extends FalseMethodPlugin {
                 }
                 if (introspectedColumn.getDefaultValue() != null) {
                     String defaultValue = introspectedColumn.getDefaultValue();
-                    //处理备注中带有类型描述情况，如 postgresql中存在 ''::character varying
+                    //postgresql과 같은 비고의 유형 설명을 처리하십시오. ''::character varying
                     if (defaultValue.matches("'\\.*'::\\w+(\\s\\w+)?")) {
                         //
                         defaultValue = defaultValue.substring(0, defaultValue.lastIndexOf("::"));
                     }
-                    //去除前后'',如 '123456' -> 123456
+                    //제거 전후'',같은 '123456' -> 123456
                     if (defaultValue.startsWith("'") && defaultValue.endsWith("'")) {
                         if (defaultValue.length() == 2) {
                             defaultValue = "";
@@ -265,7 +265,7 @@ public class MapperPlugin extends FalseMethodPlugin {
                             defaultValue = defaultValue.substring(1, defaultValue.length() - 1);
                         }
                     }
-                    //暂不支持时间类型默认值识别,不同数据库表达式不同
+                    //시간 유형 기본값 인식은 일시적으로 지원되지 않으며 다른 데이터베이스 표현식이 다릅니다.
                     if ("Boolean".equals(shortName) || "boolean".equals(shortName)) {
                         if ("0".equals(defaultValue)) {
                             defaultValue = "false";
@@ -275,16 +275,16 @@ public class MapperPlugin extends FalseMethodPlugin {
                     }
 
                     if ("String".equals(shortName)) {
-                        //字符串,不通过new String 创建
-                        // 其实通过new String 没有任何问题,不过强迫症,idea会提示,所以改了
+                        //문자열, 새 문자열로 생성되지 않음
+                        // 사실 새로운 현에는 문제가 없지만 강박 장애, 아이디어가 촉발되므로 변화
                         defaultMethod.addBodyLine(String.format("instance.%s = \"%s\";", introspectedColumn.getJavaProperty(), defaultValue));
                     } else {
                         String javaProperty = introspectedColumn.getJavaProperty();
                         if (baseClassName.contains(shortName)) {
-                            //基本类型,转成包装类的new 创建
+                            //기본 유형, 새로운 패키징 클래스 생성으로 변환
                             javaProperty = wrapperClassName.get(baseClassName.indexOf(shortName));
                         }
-                        //通过 new 方法转换
+                        //새로운 방법으로 변환
                         defaultMethod.addBodyLine(String.format("instance.%s = new %s(\"%s\");", javaProperty, shortName, defaultValue));
                     }
                 }
@@ -296,7 +296,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 如果需要生成Getter注解，就不需要生成get相关代码了
+     * Getter 주석을 생성해야하는 경우 관련 코드 가져 오기를 생성 할 필요가 없습니다.
      */
     @Override
     public boolean modelGetterMethodGenerated(Method method,
@@ -308,7 +308,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 如果需要生成Setter注解，就不需要生成set相关代码了
+     * Setter 주석을 생성해야하는 경우 세트 관련 코드를 생성 할 필요가 없습니다.
      */
     @Override
     public boolean modelSetterMethodGenerated(Method method,
@@ -319,7 +319,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成基础实体类
+     * 기본 엔티티 클래스 생성
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -332,7 +332,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成实体类注解KEY对象
+     * 엔티티 클래스 주석 KEY 객체 생성
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -345,7 +345,7 @@ public class MapperPlugin extends FalseMethodPlugin {
     }
 
     /**
-     * 生成带BLOB字段的对象
+     * BLOB 필드로 개체 생성
      *
      * @param topLevelClass
      * @param introspectedTable
@@ -361,16 +361,16 @@ public class MapperPlugin extends FalseMethodPlugin {
     @Override
     public void setContext(Context context) {
         super.setContext(context);
-        //设置默认的注释生成器
+        //기본 댓글 생성기 설정
         useMapperCommentGenerator = !"FALSE".equalsIgnoreCase(context.getProperty("useMapperCommentGenerator"));
         if (useMapperCommentGenerator) {
             commentCfg = new CommentGeneratorConfiguration();
             commentCfg.setConfigurationType(MapperCommentGenerator.class.getCanonicalName());
             context.setCommentGeneratorConfiguration(commentCfg);
         }
-        //支持oracle获取注释#114
+        //댓글을 얻기 위해 오라클 지원 # 114
         context.getJdbcConnectionConfiguration().addProperty("remarksReporting", "true");
-        //支持mysql获取注释
+        //대기하다mysql얻다논평
         context.getJdbcConnectionConfiguration().addProperty("useInformationSchema", "true");
     }
 
@@ -383,28 +383,28 @@ public class MapperPlugin extends FalseMethodPlugin {
                 this.mappers.add(mapper);
             }
         } else {
-            throw new RuntimeException("Mapper插件缺少必要的mappers属性!");
+            throw new RuntimeException("Mapper插件缺少必要의mappers속성!");
         }
         this.caseSensitive = Boolean.parseBoolean(this.properties.getProperty("caseSensitive"));
         this.forceAnnotation = getPropertyAsBoolean("forceAnnotation");
         this.beginningDelimiter = getProperty("beginningDelimiter", "");
         this.endingDelimiter = getProperty("endingDelimiter", "");
         this.schema = getProperty("schema");
-        //lombok扩展
+        //lombok넓히다
         String lombok = getProperty("lombok");
         if (lombok != null && !"".equals(lombok)) {
             this.needsData = lombok.contains("Data");
-            //@Data 优先级高于 @Getter @Setter @RequiredArgsConstructor @ToString @EqualsAndHashCode
+            //@Data 더 높은 우선 순위 @Getter @Setter @RequiredArgsConstructor @ToString @EqualsAndHashCode
             this.needsGetter = !this.needsData && lombok.contains("Getter");
             this.needsSetter = !this.needsData && lombok.contains("Setter");
             this.needsToString = !this.needsData && lombok.contains("ToString");
             this.needsEqualsAndHashCode = !this.needsData && lombok.contains("EqualsAndHashCode");
-            // 配置lombok扩展EqualsAndHashCode注解是否添加“callSuper = true”
+            // 롬복 확장 EqualsAndHashCode 주석 추가 여부 구성“callSuper = true”
             String lombokEqualsAndHashCodeCallSuper = getProperty("lombokEqualsAndHashCodeCallSuper", "false");
             this.needsEqualsAndHashCodeAndCallSuper = this.needsEqualsAndHashCode && "TRUE".equalsIgnoreCase(lombokEqualsAndHashCodeCallSuper);
             this.needsAccessors = lombok.contains("Accessors");
         }
-        //swagger扩展
+        //swagger넓히다
         String swagger = getProperty("swagger", "false");
         if ("TRUE".equalsIgnoreCase(swagger)) {
             this.needsSwagger = true;

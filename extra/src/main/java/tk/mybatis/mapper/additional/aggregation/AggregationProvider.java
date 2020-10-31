@@ -75,7 +75,7 @@ public class AggregationProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example查询总数
+     * 예제 조회 총계에 따르면
      *
      * @param ms
      * @return

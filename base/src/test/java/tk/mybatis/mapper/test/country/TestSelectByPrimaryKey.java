@@ -35,14 +35,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 通过主键查询
+ * 기본 키로 조회
  *
  * @author liuzh
  */
 public class TestSelectByPrimaryKey {
 
     /**
-     * 根据PK进行查询
+     * PK 기반 조회
      */
     @Test
     public void testDynamicSelectByPrimaryKey2() {
@@ -61,7 +61,7 @@ public class TestSelectByPrimaryKey {
     }
 
     /**
-     * 包含主键的对象做参数就行
+     * 기본 키를 포함하는 개체를 매개 변수로 사용할 수 있습니다.
      */
     @Test
     public void testDynamicSelectByPrimaryKey() {
@@ -81,7 +81,7 @@ public class TestSelectByPrimaryKey {
     }
 
     /**
-     * 查询不存在的结果
+     * 존재하지 않는 조회 결과
      */
     @Test
     public void testDynamicSelectByPrimaryKeyZero() {
@@ -100,7 +100,7 @@ public class TestSelectByPrimaryKey {
     }
 
     /**
-     * Map可以随意
+     * 지도는 무료 일 수 있습니다
      */
     @Test
     public void testSelectByPrimaryKeyMap() {
@@ -125,7 +125,7 @@ public class TestSelectByPrimaryKey {
     }
 
     /**
-     * 对象不包含主键
+     * 개체에 기본 키가 없습니다.
      */
     @Test(expected = Exception.class)
     public void testDynamicDeleteNotFoundKeyProperties() {
@@ -139,7 +139,7 @@ public class TestSelectByPrimaryKey {
     }
 
     /**
-     * 主键格式错误
+     * 잘못된 기본 키 형식
      */
     @Test
     public void testDynamicDeleteException() {

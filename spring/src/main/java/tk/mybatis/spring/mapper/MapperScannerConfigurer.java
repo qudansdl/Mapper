@@ -168,7 +168,7 @@ public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProces
         scanner.setResourceLoader(this.applicationContext);
         scanner.setBeanNameGenerator(this.nameGenerator);
         scanner.registerFilters();
-        //设置通用 Mapper
+        //일반 설정 Mapper
         scanner.setMapperHelper(this.mapperHelper);
         scanner.scan(StringUtils.tokenizeToStringArray(this.basePackage, ConfigurableApplicationContext.CONFIG_LOCATION_DELIMITERS));
     }
@@ -384,7 +384,7 @@ public class MapperScannerConfigurer implements BeanDefinitionRegistryPostProces
     }
 
     /**
-     * 属性注入
+     * 속성 주입
      *
      * @param properties
      */

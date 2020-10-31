@@ -35,7 +35,7 @@ public class DefaultNextVersion implements NextVersion {
     @Override
     public Object nextVersion(Object current) throws VersionException {
         if (current == null) {
-            throw new VersionException("当前版本号为空!");
+            throw new VersionException("현재 버전 번호가 비어 있습니다!");
         }
         if (current instanceof Integer) {
             return (Integer) current + 1;
@@ -44,7 +44,7 @@ public class DefaultNextVersion implements NextVersion {
         } else if (current instanceof Timestamp) {
             return new Timestamp(System.currentTimeMillis());
         } else {
-            throw new VersionException("默认的 NextVersion 只支持 Integer, Long 和 java.sql.Timestamp 类型的版本号，如果有需要请自行扩展!");
+            throw new VersionException("기본의 NextVersion 只대기하다 Integer, Long 和 java.sql.Timestamp 수업型의版本号，같은果有需要请自行넓히다!");
         }
     }
 

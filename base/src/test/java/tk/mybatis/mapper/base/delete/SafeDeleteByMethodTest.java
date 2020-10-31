@@ -15,7 +15,7 @@ public class SafeDeleteByMethodTest extends BaseTest {
     protected Config getConfig() {
         Config config = super.getConfig();
         config.setSafeDelete(true);
-        //和 SafeDeleteByFieldTest 测试的区别在此，这里将会使后面调用 EntityField.getValue 时，使用 getter 方法获取值
+        //테스트와 SafeDeleteByFieldTest의 차이점은 여기에 있으며, 나중에 EntityField.getValue를 호출하면 getter 메서드를 사용하여 값을 가져옵니다.
         config.setEnableMethodAnnotation(true);
         return config;
     }

@@ -165,11 +165,11 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
             // but, the actual class of the bean is MapperFactoryBean
             definition.getConstructorArgumentValues().addGenericArgumentValue(definition.getBeanClassName()); // issue #59
             definition.setBeanClass(this.mapperFactoryBean.getClass());
-            //设置通用 Mapper
+            //일반 설정 Mapper
             if(StringUtils.hasText(this.mapperHelperBeanName)){
                 definition.getPropertyValues().add("mapperHelper", new RuntimeBeanReference(this.mapperHelperBeanName));
             } else {
-                //不做任何配置的时候使用默认方式
+                //구성없이 기본 방법 사용
                 if(this.mapperHelper == null){
                     this.mapperHelper = new MapperHelper();
                 }
@@ -250,7 +250,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
     }
 
     /**
-     * 配置通用 Mapper
+     * 일반 구성 Mapper
      *
      * @param config
      */
@@ -270,7 +270,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
     }
 
     /**
-     * 从环境变量中获取 mapper 配置信息
+     * 환경 변수에서 매퍼 구성 정보 얻기
      *
      * @param environment
      */
@@ -285,7 +285,7 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
     }
 
     /**
-     * 从 properties 数组获取 mapper 配置信息
+     * 속성 배열에서 매퍼 구성 정보 가져 오기
      *
      * @param properties
      */
@@ -298,8 +298,8 @@ public class ClassPathMapperScanner extends ClassPathBeanDefinitionScanner {
             property = property.trim();
             int index = property.indexOf("=");
             if(index < 0){
-                throw new MapperException("通过 @MapperScan 注解的 properties 参数配置出错:" + property + " !\n"
-                        + "请保证配置项按 properties 文件格式要求进行配置，例如：\n"
+                throw new MapperException("通过 @MapperScan 注解의 properties 参数配置出错:" + property + " !\n"
+                        + "구성 항목이 속성 파일 형식 요구 사항에 따라 구성되었는지 확인하십시오.：\n"
                         + "properties = {\n"
                         + "\t\"mappers=tk.mybatis.mapper.common.Mapper\",\n"
                         + "\t\"notEmpty=true\"\n"

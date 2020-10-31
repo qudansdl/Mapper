@@ -25,7 +25,7 @@
 package tk.mybatis.mapper.common;
 
 /**
- * 标记接口，继承该接口的接口，在MapperScannerConfigurer#setMarkerInterface时，会自动注册到通用Mapper
+ * Marker 인터페이스는이 인터페이스의 인터페이스를 상속합니다. MapperScannerConfigurer # setMarkerInterface 일 때 일반 Mapper에 자동으로 등록됩니다.
  *
  * @author liuzh
  * @since 3.2.2

@@ -25,13 +25,13 @@
 package tk.mybatis.mapper.common;
 
 /**
- * 通用Mapper接口,其他接口继承该接口即可
+ * 일반 매퍼 인터페이스, 다른 인터페이스는이 인터페이스를 상속 할 수 있습니다.
  * <p/>
- * <p>这是一个例子，自己扩展时可以参考</p>
+ * <p>이것은 예입니다. 자신을 확장 할 때 참조 할 수 있습니다.</p>
  * <p/>
- * <p>项目地址 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
+ * <p> 프로젝트 주소 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

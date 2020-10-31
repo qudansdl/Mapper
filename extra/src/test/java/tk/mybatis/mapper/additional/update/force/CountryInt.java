@@ -29,7 +29,7 @@ import java.io.Serializable;
 
 /**
  * @author qrqhuangcy
- * @Description: 验证数值空值强制更新
+ * @Description: 값이 비어 있는지 확인
  * @date 2018-06-25
  */
 public class CountryInt implements Serializable {

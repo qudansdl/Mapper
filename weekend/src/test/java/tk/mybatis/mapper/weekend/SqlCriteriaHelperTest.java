@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class SqlCriteriaHelperTest {
     /**
-     * 忽略null值问题
+     * 널값 문제 무시
      */
     @Test
     public void ignore() {
@@ -39,8 +39,8 @@ public class SqlCriteriaHelperTest {
 
 
     /**
-     * 不忽略null属性
-     * 当属性为null 且不忽略 则转换查询 equal null 转 is null
+     * 널 속성을 무시하지 마십시오.
+     * 속성이 null이고 무시되지 않으면 조회가 동일한 null에서 null로 변환됩니다.
      */
     @Test
     public void required() {
@@ -50,7 +50,7 @@ public class SqlCriteriaHelperTest {
 
             List<Country> selectBySqlCriteriaHelper= mapper.selectByExample(new Example.Builder(Country.class)
                     .where(SqlCriteriaHelper.custom(Country.class)
-                            // required = true 则继续查询
+                            // 필수 = 조회를 계속하려면 true
                             .andEqualTo(Country::getCountryname, null, true)).build());
 
             List<Country> selectByWeekendSqls = mapper.selectByExample(new Example.Builder(Country.class)
@@ -62,7 +62,7 @@ public class SqlCriteriaHelperTest {
     }
 
     /**
-     * like查询 自动拼接 %
+     * 조회 자동 스티칭 %
      */
     @Test
     public void like() {
@@ -79,7 +79,7 @@ public class SqlCriteriaHelperTest {
                     .where(WeekendSqls.<Country>custom()
                             .andLike(Country::getCountryname, "Chin")
                             .orLike(Country::getCountryname, "A")).build());
-            //判断两个结果数组内容是否相同
+            //두 결과 배열의 내용이 동일한 지 확인
             Assert.assertArrayEquals(selectBySqlCriteriaHelper.toArray(), selectByWeekendSqls.toArray());
         } finally {
             sqlSession.close();
@@ -87,7 +87,7 @@ public class SqlCriteriaHelperTest {
     }
 
     /**
-     * in查询 空集合问题
+     * 조회 빈 컬렉션 문제
      */
     @Test
     public void list() {
@@ -104,7 +104,7 @@ public class SqlCriteriaHelperTest {
                     .where(WeekendSqls.<Country>custom()
                             .andIn(Country::getCountryname, new ArrayList())
                             .orLike(Country::getCountryname, "A")).build());
-            //判断两个结果数组内容是否相同
+            //두 결과 배열의 내용이 동일한 지 확인
             Assert.assertArrayEquals(selectBySqlCriteriaHelper.toArray(), selectByWeekendSqls.toArray());
         } finally {
             sqlSession.close();

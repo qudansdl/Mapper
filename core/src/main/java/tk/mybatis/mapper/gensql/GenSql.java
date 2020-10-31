@@ -4,7 +4,7 @@ import tk.mybatis.mapper.entity.EntityColumn;
 import tk.mybatis.mapper.entity.EntityTable;
 
 /**
- * 生成 SQL，初始化时执行
+ * SQL 생성, 초기화 중 실행
  *
  * @author liuzh
  */

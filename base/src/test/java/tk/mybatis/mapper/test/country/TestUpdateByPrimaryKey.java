@@ -34,14 +34,14 @@ import tk.mybatis.mapper.model.Country;
 import tk.mybatis.mapper.model.CountryVersion;
 
 /**
- * 通过PK更新实体类全部属性
+ * PK를 통해 엔티티 클래스의 모든 속성 업데이트
  *
  * @author liuzh
  */
 public class TestUpdateByPrimaryKey {
 
     /**
-     * 更新0个
+     * 업데이트 0
      */
     @Test
     public void testDynamicUpdateByPrimaryKeyAll() {
@@ -55,7 +55,7 @@ public class TestUpdateByPrimaryKey {
     }
 
     /**
-     * 入参为null时更新全部
+     * 입력 매개 변수가 null 인 경우 모두 업데이트
      */
     @Test
     public void testDynamicUpdateByPrimaryKeyAllByNull() {
@@ -69,7 +69,7 @@ public class TestUpdateByPrimaryKey {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicUpdateByPrimaryKey() {
@@ -79,13 +79,13 @@ public class TestUpdateByPrimaryKey {
             Country country = new Country();
             country.setId(174);
             country.setCountryname(null);
-            country.setCountryname("美国");
+            country.setCountryname("미국");
             Assert.assertEquals(1, mapper.updateByPrimaryKey(country));
 
             country = mapper.selectByPrimaryKey(174);
             Assert.assertNotNull(country);
             Assert.assertEquals(174, (int) country.getId());
-            Assert.assertEquals("美国",country.getCountryname());
+            Assert.assertEquals("미국",country.getCountryname());
             Assert.assertNull(country.getCountrycode());
         } finally {
             sqlSession.close();
@@ -93,7 +93,7 @@ public class TestUpdateByPrimaryKey {
     }
 
     /**
-     * 继承类可以使用,但多出来的属性无效
+     * 상속 된 클래스를 사용할 수 있지만 추가 속성이 유효하지 않습니다.
      */
     @Test
     public void testDynamicUpdateByPrimaryKeyNotFoundKeyProperties() {
@@ -114,7 +114,7 @@ public class TestUpdateByPrimaryKey {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testUpdateByPrimaryKeyAndVersion() {
@@ -124,21 +124,21 @@ public class TestUpdateByPrimaryKey {
             CountryVersion country = mapper.selectByPrimaryKey(174);
             Assert.assertNotNull(country);
             Assert.assertEquals(new Integer(1), country.getVersion());
-            country.setCountryname("美国2");
+            country.setCountryname("미국2");
             Assert.assertEquals(1, mapper.updateByPrimaryKey(country));
 
             country = mapper.selectByPrimaryKey(174);
             Assert.assertNotNull(country);
             Assert.assertEquals(new Integer(2), country.getVersion());
 
-            country.setCountryname("美国3");
+            country.setCountryname("미국3");
             Assert.assertEquals(1, mapper.updateByPrimaryKey(country));
 
             country = mapper.selectByPrimaryKey(174);
             Assert.assertNotNull(country);
             Assert.assertEquals(new Integer(3), country.getVersion());
 
-            country.setCountryname("美国4");
+            country.setCountryname("미국4");
             Assert.assertEquals(1, mapper.updateByPrimaryKey(country));
 
             country = mapper.selectByPrimaryKey(174);

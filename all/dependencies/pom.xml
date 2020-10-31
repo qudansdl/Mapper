@@ -34,7 +34,7 @@
     <packaging>jar</packaging>
 
     <name>dependencies</name>
-    <description>Mybatis 通用 Mapper Jar 集成</description>
+    <description>Mybatis 일반 Mapper Jar 통합</description>
 
     <dependencies>
         <dependency>

@@ -40,7 +40,7 @@ import java.util.List;
 public class TableColumnBuilder {
 
     /**
-     * 创建 TableClass
+     * 창조하다 TableClass
      *
      * @param introspectedTable
      * @return
@@ -91,7 +91,7 @@ public class TableColumnBuilder {
     }
 
     /**
-     * 创建 ColumnField
+     * ColumnField 만들기
      *
      * @param column
      * @return

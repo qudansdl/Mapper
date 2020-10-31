@@ -34,7 +34,7 @@
     <packaging>jar</packaging>
 
     <name>mapper-extra</name>
-    <description>Mybatis 通用 Mapper 扩展方法</description>
+    <description>Mybatis 일반 매퍼 확장 방법</description>
 
     <properties>
         <jdk.version>1.8</jdk.version>

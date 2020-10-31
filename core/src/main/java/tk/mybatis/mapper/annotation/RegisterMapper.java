@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自动注册 Mapper 接口标记
+ * 매퍼 인터페이스 태그 자동 등록
  *
  * @author liuzh
  * @since 3.6.0

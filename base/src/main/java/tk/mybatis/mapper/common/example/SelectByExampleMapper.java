@@ -30,16 +30,16 @@ import tk.mybatis.mapper.provider.ExampleProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,Example查询
+ * 일반 매퍼 인터페이스, 예제 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectByExampleMapper<T> {
 
     /**
-     * 根据Example条件进行查询
+     * 예제 조건에 따른 조회
      *
      * @param example
      * @return

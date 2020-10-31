@@ -31,7 +31,7 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.CountryJDBC;
 
 /**
- * sqlserver测试 - 该类注释所有测试方法是因为该测试是针对sqlserver的，而项目测试用的hsqldb，所以这些测试不能运行，需要换为sqlserver才可以
+ * 이 주석 유형의 sqlserver test-all 테스트 메서드는 테스트가 sqlserver 용이고 hsqldb가 프로젝트 테스트 용이므로 이러한 테스트를 실행할 수 없으며 sqlserver로 대체해야하기 때문입니다.
  */
 public class TestJDBC {
 

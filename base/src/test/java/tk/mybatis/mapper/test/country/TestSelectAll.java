@@ -34,14 +34,14 @@ import tk.mybatis.mapper.model.Country;
 import java.util.List;
 
 /**
- * 通过实体类属性进行查询
+ * 엔티티 클래스 속성 별 조회
  *
  * @author liuzh
  */
 public class TestSelectAll {
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test
     public void testDynamicSelectPage() {
@@ -50,7 +50,7 @@ public class TestSelectAll {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
 
             List<Country> countryList = mapper.selectAll();
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, countryList.size());
         } finally {
             sqlSession.close();
@@ -58,7 +58,7 @@ public class TestSelectAll {
     }
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test
     public void testDynamicSelectPage2() {
@@ -67,9 +67,9 @@ public class TestSelectAll {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
 
             List<Country> countryList = mapper.selectAll();
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, countryList.size());
-            //selectAll有排序
+            //모두 정렬 됨
             Assert.assertEquals(183, (int) countryList.get(0).getId());
         } finally {
             sqlSession.close();

@@ -8,9 +8,9 @@ import tk.mybatis.mapper.weekend.Fn;
 import java.util.List;
 
 /**
- * 根据属性查询接口
+ * 속성 기반 조회 인터페이스
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  *
  * @author jingkaihui
  * @date 2019/10/11
@@ -19,61 +19,61 @@ import java.util.List;
 public interface SelectByPropertyMapper<T> {
 
     /**
-     * 根据属性及对应值进行查询，只能有一个返回值，有多个结果时抛出异常，查询条件使用等号
+     * 속성 및 해당 값을 기반으로하는 조회입니다. 반환 값은 하나만있을 수 있습니다. 결과가 여러 개인 경우 예외가 발생합니다. 조회 조건은 등호를 사용합니다.
      *
-     * @param fn 查询属性
-     * @param value    属性值
+     * @param fn 조회 속성
+     * @param value    속성 값
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")
     T selectOneByProperty(@Param("fn") Fn<T, ?> fn, @Param("value") Object value);
 
     /**
-     * 根据属性及对应值进行查询，有多个返回值，查询条件使用等号
+     * 속성 및 해당 값을 기반으로하는 조회, 여러 반환 값이 있으며 조회 조건은 등호를 사용합니다.
      *
-     * @param fn 查询属性
-     * @param value 属性值
+     * @param fn 조회 속성
+     * @param value 속성 값
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")
     List<T> selectByProperty(@Param("fn") Fn<T, ?> fn, @Param("value") Object value);
 
     /**
-     * 根据属性及对应值进行查询，查询条件使用 in
+     * 속성 및 해당 값을 기반으로하는 조회, 조회 조건에 사용
      *
-     * @param fn 查询属性
-     * @param values 属性值集合，集合不能空
+     * @param fn 조회 속성
+     * @param values 속성 값 컬렉션, 컬렉션은 필수.
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")
     List<T> selectInByProperty(@Param("fn") Fn<T, ?> fn, @Param("values") List<?> values);
 
     /**
-     * 根据属性及对应值进行查询，查询条件使用 between
+     * 속성 및 해당 값을 기반으로 조회하고 조회 조건 사용 between
      *
-     * @param fn 查询属性
-     * @param begin 开始值
-     * @param end 开始值
+     * @param fn 조회 속성
+     * @param begin 시작 값
+     * @param end 시작 값
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")
     List<T> selectBetweenByProperty(@Param("fn") Fn<T, ?> fn, @Param("begin") Object begin, @Param("end") Object end);
 
     /**
-     * 根据属性及对应值进行查询，检查是否存在对应记录，查询条件使用等号
+     * 속성 및 해당 값을 기반으로 조회하고 해당 레코드가 있는지 확인하고 조회 조건에 등호 사용
      *
-     * @param fn 查询属性
-     * @param value 属性值
+     * @param fn 조회 속성
+     * @param value 속성 값
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")
     boolean existsWithProperty(@Param("fn") Fn<T, ?> fn, @Param("value") Object value);
 
     /**
-     * 根据属性及对应值进行查询，统计符合条件的记录数，查询条件使用等号
+     * 속성 및 해당 값을 기반으로 조회하고, 조건을 충족하는 레코드 수를 계산하고, 조회 조건에 등호를 사용합니다.
      *
-     * @param fn 查询属性
-     * @param value    属性值
+     * @param fn 조회 속성
+     * @param value    속성 값
      * @return
      */
     @SelectProvider(type = SelectPropertyProvider.class, method = "dynamicSQL")

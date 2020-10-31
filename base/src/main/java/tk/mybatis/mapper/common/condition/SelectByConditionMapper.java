@@ -30,16 +30,16 @@ import tk.mybatis.mapper.provider.ConditionProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectByConditionMapper<T> {
 
     /**
-     * 根据Condition条件进行查询
+     * 조건에 따른 조회
      *
      * @param condition
      * @return

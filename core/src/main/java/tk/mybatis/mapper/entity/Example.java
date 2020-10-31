@@ -34,7 +34,7 @@ import tk.mybatis.mapper.util.StringUtil;
 import java.util.*;
 
 /**
- * 通用的Example查询对象
+ * 일반 예제 조회 개체
  *
  * @author liuzh
  */
@@ -49,10 +49,10 @@ public class Example implements IDynamicTableName {
 
     protected boolean forUpdate;
 
-    //查询字段
+    //조회 필드
     protected Set<String> selectColumns;
 
-    //排除的查询字段
+    //제외 된 조회 필드
     protected Set<String> excludeColumns;
 
     protected String countColumn;
@@ -62,15 +62,15 @@ public class Example implements IDynamicTableName {
     protected Class<?> entityClass;
 
     protected EntityTable               table;
-    //属性和列对应
+    //속성 및 열 대응
     protected Map<String, EntityColumn> propertyMap;
-    //动态表名
+    //동적 테이블 이름
     protected String                    tableName;
 
     protected OrderBy ORDERBY;
 
     /**
-     * 默认exists为true
+     * 기본값은 true입니다.
      *
      * @param entityClass
      */
@@ -79,21 +79,21 @@ public class Example implements IDynamicTableName {
     }
 
     /**
-     * 带exists参数的构造方法，默认notNull为false，允许为空
+     * exist 매개 변수가있는 생성자, 기본 notNull은 false이며 비어있을 수 있습니다.
      *
      * @param entityClass
-     * @param exists      - true时，如果字段不存在就抛出异常，false时，如果不存在就不使用该字段的条件
+     * @param exists      - true필드가 존재하지 않는 경우 예외 발생, false 인 경우 필드가 존재하지 않는 경우 필드를 사용하지 않는 조건
      */
     public Example(Class<?> entityClass, boolean exists) {
         this(entityClass, exists, false);
     }
 
     /**
-     * 带exists参数的构造方法
+     * 존재 매개 변수로 메소드 생성
      *
      * @param entityClass
-     * @param exists      - true时，如果字段不存在就抛出异常，false时，如果不存在就不使用该字段的条件
-     * @param notNull     - true时，如果值为空，就会抛出异常，false时，如果为空就不使用该字段的条件
+     * @param exists      - true필드가 존재하지 않는 경우 예외 발생, false 인 경우 필드가 존재하지 않는 경우 필드를 사용하지 않는 조건
+     * @param notNull     - true값이 비어 있으면 예외가 발생하고, false이면 비어 있으면 필드 조건이 사용되지 않습니다.
      */
     public Example(Class<?> entityClass, boolean exists, boolean notNull) {
         this.exists = exists;
@@ -101,7 +101,7 @@ public class Example implements IDynamicTableName {
         oredCriteria = new ArrayList<Criteria>();
         this.entityClass = entityClass;
         table = EntityHelper.getEntityTable(entityClass);
-        //根据李领北建议修改#159
+        //Li Lingbei의 # 159 수정 제안에 따르면
         propertyMap = table.getPropertyMap();
         this.ORDERBY = new OrderBy(this, propertyMap);
     }
@@ -134,9 +134,9 @@ public class Example implements IDynamicTableName {
     }
 
     /**
-     * 排除查询字段，优先级低于 selectProperties
+     * 조회 필드 제외, 우선 순위가 selectProperties보다 낮음
      *
-     * @param properties 属性名的可变参数
+     * @param properties 속성 이름의 가변 매개 변수
      * @return
      */
     public Example excludeProperties(String... properties) {
@@ -148,7 +148,7 @@ public class Example implements IDynamicTableName {
                 if (propertyMap.containsKey(property)) {
                     this.excludeColumns.add(propertyMap.get(property).getColumn());
                 } else {
-                    throw new MapperException("类 " + entityClass.getSimpleName() + " 不包含属性 \'" + property + "\'，或该属性被@Transient注释！");
+                    throw new MapperException("수업 " + entityClass.getSimpleName() + " 속성을 포함하지 않음 \'" + property + "\'，또는 속성은 @Transient!");
                 }
             }
         }
@@ -156,7 +156,7 @@ public class Example implements IDynamicTableName {
     }
 
     /**
-     * 指定要查询的属性列 - 这里会自动映射到表字段
+     * 조회 할 속성 열을 지정합니다. 여기서는 테이블 필드에 자동으로 매핑됩니다.
      *
      * @param properties
      * @return
@@ -170,7 +170,7 @@ public class Example implements IDynamicTableName {
                 if (propertyMap.containsKey(property)) {
                     this.selectColumns.add(propertyMap.get(property).getColumn());
                 } else {
-                    throw new MapperException("类 " + entityClass.getSimpleName() + " 不包含属性 \'" + property + "\'，或该属性被@Transient注释！");
+                    throw new MapperException("수업 " + entityClass.getSimpleName() + " 속성을 포함하지 않음 \'" + property + "\'，또는 속성은 @Transient!");
                 }
             }
         }
@@ -226,7 +226,7 @@ public class Example implements IDynamicTableName {
     }
 
     public static class OrderBy {
-        //属性和列对应
+        //속성 및 열 대응
         protected Map<String, EntityColumn> propertyMap;
         private   Example                   example;
         private   Boolean                   isProperty;
@@ -238,11 +238,11 @@ public class Example implements IDynamicTableName {
 
         private String property(String property) {
             if (StringUtil.isEmpty(property) || StringUtil.isEmpty(property.trim())) {
-                throw new MapperException("接收的property为空！");
+                throw new MapperException("받은 속성이 비어 있습니다!");
             }
             property = property.trim();
             if (!propertyMap.containsKey(property)) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             }
             return propertyMap.get(property).getColumn();
         }
@@ -281,13 +281,13 @@ public class Example implements IDynamicTableName {
 
     protected abstract static class GeneratedCriteria {
         protected List<Criterion>           criteria;
-        //字段是否必须存在
+        //필드가 있어야하는지 여부
         protected boolean                   exists;
-        //值是否不能为空
+        //값을 비워 둘 수 없는지 여부
         protected boolean                   notNull;
-        //连接条件
+        //연결 조건
         protected String                    andOr;
-        //属性和列对应
+        //속성 및 열 대응
         protected Map<String, EntityColumn> propertyMap;
 
         protected GeneratedCriteria(Map<String, EntityColumn> propertyMap, boolean exists, boolean notNull) {
@@ -302,7 +302,7 @@ public class Example implements IDynamicTableName {
             if (propertyMap.containsKey(property)) {
                 return propertyMap.get(property).getColumn();
             } else if (exists) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             } else {
                 return null;
             }
@@ -312,7 +312,7 @@ public class Example implements IDynamicTableName {
             if (propertyMap.containsKey(property)) {
                 return property;
             } else if (exists) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             } else {
                 return null;
             }
@@ -465,9 +465,9 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 手写条件
+         * 필기 조건
          *
-         * @param condition 例如 "length(countryname)<5"
+         * @param condition 예 : "length(countryname)<5"
          * @return
          */
         public Criteria andCondition(String condition) {
@@ -476,10 +476,10 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 手写左边条件，右边用value值
+         * 왼쪽 조건을 손으로 쓰고 오른쪽 값을 사용합니다.
          *
-         * @param condition 例如 "length(countryname)="
-         * @param value     例如 5
+         * @param condition 예 : "length(countryname)="
+         * @param value     예 : 5
          * @return
          */
         public Criteria andCondition(String condition, Object value) {
@@ -488,11 +488,11 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 将此对象的不为空的字段参数作为相等查询条件
+         * 이 개체의 비어 있지 않은 필드 매개 변수를 동일한 조회 조건으로 사용하십시오.
          *
-         * @param param 参数对象
+         * @param param 매개 변수 개체
          * @author Bob {@link}0haizhu0@gmail.com
-         * @Date 2015年7月17日 下午12:48:08
+         * @날짜 2015 년 7 월 17 일 오후 12시:48:08
          */
         public Criteria andEqualTo(Object param) {
             if(param == null){
@@ -501,10 +501,10 @@ public class Example implements IDynamicTableName {
             MetaObject metaObject = MetaObjectUtil.forObject(param);
             String[] properties = metaObject.getGetterNames();
             for (String property : properties) {
-                //属性和列对应Map中有此属性
+                //속성 및 열은 맵에서이 속성에 해당합니다.
                 if (propertyMap.get(property) != null) {
                     Object value = metaObject.getValue(property);
-                    //属性值不为空
+                    //속성 값이 비어 있지 않습니다.
                     if (value != null) {
                         andEqualTo(property, value);
                     }
@@ -514,18 +514,18 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 将此对象的所有字段参数作为相等查询条件，如果字段为 null，则为 is null
+         * 이 개체의 모든 필드 매개 변수를 동일한 조회 조건으로 취급합니다. 필드가 null이면 null입니다.
          *
-         * @param param 参数对象
+         * @param param 매개 변수 개체
          */
         public Criteria andAllEqualTo(Object param) {
             MetaObject metaObject = MetaObjectUtil.forObject(param);
             String[] properties = metaObject.getGetterNames();
             for (String property : properties) {
-                //属性和列对应Map中有此属性
+                //속성 및 열은 맵에서이 속성에 해당합니다.
                 if (propertyMap.get(property) != null) {
                     Object value = metaObject.getValue(property);
-                    //属性值不为空
+                    //속성 값이 비어 있지 않습니다.
                     if (value != null) {
                         andEqualTo(property, value);
                     } else {
@@ -607,9 +607,9 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 手写条件
+         * 필기 조건
          *
-         * @param condition 例如 "length(countryname)<5"
+         * @param condition 예 : "length(countryname)<5"
          * @return
          */
         public Criteria orCondition(String condition) {
@@ -618,10 +618,10 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 手写左边条件，右边用value值
+         * 왼쪽 조건을 손으로 쓰고 오른쪽 값을 사용합니다.
          *
-         * @param condition 例如 "length(countryname)="
-         * @param value     例如 5
+         * @param condition 예 : "length(countryname)="
+         * @param value     예 : 5
          * @return
          */
         public Criteria orCondition(String condition, Object value) {
@@ -630,20 +630,20 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 将此对象的不为空的字段参数作为相等查询条件
+         * 이 개체의 비어 있지 않은 필드 매개 변수를 동일한 조회 조건으로 사용하십시오.
          *
-         * @param param 参数对象
+         * @param param 매개 변수 개체
          * @author Bob {@link}0haizhu0@gmail.com
-         * @Date 2015年7月17日 下午12:48:08
+         * @날짜 2015 년 7 월 17 일 오후 12시:48:08
          */
         public Criteria orEqualTo(Object param) {
             MetaObject metaObject = MetaObjectUtil.forObject(param);
             String[] properties = metaObject.getGetterNames();
             for (String property : properties) {
-                //属性和列对应Map中有此属性
+                //속성 및 열은 맵에서이 속성에 해당합니다.
                 if (propertyMap.get(property) != null) {
                     Object value = metaObject.getValue(property);
-                    //属性值不为空
+                    //속성 값이 비어 있지 않습니다.
                     if (value != null) {
                         orEqualTo(property, value);
                     }
@@ -653,18 +653,18 @@ public class Example implements IDynamicTableName {
         }
 
         /**
-         * 将此对象的所有字段参数作为相等查询条件，如果字段为 null，则为 is null
+         * 이 개체의 모든 필드 매개 변수를 동일한 조회 조건으로 취급합니다. 필드가 null이면 null입니다.
          *
-         * @param param 参数对象
+         * @param param 매개 변수 개체
          */
         public Criteria orAllEqualTo(Object param) {
             MetaObject metaObject = MetaObjectUtil.forObject(param);
             String[] properties = metaObject.getGetterNames();
             for (String property : properties) {
-                //属性和列对应Map中有此属性
+                //속성 및 열은 맵에서이 속성에 해당합니다.
                 if (propertyMap.get(property) != null) {
                     Object value = metaObject.getValue(property);
-                    //属性值不为空
+                    //속성 값이 비어 있지 않습니다.
                     if (value != null) {
                         orEqualTo(property, value);
                     } else {
@@ -825,22 +825,22 @@ public class Example implements IDynamicTableName {
     public static class Builder {
         private final Class<?>                  entityClass;
         protected     EntityTable               table;
-        //属性和列对应
+        //속성 및 열 대응
         protected     Map<String, EntityColumn> propertyMap;
         private       StringBuilder             orderByClause;
         private       boolean                   distinct;
         private       boolean                   exists;
         private       boolean                   notNull;
         private       boolean                   forUpdate;
-        //查询字段
+        //조회 필드
         private       Set<String>               selectColumns;
-        //排除的查询字段
+        //제외 된 조회 필드
         private       Set<String>               excludeColumns;
         private       String                    countColumn;
         private       List<Sqls.Criteria>       sqlsCriteria;
-        //动态表名
+        //동적 테이블 이름
         private       List<Example.Criteria>    exampleCriterias;
-        //动态表名
+        //동적 테이블 이름
         private       String                    tableName;
 
         public Builder(Class<?> entityClass) {
@@ -884,7 +884,7 @@ public class Example implements IDynamicTableName {
                     if (this.propertyMap.containsKey(property)) {
                         this.selectColumns.add(propertyMap.get(property).getColumn());
                     } else {
-                        throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                        throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
                     }
                 }
             }
@@ -900,7 +900,7 @@ public class Example implements IDynamicTableName {
                     if (propertyMap.containsKey(property)) {
                         this.excludeColumns.add(propertyMap.get(property).getColumn());
                     } else {
-                        throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                        throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
                     }
                 }
             }
@@ -1029,7 +1029,7 @@ public class Example implements IDynamicTableName {
             if (propertyMap.containsKey(property)) {
                 return propertyMap.get(property).getColumn();
             } else if (exists) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             } else {
                 return null;
             }
@@ -1039,7 +1039,7 @@ public class Example implements IDynamicTableName {
             if (propertyMap.containsKey(property)) {
                 return property;
             } else if (exists) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             } else {
                 return null;
             }
@@ -1047,11 +1047,11 @@ public class Example implements IDynamicTableName {
 
         private String propertyforOderBy(String property) {
             if (StringUtil.isEmpty(property) || StringUtil.isEmpty(property.trim())) {
-                throw new MapperException("接收的property为空！");
+                throw new MapperException("받은 속성이 비어 있습니다!");
             }
             property = property.trim();
             if (!propertyMap.containsKey(property)) {
-                throw new MapperException("当前实体类不包含名为" + property + "的属性!");
+                throw new MapperException("현재 엔티티 클래스에 이름이 없습니다." + property + "속성!");
             }
             return propertyMap.get(property).getColumn();
         }
@@ -1099,7 +1099,7 @@ public class Example implements IDynamicTableName {
 
     public Set<String> getSelectColumns() {
         if (selectColumns != null && selectColumns.size() > 0) {
-            //不需要处理
+            //다룰 필요가 없습니다
         } else if (excludeColumns != null && excludeColumns.size() > 0) {
             Collection<EntityColumn> entityColumns = propertyMap.values();
             selectColumns = new LinkedHashSet<String>(entityColumns.size() - excludeColumns.size());
@@ -1129,7 +1129,7 @@ public class Example implements IDynamicTableName {
     }
 
     /**
-     * 指定 count(property) 查询属性
+     * 속성을 조회 할 수 (property)를 지정합니다.
      *
      * @param property
      */
@@ -1140,7 +1140,7 @@ public class Example implements IDynamicTableName {
     }
 
     /**
-     * 设置表名
+     * 테이블 이름 설정
      *
      * @param tableName
      */

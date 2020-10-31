@@ -25,9 +25,9 @@
 package tk.mybatis.mapper.additional.idlist;
 
 /**
- * 通用Mapper接口,根据idList操作
+ * 일반 매퍼 인터페이스, idList에 따라 작동
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

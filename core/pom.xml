@@ -34,17 +34,17 @@
     <packaging>jar</packaging>
 
     <name>mapper-core</name>
-    <description>Mybatis 通用 Mapper</description>
+    <description>Mybatis 만능인 Mapper</description>
     <url>https://mybatis.io</url>
 
     <dependencies>
-        <!--必须依赖-->
+        <!--의존해야 함-->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>
         </dependency>
 
-        <!--可选依赖-->
+        <!--선택적 종속성-->
         <dependency>
             <groupId>org.mybatis</groupId>
             <artifactId>mybatis</artifactId>

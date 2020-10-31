@@ -35,7 +35,7 @@ import java.io.Serializable;
  * @since 2015-12-06 10:31
  */
 public class Entity<ID extends Serializable, NAME extends Serializable> {
-    //这里的a,b,c,d仅用来测试FieldHelper中的静态字段
+    //여기서 a, b, c, d는 FieldHelper의 정적 필드를 테스트하는 데만 사용됩니다.
     private static Integer a, b, c, d;
 
     @Order(value = "desc", priority = 1)

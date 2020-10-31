@@ -38,13 +38,13 @@ import java.util.Properties;
 import java.util.Set;
 
 public class MapperCommentGenerator implements CommentGenerator {
-    //开始的分隔符，例如mysql为`，sqlserver为[
+    //예를 들어, mysql은`, sqlserver는[
     private String beginningDelimiter = "";
-    //结束的分隔符，例如mysql为`，sqlserver为]
+    //예를 들어, mysql은`, sqlserver는]
     private String endingDelimiter = "";
-    //强制生成注解
+    //강제 주석
     private boolean forceAnnotation;
-    //是否生成swagger注解
+    //Swagger 주석 생성 여부
     private boolean needsSwagger;
 
     public MapperCommentGenerator() {
@@ -57,7 +57,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * xml中的注释
+     * XML의 주석
      *
      * @param xmlElement
      */
@@ -105,7 +105,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * 删除标记
+     * 마크 삭제
      *
      * @param javaElement
      * @param markAsDoNotDelete
@@ -121,7 +121,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * Example使用
+     * Example사용하다
      *
      * @param innerClass
      * @param introspectedTable
@@ -135,7 +135,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * 给字段添加数据库备注
+     * 필드에 데이터베이스 메모 추가
      *
      * @param field
      * @param introspectedTable
@@ -151,7 +151,7 @@ public class MapperCommentGenerator implements CommentGenerator {
             field.addJavaDocLine(sb.toString());
             field.addJavaDocLine(" */");
         }
-        //添加注解
+        //댓글 추가
         if (field.isTransient()) {
             //@Column
             field.addAnnotation("@Transient");
@@ -183,12 +183,12 @@ public class MapperCommentGenerator implements CommentGenerator {
                 field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY)");
             }
         } else if (introspectedColumn.isSequenceColumn()) {
-            //在 Oracle 中，如果需要是 SEQ_TABLENAME，那么可以配置为 select SEQ_{1} from dual
+            //Oracle에서 SEQ_TABLENAME이 필요한 경우 다음과 같이 구성 할 수 있습니다. select SEQ_{1} from dual
             String tableName = introspectedTable.getFullyQualifiedTableNameAtRuntime();
             String sql = MessageFormat.format(introspectedTable.getTableConfiguration().getGeneratedKey().getRuntimeSqlStatement(), tableName, tableName.toUpperCase());
             field.addAnnotation("@GeneratedValue(strategy = GenerationType.IDENTITY, generator = \"" + sql + "\")");
         }
-        // region swagger注解
+        // 영역 스웨거 주석
         if (this.needsSwagger) {
             String remarks = introspectedColumn.getRemarks();
             if (remarks == null) {
@@ -201,7 +201,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * Example使用
+     * Example사용하다
      *
      * @param field
      * @param introspectedTable
@@ -224,7 +224,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * getter方法注释
+     * getter방법 메모
      *
      * @param method
      * @param introspectedTable
@@ -235,7 +235,7 @@ public class MapperCommentGenerator implements CommentGenerator {
         StringBuilder sb = new StringBuilder();
         method.addJavaDocLine("/**");
         if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
-            sb.append(" * 获取");
+            sb.append(" * 얻다");
             sb.append(introspectedColumn.getRemarks());
             method.addJavaDocLine(sb.toString());
             method.addJavaDocLine(" *");
@@ -252,7 +252,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * setter方法注释
+     * setter방법 메모
      *
      * @param method
      * @param introspectedTable
@@ -263,7 +263,7 @@ public class MapperCommentGenerator implements CommentGenerator {
         StringBuilder sb = new StringBuilder();
         method.addJavaDocLine("/**");
         if (StringUtility.stringHasValue(introspectedColumn.getRemarks())) {
-            sb.append(" * 设置");
+            sb.append(" * 설정");
             sb.append(introspectedColumn.getRemarks());
             method.addJavaDocLine(sb.toString());
             method.addJavaDocLine(" *");
@@ -281,7 +281,7 @@ public class MapperCommentGenerator implements CommentGenerator {
     }
 
     /**
-     * Example使用
+     * Example사용하다
      *
      * @param innerClass
      * @param introspectedTable

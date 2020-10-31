@@ -1,7 +1,7 @@
 package tk.mybatis.mapper.additional.aggregation;
 
 /**
- * 聚合查询函数
+ * 집계 조회 기능
  *
  * @author liuchan
  */

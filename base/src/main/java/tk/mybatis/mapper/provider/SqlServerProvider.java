@@ -31,7 +31,7 @@ import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
 /**
- * SqlServerProvider实现类，特殊方法实现类
+ * SqlServerProvider구현 클래스, 특수 메서드 구현 클래스
  *
  * @author liuzh
  */
@@ -42,26 +42,26 @@ public class SqlServerProvider extends MapperTemplate {
     }
 
     /**
-     * 插入
+     * 끼워 넣다
      *
      * @param ms
      */
     public String insert(MappedStatement ms) {
         final Class<?> entityClass = getEntityClass(ms);
-        //开始拼sql
+        //맞춤법 SQL 시작
         StringBuilder sql = new StringBuilder();
         sql.append(SqlHelper.insertIntoTable(entityClass, tableName(entityClass)));
         sql.append(SqlHelper.insertColumns(entityClass, true, false, false));
         sql.append(SqlHelper.insertValuesColumns(entityClass, true, false, false));
 
-        // 反射把MappedStatement中的设置主键名
+        // 리플렉션은 MappedStatement에서 기본 키 이름을 설정합니다.
         EntityHelper.setKeyProperties(EntityHelper.getPKColumns(entityClass), ms);
 
         return sql.toString();
     }
 
     /**
-     * 插入不为null的字段
+     * 널이 아닌 필드 Insert
      *
      * @param ms
      * @return
@@ -73,7 +73,7 @@ public class SqlServerProvider extends MapperTemplate {
         sql.append(SqlHelper.insertColumns(entityClass, true, true, isNotEmpty()));
         sql.append(SqlHelper.insertValuesColumns(entityClass, true, true, isNotEmpty()));
 
-        // 反射把MappedStatement中的设置主键名
+        // 리플렉션은 MappedStatement에서 기본 키 이름을 설정합니다.
         EntityHelper.setKeyProperties(EntityHelper.getPKColumns(entityClass), ms);
 
         return sql.toString();

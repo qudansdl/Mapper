@@ -35,14 +35,14 @@ import java.net.URL;
 import java.util.Arrays;
 
 /**
- * @Description:  验证数值空值强制更新
+ * @Description:  값이 비어 있는지 확인
  * @author qrqhuangcy
  * @date 2018-06-25
  */
 public class UpdateByPrimaryKeySelectiveForceTest extends BaseTest {
 
     /**
-     * 获取 mybatis 配置
+     * mybatis 구성 가져 오기
      *
      * @return
      */
@@ -52,7 +52,7 @@ public class UpdateByPrimaryKeySelectiveForceTest extends BaseTest {
     };
 
     /**
-     * 获取初始化 sql
+     * 초기화 가져 오기 sql
      *
      * @return
      */
@@ -68,7 +68,7 @@ public class UpdateByPrimaryKeySelectiveForceTest extends BaseTest {
             CountryIntMapper mapper = sqlSession.getMapper(CountryIntMapper.class);
             CountryInt country = new CountryInt();
             country.setId(174);
-            country.setCountryname("英国");
+            country.setCountryname("영국");
             mapper.updateByPrimaryKeySelectiveForce(country, null);
 
             country = mapper.selectByPrimaryKey(174);

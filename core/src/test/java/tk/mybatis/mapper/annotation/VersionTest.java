@@ -51,7 +51,7 @@ public class VersionTest {
     }
 
     /**
-     * 一个实体类中只能有一个 @Version 注解
+     * 엔티티 클래스에는 @Version 주석이 하나만있을 수 있습니다.
      */
     class UserVersionError {
         @Version

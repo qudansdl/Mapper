@@ -35,7 +35,7 @@
     <packaging>pom</packaging>
 
     <name>mapper-all</name>
-    <description>Mybatis 通用 Mapper3 适配</description>
+    <description>Mybatis Universal Mapper3 적응 </ description>
 		
 	<modules>
         <module>mapper</module>

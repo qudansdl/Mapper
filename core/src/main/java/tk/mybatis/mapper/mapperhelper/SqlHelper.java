@@ -35,7 +35,7 @@ import tk.mybatis.mapper.version.VersionException;
 import java.util.Set;
 
 /**
- * 拼常用SQL的工具类
+ * 일반적인 SQL 도구
  *
  * @author liuzh
  * @since 2015-11-03 22:40
@@ -43,7 +43,7 @@ import java.util.Set;
 public class SqlHelper {
 
     /**
-     * 获取表名 - 支持动态表名
+     * 테이블 이름 가져 오기-동적 테이블 이름 지원
      *
      * @param entityClass
      * @param tableName
@@ -56,7 +56,7 @@ public class SqlHelper {
             sql.append("<when test=\"@tk.mybatis.mapper.util.OGNL@isDynamicParameter(_parameter) and dynamicTableName != null and dynamicTableName != ''\">");
             sql.append("${dynamicTableName}\n");
             sql.append("</when>");
-            //不支持指定列的时候查询全部列
+            //지정된 열이 지원되지 않는 경우 모든 열 조회
             sql.append("<otherwise>");
             sql.append(tableName);
             sql.append("</otherwise>");
@@ -68,7 +68,7 @@ public class SqlHelper {
     }
 
     /**
-     * 获取表名 - 支持动态表名，该方法用于多个入参时，通过parameterName指定入参中实体类的@Param的注解值
+     * 테이블 이름 가져 오기-동적 테이블 이름 지원.이 메서드를 여러 입력 매개 변수에 사용하는 경우 parameterName을 통해 입력 매개 변수에 엔티티 클래스의 @Param 주석 값을 지정합니다.
      *
      * @param entityClass
      * @param tableName
@@ -83,7 +83,7 @@ public class SqlHelper {
                 sql.append("<when test=\"@tk.mybatis.mapper.util.OGNL@isDynamicParameter(" + parameterName + ") and " + parameterName + ".dynamicTableName != null and " + parameterName + ".dynamicTableName != ''\">");
                 sql.append("${" + parameterName + ".dynamicTableName}");
                 sql.append("</when>");
-                //不支持指定列的时候查询全部列
+                //지정된 열이 지원되지 않는 경우 모든 열 조회
                 sql.append("<otherwise>");
                 sql.append(tableName);
                 sql.append("</otherwise>");
@@ -141,7 +141,7 @@ public class SqlHelper {
     }
 
     /**
-     * 如果_cache == null
+     * _cache 인 경우 == null
      *
      * @param column
      * @return
@@ -155,7 +155,7 @@ public class SqlHelper {
     }
 
     /**
-     * 判断自动!=null的条件结构
+     * 자동 판단!=널 조건부 구조
      *
      * @param column
      * @param contents
@@ -167,7 +167,7 @@ public class SqlHelper {
     }
 
     /**
-     * 判断自动==null的条件结构
+     * 자동 == null의 조건 구조 판단
      *
      * @param column
      * @param contents
@@ -179,7 +179,7 @@ public class SqlHelper {
     }
 
     /**
-     * 判断自动!=null的条件结构
+     * 자동 판단!=널 조건부 구조
      *
      * @param entityName
      * @param column
@@ -208,7 +208,7 @@ public class SqlHelper {
     }
 
     /**
-     * 判断自动==null的条件结构
+     * 자동 == null의 조건 구조 판단
      *
      * @param entityName
      * @param column
@@ -237,7 +237,7 @@ public class SqlHelper {
     }
 
     /**
-     * 获取所有查询列，如id,name,code...
+     * ID, 이름, 코드와 같은 모든 조회 열을 가져옵니다...
      *
      * @param entityClass
      * @return
@@ -303,7 +303,7 @@ public class SqlHelper {
     }
 
     /**
-     * from tableName - 动态表名
+     * from tableName - 동적 테이블 이름
      *
      * @param entityClass
      * @param defaultTableName
@@ -318,7 +318,7 @@ public class SqlHelper {
     }
 
     /**
-     * update tableName - 动态表名
+     * update tableName - 동적 테이블 이름
      *
      * @param entityClass
      * @param defaultTableName
@@ -329,11 +329,11 @@ public class SqlHelper {
     }
 
     /**
-     * update tableName - 动态表名
+     * update tableName - 동적 테이블 이름
      *
      * @param entityClass
-     * @param defaultTableName 默认表名
-     * @param entityName       别名
+     * @param defaultTableName 기본 테이블 이름
+     * @param entityName       별명
      * @return
      */
     public static String updateTable(Class<?> entityClass, String defaultTableName, String entityName) {
@@ -345,7 +345,7 @@ public class SqlHelper {
     }
 
     /**
-     * delete tableName - 动态表名
+     * delete tableName - 동적 테이블 이름
      *
      * @param entityClass
      * @param defaultTableName
@@ -360,7 +360,7 @@ public class SqlHelper {
     }
 
     /**
-     * insert into tableName - 动态表名
+     * insert into tableName - 동적 테이블 이름
      *
      * @param entityClass
      * @param defaultTableName
@@ -375,11 +375,11 @@ public class SqlHelper {
     }
 
     /**
-     * insert into tableName - 动态表名
+     * insert into tableName - 동적 테이블 이름
      *
      * @param entityClass
      * @param defaultTableName
-     * @param parameterName 动态表名的参数名
+     * @param parameterName 동적 테이블 이름의 매개 변수 이름
      * @return
      */
     public static String insertIntoTable(Class<?> entityClass, String defaultTableName, String parameterName) {
@@ -391,20 +391,20 @@ public class SqlHelper {
     }
 
     /**
-     * insert table()列
+     * insert table()기둥
      *
      * @param entityClass
-     * @param skipId      是否从列中忽略id类型
-     * @param notNull     是否判断!=null
-     * @param notEmpty    是否判断String类型!=''
+     * @param skipId      컬럼에서 ID 유형 무시 여부
+     * @param notNull     판단할지 여부!=null
+     * @param notEmpty    String 타입 판단 여부!=''
      * @return
      */
     public static String insertColumns(Class<?> entityClass, boolean skipId, boolean notNull, boolean notEmpty) {
         StringBuilder sql = new StringBuilder();
         sql.append("<trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\">");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (!column.isInsertable()) {
                 continue;
@@ -423,20 +423,20 @@ public class SqlHelper {
     }
 
     /**
-     * insert-values()列
+     * insert-values()기둥
      *
      * @param entityClass
-     * @param skipId      是否从列中忽略id类型
-     * @param notNull     是否判断!=null
-     * @param notEmpty    是否判断String类型!=''
+     * @param skipId      컬럼에서 ID 유형 무시 여부
+     * @param notNull     판단할지 여부!=null
+     * @param notEmpty    String 타입 판단 여부!=''
      * @return
      */
     public static String insertValuesColumns(Class<?> entityClass, boolean skipId, boolean notNull, boolean notEmpty) {
         StringBuilder sql = new StringBuilder();
         sql.append("<trim prefix=\"VALUES (\" suffix=\")\" suffixOverrides=\",\">");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (!column.isInsertable()) {
                 continue;
@@ -455,34 +455,34 @@ public class SqlHelper {
     }
 
     /**
-     * update set列
+     * update set기둥
      *
      * @param entityClass
-     * @param entityName  实体映射名
-     * @param notNull     是否判断!=null
-     * @param notEmpty    是否判断String类型!=''
+     * @param entityName  엔티티 매핑 이름
+     * @param notNull     판단할지 여부!=null
+     * @param notEmpty    String 타입 판단 여부!=''
      * @return
      */
     public static String updateSetColumns(Class<?> entityClass, String entityName, boolean notNull, boolean notEmpty) {
         StringBuilder sql = new StringBuilder();
         sql.append("<set>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        //对乐观锁的支持
+        //낙관적 잠금 지원
         EntityColumn versionColumn = null;
-        // 逻辑删除列
+        // 삭제 표시 열
         EntityColumn logicDeleteColumn = null;
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(Version.class)) {
                 if (versionColumn != null) {
-                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解的字段，一个类中只能存在一个带有 @Version 注解的字段!");
+                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解의들，一个수업中只能存在一个带有 @Version 注解의들!");
                 }
                 versionColumn = column;
             }
             if (column.getEntityField().isAnnotationPresent(LogicDelete.class)) {
                 if (logicDeleteColumn != null) {
-                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解的字段，一个类中只能存在一个带有 @LogicDelete 注解的字段!");
+                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解의들，一个수업中只能存在一个带有 @LogicDelete 注解의들!");
                 }
                 logicDeleteColumn = column;
             }
@@ -513,26 +513,26 @@ public class SqlHelper {
     }
 
     /**
-     * update set列，不考虑乐观锁注解 @Version
+     * 업데이트 세트 열, 낙관적 잠금 주석 @Version을 고려하지 않음
      *
      * @param entityClass
-     * @param entityName  实体映射名
-     * @param notNull     是否判断!=null
-     * @param notEmpty    是否判断String类型!=''
+     * @param entityName  엔티티 매핑 이름
+     * @param notNull     판단할지 여부!=null
+     * @param notEmpty    String 타입 판단 여부!=''
      * @return
      */
     public static String updateSetColumnsIgnoreVersion(Class<?> entityClass, String entityName, boolean notNull, boolean notEmpty) {
         StringBuilder sql = new StringBuilder();
         sql.append("<set>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        // 逻辑删除列
+        // 삭제 표시 열
         EntityColumn logicDeleteColumn = null;
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(LogicDelete.class)) {
                 if (logicDeleteColumn != null) {
-                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解的字段，一个类中只能存在一个带有 @LogicDelete 注解的字段!");
+                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解의들，一个수업中只能存在一个带有 @LogicDelete 注解의들!");
                 }
                 logicDeleteColumn = column;
             }
@@ -553,10 +553,10 @@ public class SqlHelper {
     }
 
     /**
-     * 不是所有参数都是 null 的检查
+     * 모든 매개 변수가 널이 아닌지 확인
      *
-     * @param parameterName 参数名
-     * @param columnSet     需要检查的列
+     * @param parameterName 매개 변수 이름
+     * @param columnSet     확인할 열
      * @return
      */
     public static String notAllNullParameterCheck(String parameterName, Set<EntityColumn> columnSet) {
@@ -576,9 +576,9 @@ public class SqlHelper {
     }
 
     /**
-     * Example 中包含至少 1 个查询条件
+     * Example 하나 이상의 조회 조건을 포함합니다.
      *
-     * @param parameterName 参数名
+     * @param parameterName 매개 변수 이름
      * @return
      */
     public static String exampleHasAtLeastOneCriteriaCheck(String parameterName) {
@@ -589,7 +589,7 @@ public class SqlHelper {
     }
 
     /**
-     * where主键条件
+     * 여기서 기본 키 조건
      *
      * @param entityClass
      * @return
@@ -599,7 +599,7 @@ public class SqlHelper {
     }
 
     /**
-     * where主键条件
+     * 여기서 기본 키 조건
      *
      * @param entityClass
      * @param useVersion
@@ -610,7 +610,7 @@ public class SqlHelper {
     }
 
     /**
-     * where主键条件
+     * 여기서 기본 키 조건
      *
      * @param entityClass
      * @param entityName
@@ -622,9 +622,9 @@ public class SqlHelper {
         boolean hasLogicDelete = hasLogicDeleteColumn(entityClass);
 
         sql.append("<where>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getPKColumns(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             sql.append(" AND ").append(column.getColumnEqualsHolder(entityName));
         }
@@ -641,7 +641,7 @@ public class SqlHelper {
     }
 
     /**
-     * where所有列的条件，会判断是否!=null
+     * 모든 열의 조건이 여부를 결정하는 곳!=null
      *
      * @param entityClass
      * @param empty
@@ -652,7 +652,7 @@ public class SqlHelper {
     }
 
     /**
-     * where所有列的条件，会判断是否!=null
+     * 모든 열의 조건이 여부를 결정하는 곳!=null
      *
      * @param entityClass
      * @param empty
@@ -664,13 +664,13 @@ public class SqlHelper {
         boolean hasLogicDelete = false;
 
         sql.append("<where>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
         EntityColumn logicDeleteColumn = SqlHelper.getLogicDeleteColumn(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (!useVersion || !column.getEntityField().isAnnotationPresent(Version.class)) {
-                // 逻辑删除，后面拼接逻辑删除字段的未删除条件
+                // 삭제되지 않은 삭제되지 않은 삭제 표시 필드의 상태 인 삭제 표시는 나중에 연결됩니다.
                 if (logicDeleteColumn != null && logicDeleteColumn == column) {
                     hasLogicDelete = true;
                     continue;
@@ -690,7 +690,7 @@ public class SqlHelper {
     }
 
     /**
-     * 乐观锁字段条件
+     * 낙관적 인 잠금 필드 조건
      *
      * @param entityClass
      * @return
@@ -702,7 +702,7 @@ public class SqlHelper {
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(Version.class)) {
                 if (hasVersion) {
-                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解的字段，一个类中只能存在一个带有 @Version 注解的字段!");
+                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解의들，一个수업中只能存在一个带有 @Version 注解의들!");
                 }
                 hasVersion = true;
                 result = " AND " + column.getColumnEqualsHolder();
@@ -712,12 +712,12 @@ public class SqlHelper {
     }
 
     /**
-     * 逻辑删除的where条件，没有逻辑删除注解则返回空字符串
+     * 삭제 표시의 where 조건, 삭제 표시 주석이없는 경우 빈 문자열이 반환됩니다.
      * <br>
      * AND column = value
      *
      * @param entityClass
-     * @param isDeleted   true：已经逻辑删除，false：未逻辑删除
+     * @param isDeleted   true：삭제 표시，false：삭제 표시되지 않음
      * @return
      */
     public static String whereLogicDelete(Class<?> entityClass, boolean isDeleted) {
@@ -726,16 +726,16 @@ public class SqlHelper {
     }
 
     /**
-     * 返回格式: column = value
+     * 반환 형식: column = value
      * <br>
-     * 默认isDeletedValue = 1  notDeletedValue = 0
+     * 기본isDeletedValue = 1  notDeletedValue = 0
      * <br>
-     * 则返回is_deleted = 1 或 is_deleted = 0
+     * 그런 다음 is_deleted = 1 또는 is_deleted = 0
      * <br>
-     * 若没有逻辑删除注解，则返回空字符串
+     * 삭제 표시 주석이없는 경우 빈 문자열이 반환됩니다.
      *
      * @param entityClass
-     * @param isDeleted   true 已经逻辑删除  false 未逻辑删除
+     * @param isDeleted   true 이미 삭제 표시됨 false 삭제 표시되지 않음
      */
     public static String logicDeleteColumnEqualsValue(Class<?> entityClass, boolean isDeleted) {
         EntityColumn logicDeleteColumn = SqlHelper.getLogicDeleteColumn(entityClass);
@@ -748,16 +748,16 @@ public class SqlHelper {
     }
 
     /**
-     * 返回格式: column = value
+     * 반환 형식: column = value
      * <br>
-     * 默认isDeletedValue = 1  notDeletedValue = 0
+     * 기본isDeletedValue = 1  notDeletedValue = 0
      * <br>
-     * 则返回is_deleted = 1 或 is_deleted = 0
+     * 그런 다음 is_deleted = 1 또는 is_deleted = 0
      * <br>
-     * 若没有逻辑删除注解，则返回空字符串
+     * 삭제 표시 주석이없는 경우 빈 문자열이 반환됩니다.
      *
      * @param column
-     * @param isDeleted true 已经逻辑删除  false 未逻辑删除
+     * @param isDeleted true 이미 삭제 표시됨 false 삭제 표시되지 않음
      */
     public static String logicDeleteColumnEqualsValue(EntityColumn column, boolean isDeleted) {
         String result = "";
@@ -768,10 +768,10 @@ public class SqlHelper {
     }
 
     /**
-     * 获取逻辑删除注解的参数值
+     * 삭제 표시 주석의 매개 변수 값 가져 오기
      *
      * @param column
-     * @param isDeleted true：逻辑删除的值，false：未逻辑删除的值
+     * @param isDeleted true：삭제 표시 값，false：삭제 표시되지 않은 값
      * @return
      */
     public static int getLogicDeletedValue(EntityColumn column, boolean isDeleted) {
@@ -786,7 +786,7 @@ public class SqlHelper {
     }
 
     /**
-     * 是否有逻辑删除的注解
+     * 삭제 표시 주석이 있습니까
      *
      * @param entityClass
      * @return
@@ -796,7 +796,7 @@ public class SqlHelper {
     }
 
     /**
-     * 获取逻辑删除注解的列，若没有返回null
+     * null을 반환하지 않는 경우 삭제 표시 주석 열을 가져옵니다.
      *
      * @param entityClass
      * @return
@@ -808,7 +808,7 @@ public class SqlHelper {
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(LogicDelete.class)) {
                 if (hasLogicDelete) {
-                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解的字段，一个类中只能存在一个带有 @LogicDelete 注解的字段!");
+                    throw new LogicDeleteException(entityClass.getCanonicalName() + " 中包含多个带有 @LogicDelete 注解의들，一个수업中只能存在一个带有 @LogicDelete 注解의들!");
                 }
                 hasLogicDelete = true;
                 logicDeleteColumn = column;
@@ -818,7 +818,7 @@ public class SqlHelper {
     }
 
     /**
-     * 获取默认的orderBy，通过注解设置的
+     * 주석으로 설정된 기본 orderBy 가져 오기
      *
      * @param entityClass
      * @return
@@ -834,7 +834,7 @@ public class SqlHelper {
     }
 
     /**
-     * example支持查询指定列时
+     * 예제는 지정된 열 조회를 지원합니다.
      *
      * @return
      */
@@ -846,7 +846,7 @@ public class SqlHelper {
         sql.append("${selectColumn}");
         sql.append("</foreach>");
         sql.append("</when>");
-        //不支持指定列的时候查询全部列
+        //지정된 열이 지원되지 않는 경우 모든 열 조회
         sql.append("<otherwise>");
         sql.append(getAllColumns(entityClass));
         sql.append("</otherwise>");
@@ -855,7 +855,7 @@ public class SqlHelper {
     }
 
     /**
-     * example支持查询指定列时
+     * 예제는 지정된 열 조회를 지원합니다.
      *
      * @return
      */
@@ -873,7 +873,7 @@ public class SqlHelper {
     }
 
     /**
-     * example查询中的orderBy条件，会判断默认orderBy
+     * 예제 조회의 orderBy 조건은 기본 orderBy를 결정합니다.
      *
      * @return
      */
@@ -892,7 +892,7 @@ public class SqlHelper {
     }
 
     /**
-     * example查询中的orderBy条件，会判断默认orderBy
+     * 예제 조회의 orderBy 조건은 기본 orderBy를 결정합니다.
      *
      * @return
      */
@@ -911,7 +911,7 @@ public class SqlHelper {
     }
 
     /**
-     * example 支持 for update
+     * 업데이트 지원 예
      *
      * @return
      */
@@ -924,7 +924,7 @@ public class SqlHelper {
     }
 
     /**
-     * example 支持 for update
+     * 업데이트 지원 예
      *
      * @return
      */
@@ -937,7 +937,7 @@ public class SqlHelper {
     }
 
     /**
-     * Example查询中的where结构，用于只有一个Example参数时
+     * Example 조회의 where 구조는 Example 매개 변수가 하나만있을 때 사용됩니다.
      *
      * @return
      */
@@ -978,7 +978,7 @@ public class SqlHelper {
     }
 
     /**
-     * Example-Update中的where结构，用于多个参数时，Example带@Param("example")注解时
+     * Example-Updatewhere 구조, 여러 매개 변수에 사용되는 경우@Param("example")댓글을 달 때
      *
      * @return
      */

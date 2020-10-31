@@ -1,7 +1,7 @@
 package tk.mybatis.mapper.additional.dialect.oracle;
 
 /**
- * @description: Oracle独有方法
+ * @description: Oracle독특한 방법
  * @author: qrqhuangcy
  * @date: 2018-11-15
  **/

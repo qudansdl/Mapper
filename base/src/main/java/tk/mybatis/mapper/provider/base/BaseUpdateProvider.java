@@ -30,7 +30,7 @@ import tk.mybatis.mapper.mapperhelper.MapperTemplate;
 import tk.mybatis.mapper.mapperhelper.SqlHelper;
 
 /**
- * BaseUpdateProvider实现类，基础方法实现类
+ * BaseUpdateProvider 구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -41,7 +41,7 @@ public class BaseUpdateProvider extends MapperTemplate {
     }
 
     /**
-     * 通过主键更新全部字段
+     * 기본 키로 모든 필드 업데이트
      *
      * @param ms
      */
@@ -55,7 +55,7 @@ public class BaseUpdateProvider extends MapperTemplate {
     }
 
     /**
-     * 通过主键更新不为null的字段
+     * 기본 키를 통해 null이 아닌 필드 업데이트
      *
      * @param ms
      * @return

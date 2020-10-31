@@ -31,7 +31,7 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.Country;
 
 /**
- * 通过实体类属性进行查询
+ * 엔티티 클래스 속성 별 조회
  *
  * @author liuzh
  */
@@ -44,9 +44,9 @@ public class TestCache {
             CachedCountryMapper mapper = sqlSession.getMapper(CachedCountryMapper.class);
             Country country = new Country();
             country.setCountrycode("CN");
-            //第一次查询，会被缓存
+            //첫 번째 조회가 캐시됩니다.
             country = mapper.selectOne(country);
-            //只有close才会真正缓存，而不是用一级缓存
+            //닫기 만 실제로 캐시되며 첫 번째 레벨 캐시가 아닙니다.
             sqlSession.close();
 
             //======================================================================
@@ -54,9 +54,9 @@ public class TestCache {
             mapper = sqlSession.getMapper(CachedCountryMapper.class);
             country = new Country();
             country.setCountrycode("CN");
-            //第二次查询，会使用第一次的缓存
+            //두 번째 조회는 첫 번째 캐시를 사용합니다.
             country = mapper.selectOne(country);
-            //只有close才会真正缓存，而不是用一级缓存
+            //닫기 만 실제로 캐시되며 첫 번째 레벨 캐시가 아닙니다.
             sqlSession.close();
         } finally {
             sqlSession.close();
@@ -67,9 +67,9 @@ public class TestCache {
     public void testCache2() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
-            //第一次查询，会被缓存
+            //첫 번째 조회가 캐시됩니다.
             sqlSession.selectOne("selectCache", 35);
-            //只有close才会真正缓存，而不是用一级缓存
+            //닫기 만 실제로 캐시되며 첫 번째 레벨 캐시가 아닙니다.
             sqlSession.close();
 
             //======================================================================

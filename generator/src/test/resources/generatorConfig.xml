@@ -41,15 +41,15 @@
             <property name="generateDefaultInstanceMethod" value="true"/>
             <property name="beginningDelimiter" value="`"/>
             <property name="endingDelimiter" value="`"/>
-          <!--使用Data注解时，Getter,Setter,ToString,EqualsAndHashCode注解无效-->
+          <!--데이터 주석을 사용할 때 Getter, Setter, ToString, EqualsAndHashCode 주석이 유효하지 않습니다.-->
           <!--<property name="lombok" value="Data,Accessors"/>-->
           <property name="lombok" value="Getter,Setter,ToString,Accessors,EqualsAndHashCode"/>
           <property name="lombokEqualsAndHashCodeCallSuper" value="true"/>
             <property name="swagger" value="true"/>
         </plugin>
 
-        <!--通用代码生成器插件-->
-        <!--mapper接口-->
+        <!--범용 코드 생성기 플러그인-->
+        <!--mapper상호 작용-->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
             <property name="targetProject" value="generator/src/test/java"/>
             <property name="targetPackage" value="test.mapper"/>
@@ -66,17 +66,17 @@
             <property name="mapperSuffix" value="Dao"/>
             <property name="fileName" value="${tableClass.shortClassName}${mapperSuffix}.xml"/>
         </plugin>
-        <!--测试输出单个文件，每个表都会生成一个对应的文件-->
+        <!--테스트 출력 단일 파일, 각 테이블은 해당 파일을 생성합니다.-->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
             <property name="targetProject" value="generator/src/test/java"/>
             <property name="targetPackage" value="test.one"/>
             <property name="templatePath" value="generator/test-one.ftl"/>
             <property name="fileName" value="${tableClass.shortClassName}Test.txt"/>
-            <!--默认值是下面这个，可以不配置-->
+            <!--기본값은 다음과 같으며 구성 할 수 없습니다.-->
             <property name="templateFormatter"
                       value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
         </plugin>
-        <!--测试输出整个文件，所有表都可用，一次只生成一个文件，用于聚合所有表使用-->
+        <!--테스트는 전체 파일을 출력하고 모든 테이블을 사용할 수 있으며 모든 테이블을 집계하는 데 사용되는 한 번에 하나의 파일 만 생성됩니다.-->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
             <property name="singleMode" value="false"/>
             <property name="targetProject" value="generator/src/test/java"/>
@@ -91,7 +91,7 @@
                         password="">
         </jdbcConnection>
 
-        <!--MyBatis 生成器只需要生成 Model-->
+        <!--MyBatis 생성기는 모델 만 생성하면됩니다.-->
         <javaModelGenerator targetPackage="test.model" targetProject="generator/src/test/java"/>
 
         <table tableName="user_info">

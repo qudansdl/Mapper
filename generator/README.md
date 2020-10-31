@@ -1,27 +1,26 @@
-# Mybatis 通用 Mapper 代码生成器
+# Mybatis Universal Mapper 코드 생성기
 
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-generator/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-generator)
 
-整个插件只有很少代码是和通用 Mapper 相关的，并且也没有直接的依赖关系。
+일반 Mapper와 관련된 전체 플러그인에 적은 양의 코드 만 있으며 직접적인 종속성은 없습니다.
 
-这个代码生成器实际上是对 MyBatis Generator 的一个扩展，使用这个扩展可以很方便的使用 Freemarker 模板语言编写代码。
+이 코드 생성기는 실제로 MyBatis Generator의 확장입니다.이 확장을 사용하면 Freemarker 템플릿 언어를 사용하여 코드를 쉽게 작성할 수 있습니다.
 
-## 测试
+## 테스트
 
-在 src/test/java 下面，`tk.mybatis.mapper.generator` 包下面有一个测试类 `Generator`。
+src/test/java 아래에 tk.mybatis.mapper.generator패키지 아래에 테스트 클래스 가 Generator있습니다.
 
-可以直接运行这个测试类查看生成代码的效果。所有生成的代码在 `src/test/java/test` 目录下，方便删除。
+이 테스트 클래스를 직접 실행하여 생성 된 코드의 효과를 확인할 수 있습니다. src/test/java/test 삭제하기 쉬운 디렉토리에 생성 된 모든 코드 .
 
-测试使用的 hsqldb 内存数据库，数据库建表 SQL 在 src/test/resources 下面的 `CreateDB.sql` 中。
+사용 된 hsqldb 메모리 데이터베이스, src / test / resources에 내장 된 SQL 데이터베이스 테이블을 테스트 CreateDB.sql합니다.
 
-代码生成器的配置在 `generatorConfig.xml` 中。
+코드 생성기는 폐기됩니다 generatorConfig.xml.
 
+# 코드 생성기 문서
 
-# 代码生成器文档
+코드 생성기는 MBG 플러그인을 기반으로하므로 MBG와 함께 사용해야합니다.
 
-代码生成器是基于 MBG 插件的，所以需要配合 MBG 使用。
-
-一个简单的 MBG 配置如下：
+간단한 MBG 구성은 다음과 같습니다.：
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -32,22 +31,22 @@
 <generatorConfiguration>
     <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
         <property name="javaFileEncoding" value="UTF-8"/>
-        <!--配置是否使用通用 Mapper 自带的注释扩展，默认 true-->
+        <!--Universal Mapper와 함께 제공되는 주석 확장을 사용할지 여부 구성. 기본값은 true -->
         <!--<property name="useMapperCommentGenerator" value="false"/>-->
 
-        <!--通用 Mapper 插件，可以生成带注解的实体类-->
+        <!--주석이 달린 엔티티 클래스를 생성 할 수있는 Universal Mapper 플러그인 -->
         <plugin type="tk.mybatis.mapper.generator.MapperPlugin">
             <property name="mappers" value="tk.mybatis.mapper.common.Mapper,tk.mybatis.mapper.hsqldb.HsqldbMapper"/>
             <property name="caseSensitive" value="true"/>
             <property name="forceAnnotation" value="true"/>
             <property name="beginningDelimiter" value="`"/>
             <property name="endingDelimiter" value="`"/>
-            <!--配置是否启用lombok, 支持如下6种注解-->
-            <!--当配置 Data 后，Getter Setter ToString EqualsAndHashCode 会被忽略-->
+            <!--lombok 활성화 여부 구성 및 다음 6 개의 주석 지원 -->
+            <!--Data 구성 후 Getter Setter ToString EqualsAndHashCode 무시-->
             <property name="lombok" value="Getter,Setter,Data,ToString,Accessors,EqualsAndHashCode"/>
         </plugin>
 
-        <!--通用代码生成器插件-->
+        <!--범용 코드 생성기 플러그인 -->
         <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
             <property name="targetProject" value="src/test/java"/>
             <property name="targetPackage" value="test.mapper"/>
@@ -62,7 +61,7 @@
                                 password="">
         </jdbcConnection>
 
-        <!--MyBatis 生成器只需要生成 Model-->
+        <!--MyBatis 생성기는 모델 생성 만 필요합니다-->
         <javaModelGenerator targetPackage="test.model" targetProject="./src/test/java"/>
 
         <table tableName="user%">
@@ -71,81 +70,80 @@
     </context>
 </generatorConfiguration>
 ```
-在这个配置中，我们只关注 `tk.mybatis.mapper.generator.TemplateFilePlugin`。
+이 구성에서는 tk.mybatis.mapper.generator.TemplateFilePlugin.
 
-## 基于模板的插件 `TemplateFilePlugin`
+## 템플릿 기반 플러그인 TemplateFilePlugin
 
-这个插件中除了几个必备的属性外，还可以增加任意的属性，属性完全是为了给模板提供数据。
-
-先看一个基本完整的配置：
+이 플러그인에 필요한 몇 가지 속성 외에도 모든 속성을 추가 할 수 있습니다. 속성은 전적으로 템플릿에 데이터를 제공하기위한 것입니다.
+먼저 기본 전체 구성을 살펴보십시오.
 
 ```xml
-<!--测试输出单个文件，每个表都会生成一个对应的文件-->
+<!--테스트는 단일 파일을 출력하고 각 테이블은 해당 파일을 생성합니다-->
 <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
     <property name="singleMode" value="false"/>
     <property name="targetProject" value="src/test/resources"/>
     <property name="targetPackage" value=""/>
     <property name="templatePath" value="generator/test-one.ftl"/>
     <property name="fileName" value="${tableClass.shortClassName}Test.txt"/>
-    <!--默认值是下面这个，可以不配置-->
+    <!--기본값은 다음과 같으며 생략 할 수 있습니다 -->
     <property name="templateFormatter" value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
 </plugin>
 ```
 
-下面介绍必备的属性。
+필수 속성은 아래에 설명되어 있습니다.
 
 ### 1. `targetProject`
 
-用于指定目标项目，一般是 `src/main/java` 或者 `src/main/resource` 这样的目录。
-还可以是 `src/test/java` 或者 `src/test/resource` 这样的目录。
+일반적으로 src/main/java또는 src/main/resource이러한 디렉토리 에서 대상 프로젝트를 지정하는 데 사용됩니다.
+src/test/java또는 src/test/resource이 디렉토리 일 수도 있습니다 .
 
-在多模块项目中，还能通过相对路径指定为其他的目录，例如：
+다중 모듈 프로젝트에서 상대 경로를 통해 다른 디렉토리를 지정할 수도 있습니다. 예를 들면 다음과 같습니다.
 
 ```xml
 <property name="targetProject" value="../myproject-api/src/main/java"/>
 ```
 
-**这个属性值有一个要求，就是目录必须存在，否则不会生成代码!**
+**이 속성 값에 대한 요구 사항이 있습니다. 즉, 디렉토리가 있어야합니다. 그렇지 않으면 코드가 생성되지 않습니다!**
 
 ### 2. `targetPackage`
 
-用于指定包的部分，虽然是这个名字，实际上就是路径。
+패키지를 지정하는 데 사용되는 부분은 이름이지만 실제로는 경로입니다.
 
-**这个属性指定的路径如果不存在，就会自动创建。**
+**이 속성에 지정된 경로가 존재하지 않으면 자동으로 생성됩니다.**
 
-这个属性的值可以为空。
+이 속성의 값은 비어있을 수 있습니다.
 
-例如 `mapper/admin` 用于生成 `mapper/admin/` 目录，或者 `tk.mybatis.mapper` 生成包（本质上还是目录）。
+예를 들어, 디렉토리 mapper/admin를 생성 mapper/admin/하거나 tk.mybatis.mapper패킷 (또는 본질적으로 디렉토리)을 생성합니다.
 
-这个属性还有一个特殊的地方，它还支持使用模板，就和下面的 `fileName` 一样，举个简单的使用场景。
+이 속성은 또한 특별한 장소가 있으며 템플릿 사용을 지원하며 바로 아래 fileName에 간단한 사용 시나리오를 제공합니다.
 
->你可能在生成前端代码的时候，希望将表对应的 JSP 生成在自己的一个目录中，此时可以配置为： 
+>프론트 엔드 코드를 생성 할 때 자신의 디렉토리에있는 테이블에 해당하는 JSP를 생성 할 수 있습니다. 이때 다음과 같이 구성 할 수 있습니다. 
 >
 >`<property name="targetPackage" value="WEB-INF/jsp/${tableClass.lowerCaseName}/"/>`
 >
->模板中可以用到的属性，这里都能用，其他属性后面会介绍。
+>템플릿에서 사용할 수있는 속성은 여기에서 사용할 수 있으며 다른 속성은 나중에 소개합니다.
 
-通过这个路径也能看出来，配置一个插件只能根据模板在一个指定位置(targetProject 和 targetPackage 决定的目录)生成一个文件。
+또한이 경로에서 플러그인을 구성하면 템플릿을 기반으로 지정된 위치 (targetProject 및 targetPackage에 의해 결정된 디렉토리)에만 파일이 생성 될 수 있음을 알 수 있습니다.
 
 ### 3. `templatePath`
 
-指定模板路径，可以是任意能够通过 ClassLoader 能够获取的位置，文件类型没有限制。
+ClassLoader를 통해 얻을 수있는 모든 위치가 될 수있는 템플릿 경로를 지정하며 파일 유형은 제한되지 않습니다.
 
-例如示例中的 `generator/test-one.ftl`。
+예를 들어 generator/test-one.ftl.
 
-**这个属性必须指定，否则不会生成代码!**
+**이 속성을 지정해야합니다. 그렇지 않으면 코드가 생성되지 않습니다!**
 
 ### 4. `fileName`
 
-这个属性用于指定生成文件的名字，这个值支持使用模板，例如上面的 `${tableClass.shortClassName}Test.txt`，具体可用的属性会在后面介绍。
+이 속성은 생성 된 파일의 이름을 지정하는 데 사용됩니다.이 값은 위와 같은 템플릿 사용을 지원합니다. 사용 ${tableClass.shortClassName}Test.txt가능한 특정 속성은 나중에 소개됩니다.
 
-**这个属性必须指定，否则不会生成代码!**
+**이 속성을 지정해야합니다. 그렇지 않으면 코드가 생성되지 않습니다!**
 
 ### 5. `templateFormatter`
 
-**这个属性可选，默认使用基于 FreeMarker 的实现!**
+**이 속성은 선택 사항이며 FreeMarker 기반 구현이 기본적으로 사용됩니다!**
 
-默认情况下，你需要添加下面的依赖：
+기본적으로 다음 종속성을 추가해야합니다.：
 
 ```xml
 <dependency>
@@ -155,45 +153,43 @@
 </dependency>
 ```
 
-默认的实现类为：`tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter`。
+기본 구현 클래스：`tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter`。
 
-这个类实现了两个接口 `TemplateFormatter, ListTemplateFormatter`。
+두 개의 인터페이스를 구현 `TemplateFormatter, ListTemplateFormatter`。
 
-这俩接口分别对应下面 `singleMode` 参数值的 `true` 和 `false`。
+`singleMode` 매개 변수 값 true및 false. 하나의 테이블이 하나의 파일을 생성하거나 여러 테이블이 하나의 파일을 생성합니다.
 
-也就是一个表生成一个文件，或者多个表生成一个文件。
+일반적으로 첫 번째 경우입니다. 그러나 구성 파일에서는 여러 테이블의 정보를 사용할 수 있습니다.
 
-对于一般情况下，都是第一种情况。但是在配置文件中，可能会用到多个表的信息。
-
-如果你想使用其他模板引擎，可以自己实现上面的接口。
+다른 템플릿 엔진을 사용하려는 경우 위의 인터페이스를 직접 구현할 수 있습니다.
 
 ### 6. `singleMode`
 
-上面已经提过，默认为 `true`。
+위에서 언급했듯이 기본값은 true입니다.
 
-一个表生成一个文件时，可用属性可以参考 `generator/test-one.ftl`，表的属性在 `tableClass` 中。
+테이블이 파일을 생성 할 때, 참조는 속성 generator/test-one.ftl, 속성 테이블에서 사용할 수 있습니다 tableClass.
 
-多个表生成一个文件时，可用属性可以参考 `generator/test-all.ftl`，所有表的属性在 `tableClassSet` 中，通过遍历可以获取单个的信息。
+문서 참조의 복수의 테이블을 생성하는 것은 사용 가능한 속성 generator/test-all.ftl일 수 있으며 , 모든 테이블의 속성은 tableClassSet순회를 통해 개별 정보를 획득 할 수 있습니다.
 
-### 7. 其他你需要的属性
+### 7. 필요한 기타 속성
 
-模板中需要的特殊信息都可以通过 `<property>` 方法设置，在模板中直接使用这里定义的属性名来使用，后面例子的中的 `mapperSuffix` 就是这种属性。
+필요한 템플릿 특정 정보는 <property>직접 사용되는 템플릿의 속성 이름을 사용하여 여기에 정의 된 바와 같이 임의의 적절한 수단에 의해 이루어질 수 있으며 , 다음 예에서는 mapperSuffix이 속성이 있습니다.
 
-## `TemplateFilePlugin` 配置示例
+## `TemplateFilePlugin` 구성 예
 
-因为模板需要根据业务进行设计，所以这里只提供了两个简单的 mapper 目标和两个完整属性的示例模板。
+비즈니스에 따라 템플릿을 디자인해야하므로 여기에는 두 개의 간단한 매퍼 목표와 완전한 속성이있는 두 개의 샘플 템플릿 만 제공됩니다.
 
-因为一个模板只能生成一类的文件，所以如果要生成多个不同的文件，就需要配置多个插件。
+템플릿은 한 가지 유형의 파일 만 생성 할 수 있기 때문에 여러 개의 다른 파일을 생성하려면 여러 플러그인을 구성해야합니다.
 
->这种设计很灵活，因为自由度很高，所以代价就是配置的多。
+>이 디자인은 자유도가 높기 때문에 매우 유연하므로 가격이 더 많이 구성됩니다.
 >
->但是正常情况下，根据业务设计的一套模板基本是固定的，不会有太多变化，所以用起来并不麻烦。
+>그러나 정상적인 상황에서는 업무에 맞게 디자인 된 템플릿 세트가 기본적으로 고정되어 있으며 너무 많은 변경이 없을 것이므로 사용하는데 번거롭지 않습니다.
 
-例如下面的示例：
+예를 들면 다음과 같습니다：
 
 ```xml
-<!--通用代码生成器插件-->
-<!--mapper接口-->
+<!--범용 코드 생성기 플러그인-->
+<!--mapper 인터페이스-->
 <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
     <property name="targetProject" value="src/test/java"/>
     <property name="targetPackage" value="test.mapper"/>
@@ -210,17 +206,17 @@
     <property name="mapperSuffix" value="Dao"/>
     <property name="fileName" value="${tableClass.shortClassName}${mapperSuffix}.xml"/>
 </plugin>
-<!--测试输出单个文件，每个表都会生成一个对应的文件-->
+<!--테스트 출력 단일 파일, 각 테이블은 해당 파일을 생성합니다-->
 <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
     <property name="targetProject" value="src/test/resources"/>
     <property name="targetPackage" value=""/>
     <property name="templatePath" value="generator/test-one.ftl"/>
     <property name="fileName" value="${tableClass.shortClassName}Test.txt"/>
-    <!--默认值是下面这个，可以不配置-->
+    <!-- 기본값은 다음과 같으며 생략 할 수 있습니다 -->
     <property name="templateFormatter"
               value="tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter"/>
 </plugin>
-<!--测试输出整个文件，所有表都可用，一次只生成一个文件，用于聚合所有表使用-->
+<!-- 테스트는 전체 파일을 출력하고 모든 테이블을 사용할 수 있으며 한 번에 하나의 파일 만 생성되어 모든 테이블을 집계하는 데 사용됩니다  -->
 <plugin type="tk.mybatis.mapper.generator.TemplateFilePlugin">
     <property name="singleMode" value="false"/>
     <property name="targetProject" value="src/test/resources"/>
@@ -230,130 +226,129 @@
 </plugin>
 ```
 
-前两个会生成 Dao 后缀的 Mapper 接口和 XML，其中有个针对性的参数 `mapperSuffix` 用于配置后缀，
-还有个 `mapperPackage` 在生成 XML 时获取接口的包名（因为和这里的 `targetPackage` 可以不同）。
+처음 두 인터페이스 mapperSuffix는 접미사를 구성하기위한 매개 변수가있는 XML Mapper Dao 접미사를 생성 하며, mapperPackageXML 인터페이스 패키지 이름을 생성 할 때 획득됩니다 (여기에서와 targetPackage다를 수 있음).
 
-后两个插件用于演示所有可用的属性，而且是两种不同的模式。
+후자의 두 플러그인은 사용 가능한 모든 속성을 보여주는 데 사용되며 두 가지 다른 모드입니다.
 
-在表和实体上可用的所有属性如下：
+테이블 및 엔터티에서 사용할 수있는 모든 속성은 다음과 같습니다.：
 
 ```
-特殊：targetPackage值在 ${package} 中。
+특수 : targetPackage 값은 $ {package}에 있습니다.
 
-<!-- 详细日期用法参考：http://freemarker.apache.org/docs/ref_builtins_date.html -->
-当前时间：
+<!-- 자세한 날짜 사용 참조：http://freemarker.apache.org/docs/ref_builtins_date.html -->
+현재 시간：
 <#assign dateTime = .now>
-日期：${dateTime?date}
-时间：${dateTime?time}
-格式化：${dateTime?string["yyyy-MM-dd HH:mm:ss"]}
+일자：${dateTime?date}
+시간：${dateTime?time}
+Format：${dateTime?string["yyyy-MM-dd HH:mm:ss"]}
 
 
-所有配置的属性信息:
+구성된 모든 속성 정보:
 <#list props?keys as key>
 ${key} - ${props[key]}
 </#list>
 
-实体和表的信息：
-表名：${tableClass.tableName}
-变量名：${tableClass.variableName}
-小写名：${tableClass.lowerCaseName}
-类名：${tableClass.shortClassName}
-全名：${tableClass.fullClassName}
-包名：${tableClass.packageName}
+엔터티 및 테이블에 대한 정보：
+테이블 이름：${tableClass.tableName}
+변수 이름：${tableClass.variableName}
+소문자 이름：${tableClass.lowerCaseName}
+클래스 이름：${tableClass.shortClassName}
+성명：${tableClass.fullClassName}
+패키지 이름：${tableClass.packageName}
 
-列的信息：
+컬럼 정보：
 =====================================
 <#if tableClass.pkFields??>
-主键：
+기본 키：
     <#list tableClass.pkFields as field>
     -------------------------------------
-    列名：${field.columnName}
-    列类型：${field.jdbcType}
-    字段名：${field.fieldName}
-    注释：${field.remarks}
-    类型包名：${field.typePackage}
-    类型短名：${field.shortTypeName}
-    类型全名：${field.fullTypeName}
-    是否主键：${field.identity?c}
-    是否可空：${field.nullable?c}
-    是否为BLOB列：${field.blobColumn?c}
-    是否为String列：${field.stringColumn?c}
-    是否为字符串列：${field.jdbcCharacterColumn?c}
-    是否为日期列：${field.jdbcDateColumn?c}
-    是否为时间列：${field.jdbcTimeColumn?c}
-    是否为序列列：${field.sequenceColumn?c}
-    列长度：${field.length?c}
-    列精度：${field.scale}
+    열 이름 : $ {field.columnName}
+    열 유형 : $ {field.jdbcType}
+    필드 이름 : $ {field.fieldName}
+    설명 : $ {field.remarks}
+    패키지 이름 입력 : $ {field.typePackage}
+    짧은 이름 입력 : $ {field.shortTypeName}
+    전체 이름 입력 : $ {field.fullTypeName}
+    기본 키 : $ {field.identity?c}
+    nullable 여부 : $ {field.nullable?c}
+    BLOB 컬럼 : $ {field.blobColumn?c}
+    문자열 : $ {field.stringColumn?c}
+    문자열 : $ {field.jdbcCharacterColumn?c}
+    날짜 : $ {field.jdbcDateColumn?c}
+    시간 : $ {field.jdbcTimeColumn?c}
+    시퀀스 : $ {field.sequenceColumn?c}
+    길이 : $ {field.length? c}
+    Scale : $ {field.scale}
     </#list>
 </#if>
 
 <#if tableClass.baseFields??>
-基础列：
+베이스 컬럼：
     <#list tableClass.baseFields as field>
     -------------------------------------
-    列名：${field.columnName}
-    列类型：${field.jdbcType}
-    字段名：${field.fieldName}
-    注释：${field.remarks}
-    类型包名：${field.typePackage}
-    类型短名：${field.shortTypeName}
-    类型全名：${field.fullTypeName}
-    是否主键：${field.identity?c}
-    是否可空：${field.nullable?c}
-    是否为BLOB列：${field.blobColumn?c}
-    是否为String列：${field.stringColumn?c}
-    是否为字符串列：${field.jdbcCharacterColumn?c}
-    是否为日期列：${field.jdbcDateColumn?c}
-    是否为时间列：${field.jdbcTimeColumn?c}
-    是否为序列列：${field.sequenceColumn?c}
-    列长度：${field.length?c}
-    列精度：${field.scale}
+    열 이름 : $ {field.columnName}
+         열 유형 : $ {field.jdbcType}
+         필드 이름 : $ {field.fieldName}
+         설명 : $ {field.remarks}
+         패키지 이름 입력 : $ {field.typePackage}
+         짧은 이름 입력 : $ {field.shortTypeName}
+         전체 이름 입력 : $ {field.fullTypeName}
+         기본 키 : $ {field.identity?c}
+         nullable 여부 : $ {field.nullable?c}
+         BLOB : $ {field.blobColumn?c}
+         문자열 : $ {field.stringColumn?c}
+         문자열 : $ {field.jdbcCharacterColumn?c}
+         날짜 : $ {field.jdbcDateColumn?c}
+         시간  : $ {field.jdbcTimeColumn?c}
+         시퀀스 : $ {field.sequenceColumn?c}
+         길이 : $ {field.length?c}
+         Scale : $ {field.scale}
     </#list>
 </#if>
 
 <#if tableClass.blobFields??>
-Blob列：
+Blob：
     <#list tableClass.blobFields as field>
     -------------------------------------
-    列名：${field.columnName}
-    列类型：${field.jdbcType}
-    字段名：${field.fieldName}
-    注释：${field.remarks}
-    类型包名：${field.typePackage}
-    类型短名：${field.shortTypeName}
-    类型全名：${field.fullTypeName}
-    是否主键：${field.identity?c}
-    是否可空：${field.nullable?c}
-    是否为BLOB列：${field.blobColumn?c}
-    是否为String列：${field.stringColumn?c}
-    是否为字符串列：${field.jdbcCharacterColumn?c}
-    是否为日期列：${field.jdbcDateColumn?c}
-    是否为时间列：${field.jdbcTimeColumn?c}
-    是否为序列列：${field.sequenceColumn?c}
-    列长度：${field.length?c}
-    列精度：${field.scale}
+    열 이름 : $ {field.columnName}
+    열 유형 : $ {field.jdbcType}
+    필드 이름 : $ {field.fieldName}
+    설명 : $ {field.remarks}
+    패키지 이름 입력 : $ {field.typePackage}
+    짧은 이름 입력 : $ {field.shortTypeName}
+    전체 이름 입력 : $ {field.fullTypeName}
+    기본 키 : $ {field.identity? c}
+    nullable 여부 : $ {field.nullable? c}
+    BLOB : $ {field.blobColumn? c}
+    문자열 : $ {field.stringColumn? c}
+    문자열 : $ {field.jdbcCharacterColumn? c}
+    날짜 : $ {field.jdbcDateColumn? c}
+    시간 : $ {field.jdbcTimeColumn? c}
+    시퀀스 : $ {field.sequenceColumn? c}
+    길이 : $ {field.length? c}
+    Scale : $ {field.scale}
     </#list>
 </#if>
 
 =====================================
-全部列（包含了pk,base,blob 字段，可用的属性和上面的一样）：
+모든 열 (pk, base, blob 필드 포함, 사용 가능한 속성은 위와 동일 함) :
 <#if tableClass.allFields??>
-列名 - 字段名
+열 이름-필드 이름
     <#list tableClass.allFields as field>
     ${field.columnName} - ${field.fieldName}
     </#list>
 </#if>
 ```
 
-## 测试执行
+## 테스트 실행
 
-上面示例就是本项目的测试代码，在 `src/test/resources/generator/generatorConfig.xml` 中。
+위의 예제는`src/test/resources/generator/generatorConfig.xml`에있는이 프로젝트의 테스트 코드입니다.
 
-还提供了一种 Java 编码方式运行的类，`src/test/java/` 中的 `tk.mybatis.mapper.generator.Generator`，配置上面 xml 中的数据库信息就可以生成。
+또한 자바 코딩 모드로 동작하는 클래스를 제공하며, 위의 xml에서 데이터베이스 정보를 설정하여`src / test / java /`의`tk.mybatis.mapper.generator.Generator`를 생성 할 수있다.
 
-测试生成的**部分**结果如下。
+테스트에서 생성 된 **부분** 결과는 다음과 같습니다.
 
-实体：
+Entity：
 ```java
 @Table(name = "`user_info`")
 public class UserInfo {
@@ -370,7 +365,7 @@ package test.mapper;
 import test.model.UserInfo;
 
 /**
-* 通用 Mapper 代码生成器
+* 범용 매퍼 코드 생성기
 *
 * @author mapper-generator
 */
@@ -390,229 +385,46 @@ XML：
 </mapper>
 ```
 
-test-one.ftl 生成的信息如下：
+test-one.ftl 생성되는 정보는 다음과 같습니다 ：
 ```java
-目标package: 
+대상 package: 
 
-当前时间：
+현재 시간：
 2017-11-6
 22:00:45
 2017-11-06 22:00:45
 
-所有配置的属性信息:
+구성된 모든 속성 정보:
 targetPackage - 
 templateFormatter - tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter
 templatePath - generator/test-one.ftl
 targetProject - src/test/resources
 fileName - ${tableClass.shortClassName}Test.txt
 
-实体和表的信息：
-表名：user_info
-变量名：userInfo
-小写名：userinfo
-类名：UserInfo
-全名：test.model.UserInfo
-包名：test.model
+엔티티 및 테이블에 대한 정보 :
+테이블 이름 : user_info
+변수 이름 : userInfo
+소문자 이름 : userinfo
+클래스 이름 : UserInfo 
+전체 이름 : test.model.UserInfo 
+패키지 이름 : test.model
 
-列的信息：
-=====================================
-主键：
-    -------------------------------------
-    列名：Id
-    列类型：INTEGER
-    字段名：id
-    注释：
-    类型包名：java.lang
-    类型短名：Integer
-    类型全名：java.lang.Integer
-    是否主键：true
-    是否可空：false
-    是否为BLOB列：false
-    是否为String列：false
-    是否为字符串列：false
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：10
-    列精度：0
 
-基础列：
-    -------------------------------------
-    列名：username
-    列类型：VARCHAR
-    字段名：username
-    注释：用户名
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：false
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：32
-    列精度：0
-    -------------------------------------
-    列名：password
-    列类型：VARCHAR
-    字段名：password
-    注释：密码
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：32
-    列精度：0
-    -------------------------------------
-    列名：usertype
-    列类型：VARCHAR
-    字段名：usertype
-    注释：用户类型
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：2
-    列精度：0
-    -------------------------------------
-    列名：enabled
-    列类型：INTEGER
-    字段名：enabled
-    注释：是否可用
-    类型包名：java.lang
-    类型短名：Integer
-    类型全名：java.lang.Integer
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：false
-    是否为字符串列：false
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：10
-    列精度：0
-    -------------------------------------
-    列名：realname
-    列类型：VARCHAR
-    字段名：realname
-    注释：真实姓名
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：32
-    列精度：0
-    -------------------------------------
-    列名：qq
-    列类型：VARCHAR
-    字段名：qq
-    注释：QQ
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：14
-    列精度：0
-    -------------------------------------
-    列名：email
-    列类型：VARCHAR
-    字段名：email
-    注释：
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：100
-    列精度：0
-    -------------------------------------
-    列名：tel
-    列类型：VARCHAR
-    字段名：tel
-    注释：联系电话
-    类型包名：java.lang
-    类型短名：String
-    类型全名：java.lang.String
-    是否主键：false
-    是否可空：true
-    是否为BLOB列：false
-    是否为String列：true
-    是否为字符串列：true
-    是否为日期列：false
-    是否为时间列：false
-    是否为序列列：false
-    列长度：255
-    列精度：0
+## 마침
 
-Blob列：
+기본 코드 생성기는 Java 맞춤법 문자열의 출력과 매우 유사하며 매우 간단합니다. 여기서는 템플릿 만 사용됩니다.
 
-=====================================
-全部列：
-列名 - 字段名
-    Id - id
-    username - username
-    password - password
-    usertype - usertype
-    enabled - enabled
-    realname - realname
-    qq - qq
-    email - email
-    tel - tel
-```
-
-## 最后
-
-基础的代码生成器是很简单的，和 Java 拼字符串输出很像，这里只是使用了模板。
-
-几乎所有人都在 JSP 中用过的 EL 就是一种模板，可能你会 `<c:forEach ` 这种，但是联想不到这里的代码生成器而已。
+거의 모든 사람이 일종의 템플릿입니다. JSP EL에서 사용할 수 <c:forEach 있지만 여기서는 Lenovo 코드 생성기 만 사용할 수 없습니다
  
-后续会在 https://github.com/abel533/Mybatis-Spring 项目中提供一套模板做为示例。
+향후 https://github.com/abel533/Mybatis-Spring 프로젝트에서 템플릿 세트가 예제로 제공 될 것 입니다.
 
->项目的发展离不开你的支持，请作者喝杯咖啡吧！
+>프로젝트의 개발은 당신의 지원과 뗄 수없는 관계이며, 저자는 커피 한잔에 초대 받았습니다!
 >
->支付宝
+>알리 페이
 >
 ><img width="360" src="https://camo.githubusercontent.com/4af3ab81f88d87abfb9c67f9c6bba84047b079e1/68747470733a2f2f6d7962617469732e746b2f696d672f616c695f7061792e706e67" alt="支付宝" data-canonical-src="https://mybatis.io/img/ali_pay.png">
 >
->微信
+>위챗
 >
 ><img width="360" src="https://camo.githubusercontent.com/56a0b0aa0c09116cb0ef2f3ebe7f6d7103705a98/68747470733a2f2f6d7962617469732e746b2f696d672f77785f7061792e706e67" alt="微信" data-canonical-src="https://mybatis.io/img/wx_pay.png">
 

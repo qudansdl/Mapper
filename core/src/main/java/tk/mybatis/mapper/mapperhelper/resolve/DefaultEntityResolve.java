@@ -37,13 +37,13 @@ public class DefaultEntityResolve implements EntityResolve {
     @Override
     public EntityTable resolveEntity(Class<?> entityClass, Config config) {
         Style style = config.getStyle();
-        //style，该注解优先于全局配置
+        //스타일,이 주석은 전역 구성보다 우선합니다.
         if (entityClass.isAnnotationPresent(NameStyle.class)) {
             NameStyle nameStyle = entityClass.getAnnotation(NameStyle.class);
             style = nameStyle.value();
         }
 
-        //创建并缓存EntityTable
+        //EntityTable 생성 및 캐시
         EntityTable entityTable = null;
         if (entityClass.isAnnotationPresent(Table.class)) {
             Table table = entityClass.getAnnotation(Table.class);
@@ -54,9 +54,9 @@ public class DefaultEntityResolve implements EntityResolve {
         }
         if (entityTable == null) {
             entityTable = new EntityTable(entityClass);
-            //可以通过stye控制
+            //다래끼로 제어 가능
             String tableName = StringUtil.convertByStyle(entityClass.getSimpleName(), style);
-            //自动处理关键字
+            //키워드 자동 처리
             if (StringUtil.isNotEmpty(config.getWrapKeyword()) && SqlReservedWords.containsWord(tableName)) {
                 tableName = MessageFormat.format(config.getWrapKeyword(), tableName);
             }
@@ -64,7 +64,7 @@ public class DefaultEntityResolve implements EntityResolve {
         }
         entityTable.setEntityClassColumns(new LinkedHashSet<EntityColumn>());
         entityTable.setEntityClassPKColumns(new LinkedHashSet<EntityColumn>());
-        //处理所有列
+        //모든 열 처리
         List<EntityField> fields = null;
         if (config.isEnableMethodAnnotation()) {
             fields = FieldHelper.getAll(entityClass);
@@ -72,9 +72,9 @@ public class DefaultEntityResolve implements EntityResolve {
             fields = FieldHelper.getFields(entityClass);
         }
         for (EntityField field : fields) {
-            //如果启用了简单类型，就做简单类型校验，如果不是简单类型，直接跳过
-            //3.5.0 如果启用了枚举作为简单类型，就不会自动忽略枚举类型
-            //4.0 如果标记了 Column 或 ColumnType 注解，也不忽略
+            //단순형이 활성화 된 경우 단순형 검증을 수행하고 단순형이 아닌 경우 직접 건너 뛰기
+            //3.5.0 열거가 단순 유형으로 활성화 된 경우 열거 유형이 자동으로 무시되지 않습니다.
+            //4.0 Column 또는 ColumnType 주석으로 표시된 경우 무시하지 마십시오.
             if (config.isUseSimpleType()
                     && !field.isAnnotationPresent(Column.class)
                     && !field.isAnnotationPresent(ColumnType.class)
@@ -85,7 +85,7 @@ public class DefaultEntityResolve implements EntityResolve {
             }
             processField(entityTable, field, config, style);
         }
-        //当pk.size=0的时候使用所有列作为主键
+        //pk.size = 0이면 모든 열을 기본 키로 사용
         if (entityTable.getEntityClassPKColumns().size() == 0) {
             entityTable.setEntityClassPKColumns(entityTable.getEntityClassColumns());
         }
@@ -94,7 +94,7 @@ public class DefaultEntityResolve implements EntityResolve {
     }
 
     /**
-     * 处理字段
+     * 가공 분야
      *
      * @param entityTable
      * @param field
@@ -102,15 +102,15 @@ public class DefaultEntityResolve implements EntityResolve {
      * @param style
      */
     protected void processField(EntityTable entityTable, EntityField field, Config config, Style style) {
-        //排除字段
+        //필드 제외
         if (field.isAnnotationPresent(Transient.class)) {
             return;
         }
         //Id
         EntityColumn entityColumn = new EntityColumn(entityTable);
-        //是否使用 {xx, javaType=xxx}
+        //사용 여부 {xx, javaType=xxx}
         entityColumn.setUseJavaType(config.isUseJavaType());
-        //记录 field 信息，方便后续扩展使用
+        //후속 확장 사용을 위해 필드 정보 기록
         entityColumn.setEntityField(field);
         if (field.isAnnotationPresent(Id.class)) {
             entityColumn.setId(true);
@@ -126,9 +126,9 @@ public class DefaultEntityResolve implements EntityResolve {
         //ColumnType
         if (field.isAnnotationPresent(ColumnType.class)) {
             ColumnType columnType = field.getAnnotation(ColumnType.class);
-            //是否为 blob 字段
+            //BLOB 필드입니까?
             entityColumn.setBlob(columnType.isBlob());
-            //column可以起到别名的作用
+            //열은 별칭으로 작동 할 수 있습니다.
             if (StringUtil.isEmpty(columnName) && StringUtil.isNotEmpty(columnType.column())) {
                 columnName = columnType.column();
             }
@@ -139,11 +139,11 @@ public class DefaultEntityResolve implements EntityResolve {
                 entityColumn.setTypeHandler(columnType.typeHandler());
             }
         }
-        //列名
+        //열 이름
         if (StringUtil.isEmpty(columnName)) {
             columnName = StringUtil.convertByStyle(field.getName(), style);
         }
-        //自动处理关键字
+        //키워드 자동 처리
         if (StringUtil.isNotEmpty(config.getWrapKeyword()) && SqlReservedWords.containsWord(columnName)) {
             columnName = MessageFormat.format(config.getWrapKeyword(), columnName);
         }
@@ -151,11 +151,11 @@ public class DefaultEntityResolve implements EntityResolve {
         entityColumn.setColumn(columnName);
         entityColumn.setJavaType(field.getJavaType());
         if (field.getJavaType().isPrimitive()) {
-            log.warn("通用 Mapper 警告信息: <[" + entityColumn + "]> 使用了基本类型，基本类型在动态 SQL 中由于存在默认值，因此任何时候都不等于 null，建议修改基本类型为对应的包装类型!");
+            log.warn("만능인 Mapper 警告信息: <[" + entityColumn + "]> 사용하다了基本수업型，基本수업型在动态 SQL 中由于存在기본값，因此任何时候都不等于 null，建议修改基本수업型为对应의包装수업型!");
         }
         //OrderBy
         processOrderBy(entityTable, field, entityColumn);
-        //处理主键策略
+        //기본 키 전략 처리
         processKeyGenerator(entityTable, field, entityColumn);
         entityTable.getEntityClassColumns().add(entityColumn);
         if (entityColumn.isId()) {
@@ -164,7 +164,7 @@ public class DefaultEntityResolve implements EntityResolve {
     }
 
     /**
-     * 处理排序
+     * 처리 정렬
      *
      * @param entityTable
      * @param field
@@ -194,24 +194,24 @@ public class DefaultEntityResolve implements EntityResolve {
     }
 
     /**
-     * 处理主键策略
+     * 기본 키 전략 처리
      *
      * @param entityTable
      * @param field
      * @param entityColumn
      */
     protected void processKeyGenerator(EntityTable entityTable, EntityField field, EntityColumn entityColumn) {
-        //KeySql 优先级最高
+        //KeySql이 가장 높은 우선 순위를 가짐
         if (field.isAnnotationPresent(KeySql.class)) {
             processKeySql(entityTable, entityColumn, field.getAnnotation(KeySql.class));
         } else if (field.isAnnotationPresent(GeneratedValue.class)) {
-            //执行 sql - selectKey
+            //수행 sql - selectKey
             processGeneratedValue(entityTable, entityColumn, field.getAnnotation(GeneratedValue.class));
         }
     }
 
     /**
-     * 处理 GeneratedValue 注解
+     * GeneratedValue 주석 처리
      *
      * @param entityTable
      * @param entityColumn
@@ -224,10 +224,10 @@ public class DefaultEntityResolve implements EntityResolve {
             entityTable.setKeyProperties(entityColumn.getProperty());
             entityTable.setKeyColumns(entityColumn.getColumn());
         } else {
-            //允许通过generator来设置获取id的sql,例如mysql=CALL IDENTITY(),hsqldb=SELECT SCOPE_IDENTITY()
-            //允许通过拦截器参数设置公共的generator
+            //생성기가 ID를 가져 오는 SQL을 설정할 수 있도록합니다. 예를 들면mysql=CALL IDENTITY(),hsqldb=SELECT SCOPE_IDENTITY()
+            //인터셉터 매개 변수를 통한 공용 생성기 설정 허용
             if (generatedValue.strategy() == GenerationType.IDENTITY) {
-                //mysql的自动增长
+                //mysql의 자동 성장
                 entityColumn.setIdentity(true);
                 if (!"".equals(generatedValue.generator())) {
                     String generator = null;
@@ -241,15 +241,15 @@ public class DefaultEntityResolve implements EntityResolve {
                 }
             } else {
                 throw new MapperException(entityColumn.getProperty()
-                        + " - 该字段@GeneratedValue配置只允许以下几种形式:" +
-                        "\n1.useGeneratedKeys的@GeneratedValue(generator=\\\"JDBC\\\")  " +
-                        "\n2.类似mysql数据库的@GeneratedValue(strategy=GenerationType.IDENTITY[,generator=\"Mysql\"])");
+                        + " - 이 필드 @GeneratedValue 구성은 다음 양식 만 허용합니다.:" +
+                        "\n1.useGeneratedKeys의@GeneratedValue(generator=\\\"JDBC\\\")  " +
+                        "\n2.수업mysql 데이터베이스처럼@GeneratedValue(strategy=GenerationType.IDENTITY[,generator=\"Mysql\"])");
             }
         }
     }
 
     /**
-     * 处理 KeySql 注解
+     * KeySql 주석 처리
      *
      * @param entityTable
      * @param entityColumn
@@ -265,7 +265,7 @@ public class DefaultEntityResolve implements EntityResolve {
             entityColumn.setIdentity(true);
             entityColumn.setOrder(ORDER.AFTER);
         }  else if (keySql.dialect() != IdentityDialect.NULL) {
-            //自动增长
+            //자동 성장
             entityColumn.setIdentity(true);
             entityColumn.setOrder(ORDER.AFTER);
             entityColumn.setGenerator(keySql.dialect().getIdentityRetrievalStatement());
@@ -281,15 +281,15 @@ public class DefaultEntityResolve implements EntityResolve {
                 GenSql genSql = keySql.genSql().newInstance();
                 entityColumn.setGenerator(genSql.genSql(entityTable, entityColumn));
             } catch (Exception e) {
-                log.error("实例化 GenSql 失败: " + e, e);
-                throw new MapperException("实例化 GenSql 失败: " + e, e);
+                log.error("GenSql을 인스턴스화하지 못했습니다.: " + e, e);
+                throw new MapperException("GenSql을 인스턴스화하지 못했습니다.: " + e, e);
             }
         } else if(keySql.genId() != GenId.NULL.class){
             entityColumn.setIdentity(false);
             entityColumn.setGenIdClass(keySql.genId());
         } else {
             throw new MapperException(entityTable.getEntityClass().getCanonicalName()
-                    + " 类中的 @KeySql 注解配置无效!");
+                    + " 클래스의 @KeySql 주석 구성이 잘못되었습니다!");
         }
     }
 

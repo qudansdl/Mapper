@@ -1,4 +1,4 @@
---该脚本需手动导入本地Oracle库
+--스크립트를 로컬 Oracle 라이브러리로 수동으로 가져와야합니다.
 create table demo_country (
   country_id      varchar2(50) constraint pk_demo_country__id primary key,
   country_name    varchar(255) not null,

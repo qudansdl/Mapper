@@ -1,4 +1,4 @@
 /**
- * 通过 issues 提交的问题
+ * 이슈를 통해 제출 된 이슈
  */
 package tk.mybatis.mapper.issues;

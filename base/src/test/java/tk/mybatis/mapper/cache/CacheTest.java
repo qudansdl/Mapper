@@ -29,13 +29,13 @@ public class CacheTest extends BaseTest {
             Country country = mapper.selectByPrimaryKey(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //由于 CountryMapper 没有使用二级缓存，因此下面的设置不会影响下次（不同的 SqlSession）查询
-            country.setCountryname("中国");
+            //CountryMapper는 보조 캐시를 사용하지 않으므로 다음 설정은 다음 조회에 영향을주지 않습니다 (다른 SqlSession).
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //下面获取新的 sqlSession
+        //아래에서 새로운 것을 얻으십시오 sqlSession
         sqlSession = getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
@@ -44,7 +44,7 @@ public class CacheTest extends BaseTest {
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
 
-            Assert.assertNotEquals("中国", country.getCountryname());
+            Assert.assertNotEquals("중국", country.getCountryname());
             Assert.assertNotEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
@@ -53,34 +53,34 @@ public class CacheTest extends BaseTest {
 
     @Test
     public void testSingleInterfaceCache() {
-        //利用二级缓存的脏数据特性来验证二级缓存
+        //2 단계 캐시의 더티 데이터 기능을 사용하여 2 단계 캐시를 확인합니다.
         SqlSession sqlSession = getSqlSession();
         try {
             CountryCacheMapper mapper = sqlSession.getMapper(CountryCacheMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //这里修改会产生脏数据，这么做只是为了验证二级缓存
-            country.setCountryname("中国");
+            //여기에서 수정하면 더티 데이터가 생성됩니다. 이것은 보조 캐시를 확인하기위한 것입니다.
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //前面 sqlSession.close() 后就会缓存，下面获取新的 sqlSession
+        //이전 sqlSession.close ()가 캐시되고 새 sqlSession.close ()가 아래에서 확보됩니다. sqlSession
         sqlSession = getSqlSession();
         try {
             CountryCacheMapper mapper = sqlSession.getMapper(CountryCacheMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
-            Assert.assertEquals("中国", country.getCountryname());
+            Assert.assertEquals("중국", country.getCountryname());
             Assert.assertEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
         }
-        //下面清空缓存再试
+        //캐시를 지우고 다시 시도하십시오.
         sqlSession = getSqlSession();
         try {
             CountryCacheMapper mapper = sqlSession.getMapper(CountryCacheMapper.class);
-            //调用 update 清空缓存
+            //업데이트를 호출하여 캐시를 지우십시오.
             mapper.updateByPrimaryKey(new Country());
             Country country = mapper.selectByPrimaryKey(35);
             Assert.assertEquals("China", country.getCountryname());
@@ -93,25 +93,25 @@ public class CacheTest extends BaseTest {
     @Test
     public void testCountryCacheRefMapper() {
         //--------------------selectByPrimaryKey---------------------
-        //利用二级缓存的脏数据特性来验证二级缓存
+        //2 단계 캐시의 더티 데이터 기능을 사용하여 2 단계 캐시를 확인합니다.
         SqlSession sqlSession = getSqlSession();
         try {
             CountryCacheRefMapper mapper = sqlSession.getMapper(CountryCacheRefMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //这里修改会产生脏数据，这么做只是为了验证二级缓存
-            country.setCountryname("中国");
+            //여기에서 수정하면 더티 데이터가 생성됩니다. 이것은 보조 캐시를 확인하기위한 것입니다.
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //前面 sqlSession.close() 后就会缓存，下面获取新的 sqlSession
+        //이전 sqlSession.close ()가 캐시되고 새 sqlSession.close ()가 아래에서 확보됩니다. sqlSession
         sqlSession = getSqlSession();
         try {
             CountryCacheRefMapper mapper = sqlSession.getMapper(CountryCacheRefMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
-            Assert.assertEquals("中国", country.getCountryname());
+            Assert.assertEquals("중국", country.getCountryname());
             Assert.assertEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
@@ -124,27 +124,27 @@ public class CacheTest extends BaseTest {
             Country country = mapper.selectById(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //这里修改会产生脏数据，这么做只是为了验证二级缓存
-            country.setCountryname("中国");
+            //여기에서 수정하면 더티 데이터가 생성됩니다. 이것은 보조 캐시를 확인하기위한 것입니다.
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //前面 sqlSession.close() 后就会缓存，下面获取新的 sqlSession
+        //이전 sqlSession.close ()가 캐시되고 새 sqlSession.close ()가 아래에서 확보됩니다. sqlSession
         sqlSession = getSqlSession();
         try {
             CountryCacheRefMapper mapper = sqlSession.getMapper(CountryCacheRefMapper.class);
             Country country = mapper.selectById(35);
-            Assert.assertEquals("中国", country.getCountryname());
+            Assert.assertEquals("중국", country.getCountryname());
             Assert.assertEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
         }
-        //下面清空缓存再试
+        //캐시를 지우고 다시 시도하십시오.
         sqlSession = getSqlSession();
         try {
             CountryCacheRefMapper mapper = sqlSession.getMapper(CountryCacheRefMapper.class);
-            //调用 update 清空缓存
+            //업데이트를 호출하여 캐시를 지우십시오.
             mapper.updateByPrimaryKey(new Country());
             Country country = mapper.selectById(35);
             Assert.assertEquals("China", country.getCountryname());
@@ -155,28 +155,28 @@ public class CacheTest extends BaseTest {
     }
 
     @Test
-    @Ignore("MyBatis 有 Bug，这种方式目前行不通")
+    @Ignore("MyBatis 버그가 있습니다.이 방법은 현재 작동하지 않습니다.")
     public void testCountryCacheWithXmlMapper() {
         //--------------------selectByPrimaryKey---------------------
-        //利用二级缓存的脏数据特性来验证二级缓存
+        //2 단계 캐시의 더티 데이터 기능을 사용하여 2 단계 캐시를 확인합니다.
         SqlSession sqlSession = getSqlSession();
         try {
             CountryCacheWithXmlMapper mapper = sqlSession.getMapper(CountryCacheWithXmlMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //这里修改会产生脏数据，这么做只是为了验证二级缓存
-            country.setCountryname("中国");
+            //여기에서 수정하면 더티 데이터가 생성됩니다. 이것은 보조 캐시를 확인하기위한 것입니다.
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //前面 sqlSession.close() 后就会缓存，下面获取新的 sqlSession
+        //이전 sqlSession.close ()가 캐시되고 새 sqlSession.close ()가 아래에서 확보됩니다. sqlSession
         sqlSession = getSqlSession();
         try {
             CountryCacheWithXmlMapper mapper = sqlSession.getMapper(CountryCacheWithXmlMapper.class);
             Country country = mapper.selectByPrimaryKey(35);
-            Assert.assertEquals("中国", country.getCountryname());
+            Assert.assertEquals("중국", country.getCountryname());
             Assert.assertEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
@@ -189,27 +189,27 @@ public class CacheTest extends BaseTest {
             Country country = mapper.selectById(35);
             Assert.assertEquals("China", country.getCountryname());
             Assert.assertEquals("CN", country.getCountrycode());
-            //这里修改会产生脏数据，这么做只是为了验证二级缓存
-            country.setCountryname("中国");
+            //여기에서 수정하면 더티 데이터가 생성됩니다. 이것은 보조 캐시를 확인하기위한 것입니다.
+            country.setCountryname("중국");
             country.setCountrycode("ZH");
         } finally {
             sqlSession.close();
         }
-        //前面 sqlSession.close() 后就会缓存，下面获取新的 sqlSession
+        //이전 sqlSession.close ()가 캐시되고 새 sqlSession.close ()가 아래에서 확보됩니다. sqlSession
         sqlSession = getSqlSession();
         try {
             CountryCacheWithXmlMapper mapper = sqlSession.getMapper(CountryCacheWithXmlMapper.class);
             Country country = mapper.selectById(35);
-            Assert.assertEquals("中国", country.getCountryname());
+            Assert.assertEquals("중국", country.getCountryname());
             Assert.assertEquals("ZH", country.getCountrycode());
         } finally {
             sqlSession.close();
         }
-        //下面清空缓存再试
+        //캐시를 지우고 다시 시도하십시오.
         sqlSession = getSqlSession();
         try {
             CountryCacheWithXmlMapper mapper = sqlSession.getMapper(CountryCacheWithXmlMapper.class);
-            //调用 update 清空缓存
+            //업데이트를 호출하여 캐시를 지우십시오.
             mapper.updateByPrimaryKey(new Country());
             Country country = mapper.selectById(35);
             Assert.assertEquals("China", country.getCountryname());

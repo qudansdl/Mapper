@@ -28,9 +28,9 @@ package tk.mybatis.mapper.common;
 import tk.mybatis.mapper.common.condition.*;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

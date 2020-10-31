@@ -48,7 +48,7 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * 每一个模板都需要配置一个插件，可以配置多个
+ * 각 템플릿은 플러그인으로 구성해야하며
  * <p>
  * <pre>
  * &lt;plugin type="xxx.TemplateFilePlugin"&gt;
@@ -65,47 +65,47 @@ import java.util.*;
  */
 public class TemplateFilePlugin extends PluginAdapter {
     /**
-     * 默认的模板格式化类
+     * 기본 템플릿 형식화 클래스
      */
     public static final String DEFAULT_TEMPLATEFORMATTER = "tk.mybatis.mapper.generator.formatter.FreemarkerTemplateFormatter";
     /**
-     * 单个文件模式
+     * 단일 파일 모드
      */
     private String          singleMode;
     /**
-     * 项目路径（目录需要已经存在）
+     * 프로젝트 경로 (디렉토리가 이미 존재해야 함)
      */
     private String          targetProject;
     /**
-     * 生成的包（路径不存在则创建）
+     * 생성 된 패키지 (경로가없는 경우 생성)
      */
     private String          targetPackage;
     /**
-     * 模板路径
+     * 템플릿 경로
      */
     private String          templatePath;
     /**
-     * 模板内容
+     * 템플릿 내용
      */
     private String          templateContent;
     /**
-     * 文件名模板，通过模板方式生成文件名，包含后缀
+     * 파일 이름 템플릿, 파일 이름은 접미사를 포함하여 템플릿을 통해 생성됩니다.
      */
     private String          fileName;
     /**
-     * 模板生成器
+     * 템플릿 생성기
      */
     private Object          templateFormatter;
     private String          templateFormatterClass;
     private Set<TableClass> cacheTables;
     
     /**
-     * 编码
+     * 코딩
      */
     private String encoding;
 
     /**
-     * 列转换为字段
+     * 열을 필드로 변환
      *
      * @param introspectedColumn
      * @return
@@ -121,7 +121,7 @@ public class TemplateFilePlugin extends PluginAdapter {
     }
 
     /**
-     * 读取文件
+     * 파일 읽기
      *
      * @param inputStream
      * @return
@@ -142,11 +142,11 @@ public class TemplateFilePlugin extends PluginAdapter {
     public boolean validate(List<String> warnings) {
         boolean right = true;
         if (!StringUtility.stringHasValue(fileName)) {
-            warnings.add("没有配置 \"fileName\" 文件名模板，因此不会生成任何额外代码!");
+            warnings.add("구성 없음 \"fileName\" 文件名模板，因此不会일으키다任何额外代码!");
             right = false;
         }
         if (!StringUtility.stringHasValue(templatePath)) {
-            warnings.add("没有配置 \"templatePath\" 模板路径，因此不会生成任何额外代码!");
+            warnings.add("구성 없음 \"templatePath\" 템플릿 경로，因此不会일으키다任何额外代码!");
             right = false;
         } else {
             try {
@@ -154,7 +154,7 @@ public class TemplateFilePlugin extends PluginAdapter {
                 try {
                     resourceUrl = ObjectFactory.getResource(templatePath);
                 } catch (Exception e) {
-                    warnings.add("本地加载\"templatePath\" 模板路径失败，尝试 URL 方式获取!");
+                    warnings.add("로컬로로드\"templatePath\" 템플릿 경로失败，尝试 URL 方式얻다!");
                 }
                 if (resourceUrl == null) {
                     resourceUrl = new URL(templatePath);
@@ -164,13 +164,13 @@ public class TemplateFilePlugin extends PluginAdapter {
                 inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
-                warnings.add("读取模板文件出错: " + e.getMessage());
+                warnings.add("템플릿 파일 읽기 오류 : " + e.getMessage());
                 right = false;
             }
         }
         if (!StringUtility.stringHasValue(templateFormatterClass)) {
             templateFormatterClass = DEFAULT_TEMPLATEFORMATTER;
-            warnings.add("没有配置 \"templateFormatterClass\" 模板处理器，使用默认的处理器!");
+            warnings.add("구성 없음 \"templateFormatterClass\" 模板다루다器，사용하다기본의다루다器!");
         }
         try {
             templateFormatter = Class.forName(templateFormatterClass).newInstance();
@@ -184,14 +184,14 @@ public class TemplateFilePlugin extends PluginAdapter {
         int errorCount = 0;
         if (!StringUtility.stringHasValue(targetProject)) {
             errorCount++;
-            warnings.add("没有配置 \"targetProject\" 路径!");
+            warnings.add("구성 없음 \"targetProject\" 통로!");
         }
         if (!StringUtility.stringHasValue(targetPackage)) {
             errorCount++;
-            warnings.add("没有配置 \"targetPackage\" 路径!");
+            warnings.add("구성 없음 \"targetPackage\" 통로!");
         }
         if (errorCount >= 2) {
-            warnings.add("由于没有配置任何有效路径，不会生成任何额外代码!");
+            warnings.add("由于구성 없음任何有效路径，不会일으키다任何额外代码!");
             return false;
         }
         return true;

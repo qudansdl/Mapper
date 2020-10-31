@@ -34,14 +34,14 @@ import tk.mybatis.mapper.model.Country;
 import java.util.List;
 
 /**
- * 通过实体类属性进行查询
+ * 엔티티 클래스 속성 별 조회
  *
  * @author liuzh
  */
 public class TestSelect {
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test
     public void testDynamicSelectAll() {
@@ -52,12 +52,12 @@ public class TestSelect {
             List<Country> countryList;
             //country.setDynamicTableName123("country_123");
             //countryList = mapper.select(country);
-            //查询总数
+            //총 조회 수
             //Assert.assertEquals(2, countryList.size());
 
             country.setDynamicTableName123(null);
             countryList = mapper.select(country);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, countryList.size());
         } finally {
             sqlSession.close();
@@ -65,7 +65,7 @@ public class TestSelect {
     }
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test
     public void testDynamicSelectPage() {
@@ -75,11 +75,11 @@ public class TestSelect {
             Country country = new Country();
             country.setCountrycode("US");
             List<Country> countryList = mapper.selectPage(country, 0, 10);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(1, countryList.size());
 
             countryList = mapper.selectPage(null, 100, 10);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, countryList.size());
         } finally {
             sqlSession.close();
@@ -87,7 +87,7 @@ public class TestSelect {
     }
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test
     public void testAllColumns() {
@@ -107,7 +107,7 @@ public class TestSelect {
     }
 
     /**
-     * 入参为null时查询全部
+     * 입력 매개 변수가 null 인 경우 모두 조회
      */
     @Test
     public void testDynamicSelectAllByNull() {
@@ -121,7 +121,7 @@ public class TestSelect {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicSelect() {
@@ -141,7 +141,7 @@ public class TestSelect {
     }
 
     /**
-     * 查询不存在的结果
+     * 존재하지 않는 조회 결과
      */
     @Test
     public void testDynamicSelectZero() {
@@ -150,7 +150,7 @@ public class TestSelect {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             Country country = new Country();
             country.setCountrycode("CN");
-            country.setCountryname("天朝");//实际上是 China
+            country.setCountryname("천상의 왕조");//실제로 China
             List<Country> countryList = mapper.select(country);
 
             Assert.assertEquals(0, countryList.size());
@@ -160,14 +160,14 @@ public class TestSelect {
     }
 
     /**
-     * 继承类可以使用,但多出来的属性无效
+     * 상속 된 클래스를 사용할 수 있지만 추가 속성이 유효하지 않습니다.
      */
     @Test
     public void testDynamicSelectNotFoundKeyProperties() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(183, mapper.select(new Key()).size());
 
             Key key = new Key();

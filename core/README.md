@@ -1,107 +1,106 @@
-# MyBatis通用Mapper3
+# MyBatis Universal Mapper3
 
 [![Build Status](https://travis-ci.org/abel533/Mapper.svg?branch=master)](https://travis-ci.org/abel533/Mapper)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper)
 [![Dependency Status](https://www.versioneye.com/user/projects/593212c722f278006540a1d1/badge.svg?style=flat)](https://www.versioneye.com/user/projects/593212c722f278006540a1d1)
 
-通用Mapper都可以极大的方便开发人员。可以随意的按照自己的需要选择通用方法，还可以很方便的开发自己的通用方法。
+General Mapper는 개발자를 크게 지원할 수 있습니다. 필요에 따라 일반적인 방법을 마음대로 선택할 수 있으며 자신 만의 일반적인 방법을 매우 편리하게 개발할 수도 있습니다.
 
-极其方便的使用MyBatis单表的增删改查。
+MyBatis 단일 테이블을 사용하여 추가, 삭제, 수정 및 확인하는 것은 매우 편리합니다.
 
-支持单表操作，不支持通用的多表联合查询。
+단일 테이블 작업을 지원하고 일반 다중 테이블 공동 쿼리는 지원하지 않습니다.
 
-## 新书《MyBatis 从入门到精通》
+## 시작에서 마스터로 MyBatis
 
-![MyBatis 从入门到精通](https://github.com/mybatis-book/book/raw/master/book.png)
+![MyBatis 시작에서 마스터](https://github.com/mybatis-book/book/raw/master/book.png)
 
-购买地址：[京东](https://item.jd.com/12103309.html)，[当当](http://product.dangdang.com/25098208.html)，[亚马逊](https://www.amazon.cn/MyBatis从入门到精通-刘增辉/dp/B072RC11DM/ref=sr_1_18?ie=UTF8&qid=1498007125&sr=8-18&keywords=mybatis)
+구매 주소 ：[Jingdong](https://item.jd.com/12103309.html)，[Dangdang](http://product.dangdang.com/25098208.html)，[Amazon](https://www.amazon.cn/MyBatis从入门到精通-刘增辉/dp/B072RC11DM/ref=sr_1_18?ie=UTF8&qid=1498007125&sr=8-18&keywords=mybatis)
 
-CSDN博客：http://blog.csdn.net/isea533/article/details/73555400
+CSDN：http://blog.csdn.net/isea533/article/details/73555400
 
-GitHub项目：https://github.com/mybatis-book/book
+GitHub：https://github.com/mybatis-book/book
 
-## 通用 Mapper 支持 Mybatis-3.2.4 及以上版本
-## 不是表中字段的属性必须加 `@Transient` 注解
+## General Mapper는 Mybatis-3.2.4 이상을 지원합니다.
+## 테이블의 속성 필드에 @Transient주석을 추가하면 안됩니다 .
 
-## Spring DevTools 配置
-感谢[emf1002](https://github.com/emf1002)提供的解决方案。
+## Spring DevTools 구성
+[emf1002](https://github.com/emf1002)。
 
-在使用 DevTools 时，通用Mapper经常会出现 `class x.x.A cannot be cast to x.x.A`。
+DevTools를 사용할 때 일반 Mapper가 자주 나타납니다 class x.x.A cannot be cast to x.x.A.
 
-同一个类如果使用了不同的类加载器，就会产生这样的错误，所以解决方案就是让通用Mapper和实体类使用相同的类加载器即可。
+동일한 클래스가 다른 클래스 로더를 사용하는 경우 이러한 오류가 발생하므로 해결 방법은 일반 Mapper 및 엔티티 클래스에 대해 동일한 클래스 로더를 사용하는 것입니다.
 
-DevTools 默认会对 IDE 中引入的所有项目使用 restart 类加载器，对于引入的 jar 包使用 base 类加载器，因此只要保证通用Mapper的jar包使用 restart
-类加载器即可。
+기본적으로 DevTools는 IDE에 도입 된 모든 프로젝트에 대해 다시 시작 클래스 로더를 사용하고 일반 매퍼의 jar 패키지가 다시 시작 클래스 로더를 사용하는 한 가져온 jar 패키지에 대해 기본 클래스 로더를 사용합니다.
 
-在 `src/main/resources` 中创建 META-INF 目录，在此目录下添加 spring-devtools.properties 配置，内容如下：
+`src/main/resources`에 META-INF/spring-devtools.properties 파일 생성：
 ```properties
 restart.include.mapper=/mapper-[\\w-\\.]+jar
 restart.include.pagehelper=/pagehelper-[\\w-\\.]+jar
 ```
-使用这个配置后，就会使用 restart 类加载加载 include 进去的 jar 包。
+이 구성을 사용한 후 다시 시작 클래스를 사용하여 포함 된 jar 패키지를로드합니다.
 
-## 项目文档
+## 프로젝트 문서
 
 ### https://mapperhelper.github.io
 
-在你打算使用通用 Mapper 前，一定要看看下面的文档，许多人在初次使用时遇到的问题，99% 都在文档中有说明！！
+Universal Mapper를 사용하기 전에 다음 문서를 반드시 읽으십시오. 처음 사용하는 동안 많은 사람들이 겪는 문제의 99 %가 문서에 설명되어 있습니다! !
 
-1. [如何集成通用Mapper](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/2.Integration.md)
-2. [如何使用通用Mapper](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/3.Use.md)
-2. [3.3.0版本新增功能用法文档](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/3.2.Use330.md)
-3. [根据需要自定义接口](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/4.Professional.md)
-4. [Mapper3通用接口大全](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/5.Mappers.md)
-5. [扩展通用接口](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/6.MyMapper.md)
-6. [使用Mapper专用的MyBatis生成器插件](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/7.UseMBG.md)
-7. [在Spring4中使用通用Mapper](http://git.oschina.net/free/Mapper2/blob/master/wiki/mapper/4.Spring4.md)
-8. [Mapper3常见问题和用法](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/9.QA.md)
+1. [일반 매퍼를 통합하는 방법](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/2.Integration.md)
+2. [Universal Mapper 사용 방법](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/3.Use.md)
+2. [버전 3.3.0 사용 문서의 새로운 기능](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/3.2.Use330.md)
+3. [필요에 따라 인터페이스 사용자 지정](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/4.Professional.md)
+4. [Mapper3 일반 인터페이스 완료](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/5.Mappers.md)
+5. [확장 된 공통 인터페이스](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/6.MyMapper.md)
+6. [Mapper 용 MyBatis 생성기 플러그인 사용](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/7.UseMBG.md)
+7. [Spring 4에서 Universal Mapper 사용](http://git.oschina.net/free/Mapper2/blob/master/wiki/mapper/4.Spring4.md)
+8. [Mapper3 일반적인 문제 및 사용법](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/9.QA.md)
 
-### 如何让作者为你开发通用方法？
+### 저자는 당신을위한 일반적인 방법을 어떻게 개발할 수 있습니까?
 
-实际上，只要你看看上面的第 6 个文档，你完全可以自己开发出来。
+사실, 위의 여섯 번째 문서를 보면 직접 개발할 수 있습니다.
 
-或者你可以通过赞助作者 10~50 元来让作者根据你的需求开发**一个**通用方法。
+아니면 저자가 개발 수 있도록 저자에게 10 ~ 50위안을 후원 할 수 일반적인 방법을 사용자의 필요에 따라 .
 
-赞助后保留截图，将截图和需求内容发邮件到 abel533@gmail.com 和作者联系。
+후원 후 스크린 샷을 보관하고 스크린 샷과 필수 콘텐츠를  abel533@gmail.com이메일을 보내 저자 에게 연락하십시오.
 
-你还可以通过开源中国众包购买服务[开发 MyBatis 通用 Mapper 通用方法](https://zb.oschina.net/market/opus/92cda9e3bc85365f)
+오픈 소스 중국어 크라우드 소싱 구매 서비스를 통해[MyBatis Universal Mapper Universal Method](https://zb.oschina.net/market/opus/92cda9e3bc85365f)
 
-## 通用 Mapper - 简单用法示例
+## 일반 매퍼 간단한 사용 예
 
-全部针对单表操作，每个实体类都需要继承通用Mapper接口来获得通用方法。
+모두 단일 테이블 작업의 경우 각 엔티티 클래스는 일반 메소드를 얻기 위해 일반 Mapper 인터페이스를 상속해야합니다.
 
-示例代码：
+샘플 코드：
 
     CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-    //查询全部
+    //전체 조회
     List<Country> countryList = mapper.select(new Country());
-    //总数
+    //갯수
     Assert.assertEquals(183, countryList.size());
 
-    //通用Example查询
+    //일반 예제 쿼리
     Example example = new Example(Country.class);
     example.createCriteria().andGreaterThan("id", 100);
     countryList = mapper.selectByExample(example);
     Assert.assertEquals(83, countryList.size());
 
-    //MyBatis-Generator生成的Example查询
+    //MyBatis-Generator에서 생성 한 예제 쿼리
     CountryExample example2 = new CountryExample();
     example2.createCriteria().andIdGreaterThan(100);
     countryList = mapper.selectByExample(example2);
     Assert.assertEquals(83, countryList.size());
 
-CountryMapper代码如下：
+CountryMapper：
 
     public interface CountryMapper extends Mapper<Country> {
     }
 
-这里不说更具体的内容，如果您有兴趣，可以查看下面的<b>项目文档</b>
+여기서 더 구체적인 내용에 대해서는 언급하지 않겠습니다. 관심이 있으시면 다음 <b>프로젝트 문서</b>를 확인하세요.
 
-## 实体类注解
+## 엔티티 클래스 주석
 
-从上面效果来看也能感觉出这是一种类似hibernate的用法，因此也需要实体和表对应起来，因此使用了JPA注解。更详细的内容可以看下面的<b>项目文档</b>。
+위의 효과에서 이것이 최대 절전 모드와 같은 사용이라고 느낄 수도 있으므로 엔티티와 테이블도 대응해야하므로 JPA 주석이 사용됩니다. 자세한 내용은 다음 <b>프로젝트 문서</b>를 참조하십시오.
 
-Country代码：
+Country：
 
     public class Country {
         @Id
@@ -109,50 +108,50 @@ Country代码：
         @Column
         private String countryname;
         private String countrycode;
-        //省略setter和getter方法
+        //setter 및 getter 메서드 생략
     }
     
-[使用Mapper专用的MyBatis Generator插件](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/7.UseMBG.md) 可以方便的生成这些（带注解的）实体类。
+이러한 (주석이있는) 엔티티 클래스는[Mapper 용 MyBatis Generator 플러그인](http://git.oschina.net/free/Mapper/blob/master/wiki/mapper3/7.UseMBG.md)을 사용하여 쉽게 생성 할 수 있습니다.
 
-## 使用 Maven
+## Maven 사용
 ```xml
 <dependency>
     <groupId>tk.mybatis</groupId>
     <artifactId>mapper</artifactId>
-    <version>最新版本</version>
+    <version>버전</version>
 </dependency>
 ```
-如果你使用 Spring Boot 可以直接引入：
+Spring Boot를 사용하는 경우：
 ```xml
 <!--mapper-->
 <dependency>
     <groupId>tk.mybatis</groupId>
     <artifactId>mapper-spring-boot-starter</artifactId>
-    <version>最新版本</version>
+    <version>버전</version>
 </dependency>
 ```
-具体用法可以参考：[MyBatis-Spring-Boot](https://github.com/abel533/MyBatis-Spring-Boot) 
+구체적인 사용법은 다음을 참조하십시오：[MyBatis-Spring-Boot](https://github.com/abel533/MyBatis-Spring-Boot) 
 
-## 引入 Jar 包，下载地址：
+## Jar 패키지 소개, 다운로드 링크：
 
 https://oss.sonatype.org/content/repositories/releases/tk/mybatis/mapper
 
 http://repo1.maven.org/maven2/tk/mybatis/mapper
 
-由于通用Mapper依赖JPA，所以还需要下载persistence-api-1.0.jar：
+Universal Mapper는 JPA를 사용하므로 persistence-api-1.0.jar도 다운로드해야합니다.
 
 http://repo1.maven.org/maven2/javax/persistence/persistence-api/1.0/
 
 ## [更新日志](http://git.oschina.net/free/Mapper/blob/master/wiki/Changelog.md)
 
-##作者信息
+##업데이트 로그 
 
-MyBatis 工具网站:[https://mybatis.io](https://mybatis.io)
+MyBatis:[https://mybatis.io](https://mybatis.io)
 
-作者博客：http://blog.csdn.net/isea533
+블로그：http://blog.csdn.net/isea533
 
-作者邮箱： abel533@gmail.com
+이메일： abel533@gmail.com
 
-如需加群，请通过 https://mybatis.io 首页按钮加群。
+그룹 추가가 필요한 경우  https://mybatis.io 홈페이지 버튼을 통해 그룹을 추가 하세요.
 
-推荐使用Mybatis分页插件:[PageHelper分页插件](https://github.com/pagehelper/Mybatis-PageHelper)
+Mybatis 페이징 플러그인 사용 권장 :[PageHelper分页插件](https://github.com/pagehelper/Mybatis-PageHelper)

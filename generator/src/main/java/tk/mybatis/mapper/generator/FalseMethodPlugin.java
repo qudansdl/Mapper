@@ -34,7 +34,7 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import java.util.List;
 
 /**
- * 禁用大多数方法
+ * 대부분의 방법 비활성화
  *
  * @author liuzh
  */
@@ -45,7 +45,7 @@ public class FalseMethodPlugin extends PluginAdapter {
         return true;
     }
 
-    //下面所有return false的方法都不生成。这些都是基础的CRUD方法，使用通用Mapper实现
+    //아래 모두return 잘못된 메서드는 생성되지 않습니다.일반적인 Mapper를 사용하여 구현되는 기본 CRUD 방법입니다.
     @Override
     public boolean clientDeleteByPrimaryKeyMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         return false;

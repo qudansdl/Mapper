@@ -7,7 +7,7 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import java.util.List;
 
 /**
- * @Description:  通用Mapper接口, 非空字段强制更新
+ * @Description:  일반 매퍼 인터페이스, 비어 있지 않은 필드의 필수 업데이트
  * @author qrqhuangcy
  * @date 2018-06-26
  */
@@ -15,7 +15,7 @@ import java.util.List;
 public interface UpdateByPrimaryKeySelectiveForceMapper<T> {
 
     /**
-     * 根据主键更新属性不为null的值, 指定的属性(null值)会被强制更新
+     * null이 아닌 속성 값을 업데이트하는 기본 키에 따라 지정된 속성 (null 값)이 강제로 업데이트됩니다.
      * @param record
      * @param forceUpdateProperties
      * @return

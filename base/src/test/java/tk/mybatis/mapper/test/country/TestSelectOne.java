@@ -33,14 +33,14 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.Country;
 
 /**
- * 通过实体类属性进行查询
+ * 엔티티 클래스 속성 별 조회
  *
  * @author liuzh
  */
 public class TestSelectOne {
 
     /**
-     * 查询全部
+     * 모두 조회
      */
     @Test(expected = TooManyResultsException.class)
     public void testDynamicSelectAll() {
@@ -54,7 +54,7 @@ public class TestSelectOne {
     }
 
     /**
-     * 入参为null时查询全部
+     * 입력 매개 변수가 null 인 경우 모두 조회
      */
     @Test(expected = TooManyResultsException.class)
     public void testDynamicSelectAllByNull() {
@@ -68,7 +68,7 @@ public class TestSelectOne {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicSelect() {
@@ -87,7 +87,7 @@ public class TestSelectOne {
     }
 
     /**
-     * 查询不存在的结果
+     * 존재하지 않는 조회 결과
      */
     @Test
     public void testDynamicSelectZero() {
@@ -96,7 +96,7 @@ public class TestSelectOne {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             Country country = new Country();
             country.setCountrycode("CN");
-            country.setCountryname("天朝");//实际上是 China
+            country.setCountryname("천상의 왕조");//실제로 China
             Country result = mapper.selectOne(country);
 
             Assert.assertNull(result);

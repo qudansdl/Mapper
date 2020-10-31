@@ -1,22 +1,22 @@
-# Mybatis 通用 Mapper Jar 集成
+# Mybatis Universal Mapper 통합 Jar 
 
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-all-dependencies/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper-all-dependencies)
 
-本项目默认集成了 mapper-core, mapper-extra, mapper-generator, mapper-spring, mapper-weekend 项目。
+mapper-core, mapper-extra, mapper-generator, mapper-spring, mapper-weekend 프로젝트를 통합.
 
-使用时，只需要添加 mapper-all 的依赖即可。
+mapper-all 종속성 추가.
 
 ```xml
 <dependency>
     <groupId>tk.mybatis</groupId>
     <artifactId>mapper-all-dependencies</artifactId>
-    <version>版本号</version>
+    <version>버전</version>
 </dependency>
 ```
 
-引入后会自动引入其他依赖。
+다른 종속성은 자동 추가.
 
-可以通过在 pom 中增加下面对应的属性来修改依赖的版本号： 
+pom에 다음 해당 속성을 추가하여 버전 번호 수정： 
 
 ```xml
 <properties>
@@ -28,4 +28,4 @@
 </properties>
 ```
 
->上面具体版本号只是示例，默认不需要自己设置。
+>위의 특정 버전 번호는 예시 일 뿐이며 기본적으로 설정할 필요가 없습니다.。

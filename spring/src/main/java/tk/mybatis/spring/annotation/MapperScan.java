@@ -138,14 +138,14 @@ public @interface MapperScan {
     Class<? extends MapperFactoryBean> factoryBean() default MapperFactoryBean.class;
 
     /**
-     * 通用 Mapper 的配置，一行一个配置
+     * 일반 매퍼 구성, 한 줄에 하나의 구성
      *
      * @return
      */
     String[] properties() default {};
 
     /**
-     * 还可以直接配置一个 MapperHelper bean
+     * 직접 구성 할 수도 있습니다. MapperHelper bean
      *
      * @return
      */

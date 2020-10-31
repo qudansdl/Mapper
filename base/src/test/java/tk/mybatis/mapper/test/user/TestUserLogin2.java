@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * 通过主键删除
+ * 기본 키로 삭제
  *
  * @author liuzh
  */
@@ -44,7 +44,7 @@ public class TestUserLogin2 {
 
 
     /**
-     * 新增
+     * 더하다
      */
     @Test
     public void testInsert() {
@@ -61,7 +61,7 @@ public class TestUserLogin2 {
 
             Assert.assertNotNull(userLogin.getLogid());
             Assert.assertTrue(userLogin.getLogid() > 10);
-            //这里测了实体类入参的删除
+            //엔티티 클래스 항목 매개 변수의 삭제는 여기서 테스트됩니다.
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(userLogin));
         } finally {
             sqlSession.close();
@@ -69,26 +69,26 @@ public class TestUserLogin2 {
     }
 
     /**
-     * 主要测试删除
+     * 메인 테스트 삭제
      */
     @Test
     public void testDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             UserLogin2Mapper mapper = sqlSession.getMapper(UserLogin2Mapper.class);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, mapper.selectCount(new UserLogin2()));
-            //根据主键查询
+            //기본 키로 조회
             UserLogin2Key key = new UserLogin2();
             key.setLogid(1);
             key.setUsername("test1");
             UserLogin2 userLogin = mapper.selectByPrimaryKey(key);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(key));
 
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(9, mapper.selectCount(new UserLogin2()));
-            //插入
+            //끼워 넣다
             Assert.assertEquals(1, mapper.insert(userLogin));
         } finally {
             sqlSession.close();
@@ -97,7 +97,7 @@ public class TestUserLogin2 {
 
 
     /**
-     * 查询
+     * 조회
      */
     @Test
     public void testSelect() {
@@ -114,7 +114,7 @@ public class TestUserLogin2 {
     }
 
     /**
-     * 根据主键全更新
+     * 기본 키를 기반으로 전체 업데이트
      */
     @Test
     public void testUpdateByPrimaryKey() {
@@ -128,7 +128,7 @@ public class TestUserLogin2 {
             Assert.assertNotNull(userLogin);
             userLogin.setLoginip("1.1.1.1");
             userLogin.setLogindate(null);
-            //不会更新username
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKey(userLogin));
 
             userLogin = mapper.selectByPrimaryKey(userLogin);
@@ -140,7 +140,7 @@ public class TestUserLogin2 {
     }
 
     /**
-     * 根据主键更新非null
+     * 비 업데이트null
      */
     @Test
     public void testUpdateByPrimaryKeySelective() {
@@ -156,7 +156,7 @@ public class TestUserLogin2 {
             Assert.assertNotNull(userLogin);
             userLogin.setLogindate(null);
             userLogin.setLoginip("1.1.1.1");
-            //不会更新username
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKeySelective(userLogin));
 
             userLogin = mapper.selectByPrimaryKey(key);

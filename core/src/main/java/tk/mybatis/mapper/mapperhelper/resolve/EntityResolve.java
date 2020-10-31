@@ -4,14 +4,14 @@ import tk.mybatis.mapper.entity.Config;
 import tk.mybatis.mapper.entity.EntityTable;
 
 /**
- * 解析实体类接口
+ * 엔티티 클래스 인터페이스 해결
  *
  * @author liuzh
  */
 public interface EntityResolve {
 
     /**
-     * 解析类为 EntityTable
+     * 파싱 클래스는 EntityTable
      *
      * @param entityClass
      * @param config

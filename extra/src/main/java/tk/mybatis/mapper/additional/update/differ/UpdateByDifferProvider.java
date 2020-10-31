@@ -47,7 +47,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
     }
 
     /**
-     * 差异更新
+     * 차이 업데이트
      *
      * @param ms
      */
@@ -61,7 +61,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
     }
 
     /**
-     * where主键条件
+     * 여기서 기본 키 조건
      *
      * @param entityClass
      * @return
@@ -69,9 +69,9 @@ public class UpdateByDifferProvider extends MapperTemplate {
     public String wherePKColumns(Class<?> entityClass, boolean useVersion) {
         StringBuilder sql = new StringBuilder();
         sql.append("<where>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getPKColumns(entityClass);
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             sql.append(" AND " + column.getColumnEqualsHolder(NEWER));
         }
@@ -84,7 +84,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
 
 
     /**
-     * 乐观锁字段条件
+     * 낙관적 인 잠금 필드 조건
      *
      * @param entityClass
      * @return
@@ -96,7 +96,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(Version.class)) {
                 if (hasVersion) {
-                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解的字段，一个类中只能存在一个带有 @Version 注解的字段!");
+                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解의들，一个수업中只能存在一个带有 @Version 注解의들!");
                 }
                 hasVersion = true;
                 result = " AND " + column.getColumnEqualsHolder(NEWER);
@@ -106,7 +106,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
     }
 
     /**
-     * update set列
+     * update set기둥
      *
      * @param entityClass
      * @return
@@ -114,15 +114,15 @@ public class UpdateByDifferProvider extends MapperTemplate {
     public String updateSetColumnsByDiffer(Class<?> entityClass) {
         StringBuilder sql = new StringBuilder();
         sql.append("<set>");
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnSet = EntityHelper.getColumns(entityClass);
-        //对乐观锁的支持
+        //낙관적 잠금 지원
         EntityColumn versionColumn = null;
-        //当某个列有主键策略时，不需要考虑他的属性是否为空，因为如果为空，一定会根据主键策略给他生成一个值
+        //열에 기본 키 전략이있는 경우 해당 속성이 비어 있는지 여부를 고려할 필요가 없습니다. 비어있는 경우 기본 키 전략에 따라 값이 생성되기 때문입니다.
         for (EntityColumn column : columnSet) {
             if (column.getEntityField().isAnnotationPresent(Version.class)) {
                 if (versionColumn != null) {
-                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解的字段，一个类中只能存在一个带有 @Version 注解的字段!");
+                    throw new VersionException(entityClass.getCanonicalName() + " 中包含多个带有 @Version 注解의들，一个수업中只能存在一个带有 @Version 注解의들!");
                 }
                 versionColumn = column;
             }
@@ -146,7 +146,7 @@ public class UpdateByDifferProvider extends MapperTemplate {
     }
 
     /**
-     * 判断自动!=null的条件结构
+     * 자동 판단!=널 조건부 구조
      *
      * @param column
      * @param contents

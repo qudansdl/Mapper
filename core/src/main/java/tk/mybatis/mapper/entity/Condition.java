@@ -25,7 +25,7 @@
 package tk.mybatis.mapper.entity;
 
 /**
- * Condition - 条件查询，命名就是任性
+ * 조건-조건 조회, 이름 지정은 의도적 임
  *
  * @author liuzh
  * @since 2015-06-10

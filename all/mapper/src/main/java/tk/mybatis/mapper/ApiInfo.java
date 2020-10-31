@@ -1,7 +1,7 @@
 package tk.mybatis.mapper;
 
 /**
- * Java Doc 内容请通过各个独立项目进行查看
+ * Java Doc 개별 프로젝트를 통해 내용을 확인하세요.
  *
  * @author liuzh
  */

@@ -29,16 +29,16 @@ import org.apache.ibatis.annotations.Options;
 import tk.mybatis.mapper.provider.SqlServerProvider;
 
 /**
- * 通用Mapper接口,插入
+ * 범용 매퍼 인터페이스, Insert
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface InsertMapper<T> {
 
     /**
-     * 插入数据库，`null`值也会插入，不会使用列的默认值
+     * 데이터베이스를 Insert하면`null` 값이 Insert되며 열의 기본값은 사용되지 않습니다.
      *
      * @param record
      * @return

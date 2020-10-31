@@ -37,28 +37,28 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * 实体类工具类 - 处理实体和数据库表以及字段关键的一个类
+ * 엔티티 클래스 도구 클래스-주요 엔티티 및 데이터베이스 테이블 및 필드를 처리하는 클래스
  * <p/>
- * <p>项目地址 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
+ * <p> 프로젝트 주소 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
  *
  * @author liuzh
  */
 public class EntityHelper {
 
     /**
-     * 实体类 => 表对象
+     * 엔티티 클래스 => 테이블 객체
      */
     private static final Map<Class<?>, EntityTable> entityTableMap = new ConcurrentHashMap<Class<?>, EntityTable>();
 
     private static final EntityResolve DEFAULT = new DefaultEntityResolve();
 
     /**
-     * 实体类解析器
+     * 엔티티 클래스 파서
      */
     private static EntityResolve resolve = DEFAULT;
 
     /**
-     * 获取表对象
+     * 테이블 개체 가져 오기
      *
      * @param entityClass
      * @return
@@ -66,13 +66,13 @@ public class EntityHelper {
     public static EntityTable getEntityTable(Class<?> entityClass) {
         EntityTable entityTable = entityTableMap.get(entityClass);
         if (entityTable == null) {
-            throw new MapperException("无法获取实体类" + entityClass.getCanonicalName() + "对应的表名!");
+            throw new MapperException("엔티티 클래스를 가져올 수 없습니다." + entityClass.getCanonicalName() + "해당 테이블 이름!");
         }
         return entityTable;
     }
 
     /**
-     * 获取默认的orderby语句
+     * 기본 orderby 문 가져 오기
      *
      * @param entityClass
      * @return
@@ -109,7 +109,7 @@ public class EntityHelper {
     }
 
     /**
-     * 获取全部列
+     * 모든 열 가져 오기
      *
      * @param entityClass
      * @return
@@ -119,7 +119,7 @@ public class EntityHelper {
     }
 
     /**
-     * 获取主键信息
+     * 기본 키 정보 얻기
      *
      * @param entityClass
      * @return
@@ -129,7 +129,7 @@ public class EntityHelper {
     }
 
     /**
-     * 获取查询的Select
+     * 조회 선택 가져 오기
      *
      * @param entityClass
      * @return
@@ -145,7 +145,7 @@ public class EntityHelper {
         for (EntityColumn entityColumn : columnList) {
             selectBuilder.append(entityColumn.getColumn());
             if (!skipAlias && !entityColumn.getColumn().equalsIgnoreCase(entityColumn.getProperty())) {
-                //不等的时候分几种情况，例如`DESC`
+                //'DESC'와 같이 기다리지 않는 몇 가지 상황이 있습니다.
                 if (entityColumn.getColumn().substring(1, entityColumn.getColumn().length() - 1).equalsIgnoreCase(entityColumn.getProperty())) {
                     selectBuilder.append(",");
                 } else {
@@ -160,7 +160,7 @@ public class EntityHelper {
     }
 
     /**
-     * 初始化实体属性
+     * 엔터티 속성 초기화
      *
      * @param entityClass
      * @param config
@@ -169,13 +169,13 @@ public class EntityHelper {
         if (entityTableMap.get(entityClass) != null) {
             return;
         }
-        //创建并缓存EntityTable
+        //EntityTable 생성 및 캐시
         EntityTable entityTable = resolve.resolveEntity(entityClass, config);
         entityTableMap.put(entityClass, entityTable);
     }
 
     /**
-     * 设置实体类解析器
+     * 엔티티 클래스 파서 설정
      *
      * @param resolve
      */
@@ -184,9 +184,9 @@ public class EntityHelper {
     }
 
     /**
-     * 通过反射设置MappedStatement的keyProperties字段值
+     * 리플렉션을 통해 MappedStatement의 keyProperties 필드 값 설정
      *
-     * @param pkColumns 所有的主键字段
+     * @param pkColumns 모든 기본 키 필드
      * @param ms        MappedStatement
      */
     public static void setKeyProperties(Set<EntityColumn> pkColumns, MappedStatement ms) {

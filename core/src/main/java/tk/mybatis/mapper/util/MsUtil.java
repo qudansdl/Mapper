@@ -39,17 +39,17 @@ public class MsUtil {
     public static final Cache CLASS_CACHE = new SoftCache(new PerpetualCache("MAPPER_CLASS_CACHE"));
 
     /**
-     * 根据msId获取接口类
+     * msId에 따라 인터페이스 클래스 가져 오기
      *
      * @param msId
      * @return
      */
     public static Class<?> getMapperClass(String msId) {
         if (msId.indexOf(".") == -1) {
-            throw new MapperException("当前MappedStatement的id=" + msId + ",不符合MappedStatement的规则!");
+            throw new MapperException("当前MappedStatement의id=" + msId + ", MappedStatement의 규칙을 충족하지 않습니다!");
         }
         String mapperClassStr = msId.substring(0, msId.lastIndexOf("."));
-        //由于一个接口中的每个方法都会进行下面的操作，因此缓存
+        //인터페이스의 각 메서드는 다음 작업을 수행하므로 캐시는
         Class<?> mapperClass = (Class<?>) CLASS_CACHE.getObject(mapperClassStr);
         if(mapperClass != null){
             return mapperClass;
@@ -80,7 +80,7 @@ public class MsUtil {
     }
 
     /**
-     * 获取执行的方法名
+     * 실행 된 메서드의 이름을 가져옵니다.
      *
      * @param ms
      * @return
@@ -90,7 +90,7 @@ public class MsUtil {
     }
 
     /**
-     * 获取执行的方法名
+     * 실행 된 메서드의 이름을 가져옵니다.
      *
      * @param msId
      * @return

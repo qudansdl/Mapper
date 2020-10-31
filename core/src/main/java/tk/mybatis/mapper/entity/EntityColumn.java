@@ -31,7 +31,7 @@ import tk.mybatis.mapper.genid.GenId;
 import tk.mybatis.mapper.util.StringUtil;
 
 /**
- * 数据库表对应的列
+ * 데이터베이스 테이블의 해당 열
  *
  * @author liuzh
  */
@@ -45,21 +45,21 @@ public class EntityColumn {
     private boolean id = false;
     private boolean identity = false;
     private Class<? extends GenId> genIdClass;
-    //字段是否为 blob
+    //필드가 Blob인지 여부
     private boolean blob;
     private String generator;
-    //排序
+    //종류
     private String orderBy;
     private int orderPriority;
-    //可插入
+    //플러그 가능
     private boolean insertable = true;
-    //可更新
+    //업데이트 가능
     private boolean updatable = true;
     private ORDER order = ORDER.DEFAULT;
-    //是否设置 javaType
+    //javaType 설정 여부
     private boolean useJavaType;
     /**
-     * 对应的字段信息
+     * 해당 필드 정보
      *
      * @since 3.5.0
      */
@@ -73,7 +73,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:colum = #{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+     * 반환 형식은 다음과 같습니다.:colum = #{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
      *
      * @param entityName
      * @return
@@ -83,7 +83,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:#{entityName.age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+     * 반환 형식은 다음과 같습니다.:#{entityName.age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
      *
      * @param entityName
      * @return
@@ -93,7 +93,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+     * 반환 형식은 다음과 같습니다.:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
      *
      * @param entityName
      * @param suffix
@@ -104,7 +104,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler},
+     * 반환 형식은 다음과 같습니다.:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler},
      *
      * @param entityName
      * @param suffix
@@ -115,7 +115,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler}+separator
+     * 반환 형식은 다음과 같습니다.:#{entityName.age+suffix,jdbcType=NUMERIC,typeHandler=MyTypeHandler}+separator
      *
      * @param entityName
      * @param suffix
@@ -132,19 +132,19 @@ public class EntityColumn {
         if (StringUtil.isNotEmpty(suffix)) {
             sb.append(suffix);
         }
-        //如果 null 被当作值来传递，对于所有可能为空的列，JDBC Type 是需要的
+        //null이 값으로 전달되면 null 일 수있는 모든 열에 JDBC 유형이 필요합니다.
         if (this.jdbcType != null) {
             sb.append(", jdbcType=");
             sb.append(this.jdbcType.toString());
         }
-        //为了以后定制类型处理方式，你也可以指定一个特殊的类型处理器类，例如枚举
+        //나중에 유형 처리를 사용자 정의하기 위해 열거와 같은 특수 유형 프로세서 클래스를 지정할 수도 있습니다.
         if (this.typeHandler != null) {
             sb.append(", typeHandler=");
             sb.append(this.typeHandler.getCanonicalName());
         }
-        //3.4.0 以前的 mybatis 无法获取父类中泛型的 javaType，所以如果使用低版本，就需要设置 useJavaType = true
-        //useJavaType 默认 false,没有 javaType 限制时，对 ByPrimaryKey 方法的参数校验就放宽了，会自动转型
-        if (useJavaType && !this.javaType.isArray()) {//当类型为数组时，不设置javaType#103
+        //3.4.0 이전 mybatis는 상위 클래스에서 일반 javaType을 가져올 수 없었으므로 더 낮은 버전을 사용하는 경우 다음을 설정해야합니다. useJavaType = true
+        //useJavaType 기본값은 false이며, javaType 제한이없는 경우 ByPrimaryKey 메소드의 매개 변수 검증이 완화되어 자동으로 변환됩니다.
+        if (useJavaType && !this.javaType.isArray()) {//유형이 배열 인 경우 javaType # 103이 설정되지 않습니다.
             sb.append(", javaType=");
             sb.append(javaType.getCanonicalName());
         }
@@ -199,7 +199,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:colum = #{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+     * 반환 형식은 다음과 같습니다.:colum = #{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
      *
      * @return
      */
@@ -208,7 +208,7 @@ public class EntityColumn {
     }
 
     /**
-     * 返回格式如:#{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
+     * 반환 형식은 다음과 같습니다.:#{age,jdbcType=NUMERIC,typeHandler=MyTypeHandler}
      *
      * @return
      */

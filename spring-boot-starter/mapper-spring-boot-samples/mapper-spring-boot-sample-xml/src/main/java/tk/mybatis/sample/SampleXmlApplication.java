@@ -49,7 +49,7 @@ public class SampleXmlApplication implements CommandLineRunner {
         Country c = countryMapper.selectByPrimaryKey(1);
         System.out.println("Key : 1, Country Name: " + c.getCountryname());
         c.setId(null);
-        c.setCountryname("新名字");
+        c.setCountryname("새로운 이름");
         countryMapper.insert(c);
         System.out.println("New Key: " + c.getId());
         List<Country> countries = countryMapper.selectAll();

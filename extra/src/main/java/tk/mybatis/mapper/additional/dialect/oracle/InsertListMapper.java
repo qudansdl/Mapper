@@ -30,9 +30,9 @@ import tk.mybatis.mapper.annotation.KeySql;
 import java.util.List;
 
 /**
- * <p>Oracle批量插入
- * <p>支持@{@link KeySql#genId()}，不支持@{@link KeySql#sql()}
- * <p>因INSERT ALL语法不支持序列，可手工获取序列并设置至Entity或绑定触发器
+ * <p>Oracle대량 Insert
+ * <p>지원하지 않음 @ {@ link KeySql # genId ()}@{@link KeySql#sql()}
+ * <p> INSERT ALL 구문은 시퀀스를 지원하지 않기 때문에 시퀀스를 수동으로 가져와 엔티티에 설정하거나 트리거를 바인딩 할 수 있습니다.
  * @author qrqhuangcy
  * @date 2018-11-16
  */
@@ -40,7 +40,7 @@ import java.util.List;
 public interface InsertListMapper<T> {
 
     /**
-     * <p>生成如下批量SQL:
+     * <p>다음 배치 SQL 생성:
      * <p>INSERT ALL
      * <p>INTO demo_country ( country_id,country_name,country_code ) VALUES ( ?,?,? )
      * <p>INTO demo_country ( country_id,country_name,country_code ) VALUES ( ?,?,? )

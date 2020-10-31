@@ -33,7 +33,7 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.Country;
 
 /**
- * 通过PK更新实体类非null属性
+ * PK를 통해 엔티티 클래스의 널이 아닌 속성 업데이트
  *
  * @author liuzh
  */
@@ -62,7 +62,7 @@ public class TestUpdateByPrimaryKeySelective {
     }
 
     /**
-     * 根据查询条件进行查询
+     * 조회 조건에 따른 조회
      */
     @Test
     public void testDynamicUpdateByPrimaryKeySelective() {
@@ -71,13 +71,13 @@ public class TestUpdateByPrimaryKeySelective {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             Country country = new Country();
             country.setId(173);
-            country.setCountryname("英国");
+            country.setCountryname("영국");
             Assert.assertEquals(1, mapper.updateByPrimaryKeySelective(country));
 
             country = mapper.selectByPrimaryKey(173);
             Assert.assertNotNull(country);
             Assert.assertEquals(173, (int) country.getId());
-            Assert.assertEquals("英国", country.getCountryname());
+            Assert.assertEquals("영국", country.getCountryname());
             Assert.assertNotNull(country.getCountrycode());
             Assert.assertEquals("GB", country.getCountrycode());
         } finally {
@@ -86,7 +86,7 @@ public class TestUpdateByPrimaryKeySelective {
     }
 
     /**
-     * 继承类可以使用,但多出来的属性无效
+     * 상속 된 클래스를 사용할 수 있지만 추가 속성이 유효하지 않습니다.
      */
     @Test
     public void testDynamicUpdateByPrimaryKeySelectiveNotFoundKeyProperties() {

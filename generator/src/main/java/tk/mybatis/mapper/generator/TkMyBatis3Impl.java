@@ -31,9 +31,9 @@ import java.text.MessageFormat;
 import static org.mybatis.generator.internal.util.StringUtility.stringHasValue;
 
 /**
- * 可以通过MBG1.3.4+版本提供的table元素的mapperName属性设置统一的名称，使用{0}作为实体类名的占位符。
+ * MBG1을 통과 할 수 있습니다.3.4+ 버전에서 제공하는 테이블 요소의 mapperName 속성은 {0}를 엔티티 클래스 이름의 자리 표시 자로 사용하여 균일 한 이름을 설정합니다.
  * <p>
- * 用法：
+ * 용법：
  * <pre>
  * &lt;context id="Mysql" targetRuntime="tk.mybatis.mapper.generator.TkMyBatis3Impl" defaultModelType="flat"&gt;
  * &lt;/context&gt;
@@ -54,7 +54,7 @@ public class TkMyBatis3Impl extends IntrospectedTableMyBatis3Impl {
             if (ind != -1) {
                 mapperName = mapperName.substring(ind + 1);
             }
-            //支持mapperName = "{0}Dao" 等用法
+            //mapperName 지원 = "{0}Dao" 동등한 사용법
             sb.append(MessageFormat.format(mapperName, fullyQualifiedTable.getDomainObjectName()));
             sb.append(".xml"); //$NON-NLS-1$
         } else {
@@ -88,7 +88,7 @@ public class TkMyBatis3Impl extends IntrospectedTableMyBatis3Impl {
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         if (stringHasValue(tableConfiguration.getMapperName())) {
-            //支持mapperName = "{0}Dao" 等用法
+            //mapperName 지원 = "{0}Dao" 동등한 사용법
             sb.append(MessageFormat.format(tableConfiguration.getMapperName(), fullyQualifiedTable.getDomainObjectName()));
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());
@@ -100,7 +100,7 @@ public class TkMyBatis3Impl extends IntrospectedTableMyBatis3Impl {
         sb.append(calculateJavaClientInterfacePackage());
         sb.append('.');
         if (stringHasValue(tableConfiguration.getSqlProviderName())) {
-            //支持mapperName = "{0}SqlProvider" 等用法
+            //mapperName 지원 = "{0}SqlProvider" 동등한 사용법
             sb.append(MessageFormat.format(tableConfiguration.getSqlProviderName(), fullyQualifiedTable.getDomainObjectName()));
         } else {
             sb.append(fullyQualifiedTable.getDomainObjectName());

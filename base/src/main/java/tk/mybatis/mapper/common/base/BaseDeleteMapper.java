@@ -29,9 +29,9 @@ import tk.mybatis.mapper.common.base.delete.DeleteByPrimaryKeyMapper;
 import tk.mybatis.mapper.common.base.delete.DeleteMapper;
 
 /**
- * 通用Mapper接口,基础删除
+ * 일반 매퍼 인터페이스, 기본 삭제
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper

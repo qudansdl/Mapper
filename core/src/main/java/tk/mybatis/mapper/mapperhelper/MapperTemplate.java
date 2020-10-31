@@ -53,7 +53,7 @@ import static tk.mybatis.mapper.util.MsUtil.getMapperClass;
 import static tk.mybatis.mapper.util.MsUtil.getMethodName;
 
 /**
- * 通用Mapper模板类，扩展通用Mapper时需要继承该类
+ * Generic Mapper를 확장 할 때 상속해야하는 Generic Mapper 템플릿 클래스
  *
  * @author liuzh
  */
@@ -70,7 +70,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 该方法仅仅用来初始化ProviderSqlSource
+     * 이 메서드는 ProviderSqlSource를 초기화하는 데만 사용됩니다.
      *
      * @param record
      * @return
@@ -80,7 +80,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 添加映射方法
+     * 매핑 방법 추가
      *
      * @param methodName
      * @param method
@@ -90,7 +90,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 获取IDENTITY值的表达式
+     * IDENTITY 값을 얻기위한 표현식
      *
      * @param column
      * @return
@@ -100,7 +100,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 是否支持该通用方法
+     * 일반적인 방법 지원 여부
      *
      * @param msId
      * @return
@@ -115,7 +115,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 设置返回值类型 - 为了让typeHandler在select时有效，改为设置resultMap
+     * 반환 값 유형 설정-선택시 typeHandler를 적용하려면 대신 resultMap을 설정하십시오.
      *
      * @param ms
      * @param entityClass
@@ -129,7 +129,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 重新设置SqlSource
+     * 초기화SqlSource
      *
      * @param ms
      * @param sqlSource
@@ -140,7 +140,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 通过xmlSql创建sqlSource
+     * xmlSql을 통해 sqlSource 만들기
      *
      * @param ms
      * @param xmlSql
@@ -151,7 +151,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 获取返回值类型 - 实体类型
+     * 반환 값 유형-엔티티 유형 가져 오기
      *
      * @param ms
      * @return
@@ -168,7 +168,7 @@ public abstract class MapperTemplate {
                     ParameterizedType t = (ParameterizedType) type;
                     if (t.getRawType() == this.mapperClass || this.mapperClass.isAssignableFrom((Class<?>) t.getRawType())) {
                         Class<?> returnType = (Class<?>) t.getActualTypeArguments()[0];
-                        //获取该类型后，第一次对该类型进行初始化
+                        //타입 획득 후 처음으로 타입 초기화
                         EntityHelper.initEntityNameMap(returnType, mapperHelper.getConfig());
                         entityClassMap.put(msId, returnType);
                         return returnType;
@@ -176,11 +176,11 @@ public abstract class MapperTemplate {
                 }
             }
         }
-        throw new MapperException("无法获取 " + msId + " 方法的泛型信息!");
+        throw new MapperException("없는 " + msId + " 방법에 대한 일반 정보!");
     }
 
     /**
-     * 获取实体类的表名
+     * 엔티티 클래스의 테이블 이름 가져 오기
      *
      * @param entityClass
      * @return
@@ -189,7 +189,7 @@ public abstract class MapperTemplate {
         EntityTable entityTable = EntityHelper.getEntityTable(entityClass);
         String prefix = entityTable.getPrefix();
         if (StringUtil.isEmpty(prefix)) {
-            //使用全局配置
+            //전역 구성 사용
             prefix = mapperHelper.getConfig().getPrefix();
         }
         if (StringUtil.isNotEmpty(prefix)) {
@@ -219,7 +219,7 @@ public abstract class MapperTemplate {
     }
 
     /**
-     * 重新设置SqlSource
+     * 초기화SqlSource
      *
      * @param ms
      * @throws java.lang.reflect.InvocationTargetException
@@ -227,28 +227,28 @@ public abstract class MapperTemplate {
      */
     public void setSqlSource(MappedStatement ms) throws Exception {
         if (this.mapperClass == getMapperClass(ms.getId())) {
-            throw new MapperException("请不要配置或扫描通用Mapper接口类：" + this.mapperClass);
+            throw new MapperException("请不要配置或扫描만능인Mapper상호 작용수업：" + this.mapperClass);
         }
         Method method = methodMap.get(getMethodName(ms));
         try {
-            //第一种，直接操作ms，不需要返回值
+            //첫 번째 유형은 값을 반환하지 않고 ms를 직접 조작하는 것입니다.
             if (method.getReturnType() == Void.TYPE) {
                 method.invoke(this, ms);
             }
-            //第二种，返回SqlNode
+            //두 번째, SqlNode로 돌아 가기
             else if (SqlNode.class.isAssignableFrom(method.getReturnType())) {
                 SqlNode sqlNode = (SqlNode) method.invoke(this, ms);
                 DynamicSqlSource dynamicSqlSource = new DynamicSqlSource(ms.getConfiguration(), sqlNode);
                 setSqlSource(ms, dynamicSqlSource);
             }
-            //第三种，返回xml形式的sql字符串
+            //세 번째는 xml 형식으로 SQL 문자열을 반환하는 것입니다.
             else if (String.class.equals(method.getReturnType())) {
                 String xmlSql = (String) method.invoke(this, ms);
                 SqlSource sqlSource = createSqlSource(ms, xmlSql);
-                //替换原有的SqlSource
+                //원래 SqlSource 바꾸기
                 setSqlSource(ms, sqlSource);
             } else {
-                throw new MapperException("自定义Mapper方法返回类型错误,可选的返回类型为void,SqlNode,String三种!");
+                throw new MapperException("自定义Mapper方法返回수업型错误,可选의返回수업型为void,SqlNode,String三种!");
             }
         } catch (IllegalAccessException e) {
             throw new MapperException(e);

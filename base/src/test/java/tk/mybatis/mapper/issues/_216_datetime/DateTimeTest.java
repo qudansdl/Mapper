@@ -74,11 +74,11 @@ public class DateTimeTest extends BaseTest {
 
             timeModel = mapper.selectByPrimaryKey(3);
 
-            //保存后数据库中不存在时间部分
+            //저장 후 데이터베이스에 시간 부분이 없습니다.
             Assert.assertEquals(toDate(now), toDate(timeModel.getTestDate()));
             Assert.assertEquals(toDate(now) + " 00:00:00", toDatetime(timeModel.getTestDate()));
 
-            //日期和时间都有
+            //날짜와 시간
             Assert.assertEquals(toTime(now), toTime(timeModel.getTestTime()));
             Assert.assertEquals(toDatetime(now), toDatetime(timeModel.getTestTime()));
 
@@ -124,11 +124,11 @@ public class DateTimeTest extends BaseTest {
 
             timeModel = mapper.selectByPrimaryKey(3);
 
-            //保存后数据库中不存在时间部分
+            //저장 후 데이터베이스에 시간 부분이 없습니다.
             Assert.assertEquals(toDate(now), toDate(timeModel.getTestDate()));
             Assert.assertEquals(toDate(now) + " 00:00:00", toDatetime(timeModel.getTestDate()));
 
-            //日期和时间都有
+            //날짜와 시간
             Assert.assertEquals(toTime(now), toTime(timeModel.getTestTime()));
             Assert.assertEquals(toDatetime(now), toDatetime(timeModel.getTestTime()));
 
@@ -170,7 +170,7 @@ public class DateTimeTest extends BaseTest {
             timeModel.setTestTime(now);
             timeModel.setTestDatetime(now);
             /*
-                insert 日志能明显看到制定 jdbcType 后的区别
+                Insert 로그는 jdbcType을 설정 한 후 명확하게 차이점을 볼 수 있습니다.
 
                 DEBUG [main] - ==>  Preparing: INSERT INTO test_timestamp ( id,test_date,test_time,test_datetime ) VALUES( ?,?,?,? )
                 DEBUG [main] - ==> Parameters: 3(Integer), 2018-02-25(Date), 11:50:18(Time), 2018-02-25 11:50:18.263(Timestamp)
@@ -179,13 +179,13 @@ public class DateTimeTest extends BaseTest {
 
             timeModel = mapper.selectByPrimaryKey(3);
 
-            //保存后数据库中不存在时间部分
+            //저장 후 데이터베이스에 시간 부분이 없습니다.
             Assert.assertEquals(toDate(now), toDate(timeModel.getTestDate()));
             Assert.assertEquals(toDate(now) + " 00:00:00", toDatetime(timeModel.getTestDate()));
 
-            //时间
+            //시각
             Assert.assertEquals(toTime(now), toTime(timeModel.getTestTime()));
-            //由于插入数据库时指定的 jdbcType=TIME，所以下面是没有日期部分的
+            //데이터베이스에 Insert 할 때 지정된 jdbcType = TIME으로 인해 아래에 날짜 부분이 없습니다.
             Assert.assertEquals("1970-01-01 " + toTime(now), toDatetime(timeModel.getTestTime()));
 
             Assert.assertEquals(toDatetime(now), toDatetime(timeModel.getTestDatetime()));

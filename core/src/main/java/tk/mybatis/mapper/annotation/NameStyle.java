@@ -32,7 +32,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 名字转换样式，注解的优先级高于全局配置
+ * 이름 변환 스타일, 주석 우선 순위가 전역 구성보다 높습니다.
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

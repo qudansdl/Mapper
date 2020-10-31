@@ -29,9 +29,9 @@ import org.apache.ibatis.annotations.Options;
 import tk.mybatis.mapper.provider.SqlServerProvider;
 
 /**
- * 通用Mapper接口,插入
+ * 범용 매퍼 인터페이스, Insert
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper

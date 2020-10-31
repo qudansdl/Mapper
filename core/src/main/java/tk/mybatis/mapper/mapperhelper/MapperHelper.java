@@ -47,9 +47,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import static tk.mybatis.mapper.util.MsUtil.getMapperClass;
 
 /**
- * 处理主要逻辑，最关键的一个类
+ * 가장 중요한 클래스 인 메인 로직 처리
  * <p/>
- * <p>项目地址 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
+ * <p> 프로젝트 주소 : <a href="https://github.com/abel533/Mapper" target="_blank">https://github.com/abel533/Mapper</a></p>
  *
  * @author liuzh
  */
@@ -58,28 +58,28 @@ public class MapperHelper {
     private static final Log log = LogFactory.getLog(MapperHelper.class);
 
     /**
-     * 注册的接口
+     * 등록 된 인터페이스
      */
     private List<Class<?>> registerClass = new ArrayList<Class<?>>();
 
     /**
-     * 注册的通用Mapper接口
+     * 등록 된 일반 매퍼 인터페이스
      */
     private Map<Class<?>, MapperTemplate> registerMapper = new ConcurrentHashMap<Class<?>, MapperTemplate>();
 
     /**
-     * 通用Mapper配置
+     * 일반 매퍼 구성
      */
     private Config config = new Config();
 
     /**
-     * 默认构造方法
+     * 기본 생성자
      */
     public MapperHelper() {
     }
 
     /**
-     * 带配置的构造方法
+     * 구성이있는 시공 방법
      *
      * @param properties
      */
@@ -89,7 +89,7 @@ public class MapperHelper {
     }
 
     /**
-     * 通过通用Mapper接口获取对应的MapperTemplate
+     * 일반 Mapper 인터페이스를 통해 해당 MapperTemplate 얻기
      *
      * @param mapperClass
      * @return
@@ -121,8 +121,8 @@ public class MapperHelper {
             if (templateClass == null) {
                 templateClass = tempClass;
             } else if (templateClass != tempClass) {
-                log.error("一个通用Mapper中只允许存在一个MapperTemplate子类!");
-                throw new MapperException("一个通用Mapper中只允许存在一个MapperTemplate子类!");
+                log.error("一个만능인Mapper中只允许存在一个MapperTemplate子수업!");
+                throw new MapperException("一个만능인Mapper中只允许存在一个MapperTemplate子수업!");
             }
         }
         if (templateClass == null || !MapperTemplate.class.isAssignableFrom(templateClass)) {
@@ -135,20 +135,20 @@ public class MapperHelper {
             log.error("实例化MapperTemplate对象失败:" + e, e);
             throw new MapperException("实例化MapperTemplate对象失败:" + e.getMessage());
         }
-        //注册方法
+        //등록 방법
         for (String methodName : methodSet) {
             try {
                 mapperTemplate.addMethodMap(methodName, templateClass.getMethod(methodName, MappedStatement.class));
             } catch (NoSuchMethodException e) {
-                log.error(templateClass.getCanonicalName() + "中缺少" + methodName + "方法!", e);
-                throw new MapperException(templateClass.getCanonicalName() + "中缺少" + methodName + "方法!");
+                log.error(templateClass.getCanonicalName() + "잃어버린" + methodName + "방법!", e);
+                throw new MapperException(templateClass.getCanonicalName() + "잃어버린" + methodName + "방법!");
             }
         }
         return mapperTemplate;
     }
 
     /**
-     * 注册通用Mapper接口
+     * 공통 매퍼 인터페이스 등록
      *
      * @param mapperClass
      */
@@ -157,7 +157,7 @@ public class MapperHelper {
             registerClass.add(mapperClass);
             registerMapper.put(mapperClass, fromMapperClass(mapperClass));
         }
-        //自动注册继承的接口
+        //상속 된 인터페이스의 자동 등록
         Class<?>[] interfaces = mapperClass.getInterfaces();
         if (interfaces != null && interfaces.length > 0) {
             for (Class<?> anInterface : interfaces) {
@@ -167,7 +167,7 @@ public class MapperHelper {
     }
 
     /**
-     * 注册通用Mapper接口
+     * 공통 매퍼 인터페이스 등록
      *
      * @param mapperClass
      */
@@ -175,13 +175,13 @@ public class MapperHelper {
         try {
             registerMapper(Class.forName(mapperClass));
         } catch (ClassNotFoundException e) {
-            log.error("注册通用Mapper[" + mapperClass + "]失败，找不到该通用Mapper!", e);
-            throw new MapperException("注册通用Mapper[" + mapperClass + "]失败，找不到该通用Mapper!");
+            log.error("일반 등록Mapper[" + mapperClass + "]失败，找不到该만능인Mapper!", e);
+            throw new MapperException("일반 등록Mapper[" + mapperClass + "]失败，找不到该만능인Mapper!");
         }
     }
 
     /**
-     * 判断当前的接口方法是否需要进行拦截
+     * 현재 인터페이스 메서드를 가로 채야하는지 여부 확인
      *
      * @param msId
      * @return
@@ -189,21 +189,21 @@ public class MapperHelper {
     public MapperTemplate isMapperMethod(String msId) {
         MapperTemplate mapperTemplate = getMapperTemplateByMsId(msId);
         if(mapperTemplate == null){
-            //通过 @RegisterMapper 注解自动注册的功能
+            //@RegisterMapper 주석을 통한 자동 등록 기능
             try {
                 Class<?> mapperClass = getMapperClass(msId);
                 if(mapperClass.isInterface() && hasRegisterMapper(mapperClass)){
                     mapperTemplate = getMapperTemplateByMsId(msId);
                 }
             } catch (Exception e){
-                log.warn("特殊情况: " + e);
+                log.warn("특별한 상황: " + e);
             }
         }
         return mapperTemplate;
     }
 
     /**
-     * 根据 msId 获取 MapperTemplate
+     * msId를 기반으로 MapperTemplate 가져 오기
      *
      * @param msId
      * @return
@@ -218,7 +218,7 @@ public class MapperHelper {
     }
 
     /**
-     * 判断接口是否包含通用接口，
+     * 인터페이스에 일반 인터페이스가 포함되어 있는지 확인합니다.
      *
      * @param mapperInterface
      * @return
@@ -229,31 +229,31 @@ public class MapperHelper {
                 return true;
             }
         }
-        //通过 @RegisterMapper 注解自动注册的功能
+        //@RegisterMapper 주석을 통한 자동 등록 기능
         return hasRegisterMapper(mapperInterface);
     }
 
     /**
-     * 增加通过 @RegisterMapper 注解自动注册的功能
+     * @RegisterMapper 주석을 통해 자동 등록 기능 추가
      *
      * @param mapperInterface
      * @return
      */
     private boolean hasRegisterMapper(Class<?> mapperInterface){
-        //如果一个都没匹配上，很可能是还没有注册 mappers，此时通过 @RegisterMapper 注解进行判断
+        //일치하는 항목이 없으면 매퍼가 아직 등록되지 않았을 가능성이 있습니다. 이때 @RegisterMapper 주석을 사용하여
         Class<?>[] interfaces = mapperInterface.getInterfaces();
         boolean hasRegisterMapper = false;
         if (interfaces != null && interfaces.length > 0) {
             for (Class<?> anInterface : interfaces) {
-                //自动注册标记了 @RegisterMapper 的接口
+                //@RegisterMapper로 표시된 인터페이스 자동 등록
                 if(anInterface.isAnnotationPresent(RegisterMapper.class)){
                     hasRegisterMapper = true;
-                    //如果已经注册过，就避免在反复调用下面会迭代的方法
+                    //이미 등록한 경우 다음 반복 메서드를 반복적으로 호출하지 마십시오.
                     if (!registerMapper.containsKey(anInterface)) {
                         registerMapper(anInterface);
                     }
                 }
-                //如果父接口的父接口存在注解，也可以注册
+                //상위 인터페이스의 상위 인터페이스에 주석이있는 경우 등록 할 수도 있습니다.
                 else if(hasRegisterMapper(anInterface)){
                     hasRegisterMapper = true;
                 }
@@ -263,8 +263,8 @@ public class MapperHelper {
     }
 
     /**
-     * 配置完成后，执行下面的操作
-     * <br>处理configuration中全部的MappedStatement
+     * 구성이 완료된 후 다음 작업을 수행하십시오.
+     * <br>구성에서 모두 처리MappedStatement
      *
      * @param configuration
      */
@@ -273,7 +273,7 @@ public class MapperHelper {
     }
 
     /**
-     * 配置指定的接口
+     * 지정된 인터페이스 구성
      *
      * @param configuration
      * @param mapperInterface
@@ -296,7 +296,7 @@ public class MapperHelper {
     }
 
     /**
-     * 处理 MappedStatement
+     * 다루다 MappedStatement
      *
      * @param ms
      */
@@ -308,7 +308,7 @@ public class MapperHelper {
     }
 
     /**
-     * 获取通用Mapper配置
+     * 일반 매퍼 구성 가져 오기
      *
      * @return
      */
@@ -317,7 +317,7 @@ public class MapperHelper {
     }
 
     /**
-     * 设置通用Mapper配置
+     * 일반 매퍼 구성 설정
      *
      * @param config
      */
@@ -327,10 +327,10 @@ public class MapperHelper {
             try {
                 EntityHelper.setResolve(config.getResolveClass().newInstance());
             } catch (Exception e) {
-                log.error("创建 " + config.getResolveClass().getCanonicalName()
-                    + " 实例失败，请保证该类有默认的构造方法!", e);
-                throw new MapperException("创建 " + config.getResolveClass().getCanonicalName()
-                        + " 实例失败，请保证该类有默认的构造方法!", e);
+                log.error("창조하다 " + config.getResolveClass().getCanonicalName()
+                    + " 인스턴스가 실패했습니다. 클래스에 기본 생성자가 있는지 확인하십시오!", e);
+                throw new MapperException("창조하다 " + config.getResolveClass().getCanonicalName()
+                        + " 인스턴스가 실패했습니다. 클래스에 기본 생성자가 있는지 확인하십시오!", e);
             }
         }
         if(config.getMappers() != null && config.getMappers().size() > 0){
@@ -341,25 +341,25 @@ public class MapperHelper {
     }
 
     /**
-     * 配置属性
+     * 구성 속성
      *
      * @param properties
      */
     public void setProperties(Properties properties) {
         config.setProperties(properties);
-        //注册解析器
+        //리졸버 등록
         if (properties != null) {
             String resolveClass = properties.getProperty("resolveClass");
             if (StringUtil.isNotEmpty(resolveClass)) {
                 try {
                     EntityHelper.setResolve((EntityResolve) Class.forName(resolveClass).newInstance());
                 } catch (Exception e) {
-                    log.error("创建 " + resolveClass + " 实例失败!", e);
-                    throw new MapperException("创建 " + resolveClass + " 实例失败!", e);
+                    log.error("창조하다 " + resolveClass + " 인스턴스가 실패했습니다!", e);
+                    throw new MapperException("창조하다 " + resolveClass + " 인스턴스가 실패했습니다!", e);
                 }
             }
         }
-        //注册通用接口
+        //공통 인터페이스 등록
         if (properties != null) {
             String mapper = properties.getProperty("mappers");
             if (StringUtil.isNotEmpty(mapper)) {
@@ -374,9 +374,9 @@ public class MapperHelper {
     }
 
     /**
-     * 重新设置SqlSource
+     * 초기화SqlSource
      * <p/>
-     * 执行该方法前必须使用isMapperMethod判断，否则msIdCache会空
+     * 이 메서드를 실행하기 전에 isMapperMethod를 사용하여 판단해야합니다. 그렇지 않으면 msIdCache가 비어 있습니다.
      *
      * @param ms
      * @param mapperTemplate

@@ -35,29 +35,29 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 通过主键删除
+ * 기본 키로 삭제
  *
  * @author liuzh
  */
 public class TestDeleteByPrimaryKey {
 
     /**
-     * 主要测试删除
+     * 메인 테스트 삭제
      */
     @Test
     public void testDynamicDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(183, mapper.selectCount(new Country()));
-            //查询100
+            //조회100
             Country country = mapper.selectByPrimaryKey(100);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(100));
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(182, mapper.selectCount(new Country()));
-            //插入
+            //끼워 넣다
             Assert.assertEquals(1, mapper.insert(country));
         } finally {
             sqlSession.close();
@@ -65,14 +65,14 @@ public class TestDeleteByPrimaryKey {
     }
 
     /**
-     * 删除不存在的主键
+     * 존재하지 않는 기본 키 삭제
      */
     @Test
     public void testDynamicDeleteZero() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(0, mapper.deleteByPrimaryKey(null));
             Assert.assertEquals(0, mapper.deleteByPrimaryKey(-100));
             Assert.assertEquals(0, mapper.deleteByPrimaryKey(0));
@@ -83,7 +83,7 @@ public class TestDeleteByPrimaryKey {
     }
 
     /**
-     * 对象包含主键即可
+     * 개체에 기본 키가 포함되어 있습니다.
      */
     @Test
     public void testDynamicDeleteEntity() {
@@ -100,7 +100,7 @@ public class TestDeleteByPrimaryKey {
     }
 
     /**
-     * Map可以随意
+     * 지도는 무료 일 수 있습니다
      */
     @Test
     public void testDynamicDeleteMap() {
@@ -121,14 +121,14 @@ public class TestDeleteByPrimaryKey {
     }
 
     /**
-     * 对象不包含主键
+     * 개체에 기본 키가 없습니다.
      */
     @Test(expected = Exception.class)
     public void testDynamicDeleteNotFoundKeyProperties() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(0, mapper.deleteByPrimaryKey(new Key()));
         } finally {
             sqlSession.close();
@@ -136,14 +136,14 @@ public class TestDeleteByPrimaryKey {
     }
 
     /**
-     * 主键格式错误
+     * 잘못된 기본 키 형식
      */
     @Test
     public void testDynamicDeleteException() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(100));
         } finally {
             sqlSession.rollback();

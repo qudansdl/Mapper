@@ -12,7 +12,7 @@
         <jdbc:script location="tk/mybatis/mapper/configuration/CreateDB.sql"/>
     </jdbc:embedded-database>
 
-    <!--使用 Configuration 方式进行配置-->
+    <!--구성 방법을 사용하여 구성-->
     <bean id="mybatisConfig" class="tk.mybatis.mapper.session.Configuration">
         <property name="mapperProperties">
             <value>

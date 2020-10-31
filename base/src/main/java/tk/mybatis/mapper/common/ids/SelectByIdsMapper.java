@@ -30,18 +30,18 @@ import tk.mybatis.mapper.provider.IdsProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,根据ids查询
+ * 일반 매퍼 인터페이스, ID에 따른 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectByIdsMapper<T> {
 
     /**
-     * 根据主键字符串进行查询，类中只有存在一个带有@Id注解的字段
+     * 기본 키 문자열을 기반으로하는 조회, 클래스에 @Id로 주석이 달린 필드가 하나만 있습니다.
      *
-     * @param ids 如 "1,2,3,4"
+     * @param ids 같은 "1,2,3,4"
      * @return
      */
     @SelectProvider(type = IdsProvider.class, method = "dynamicSQL")

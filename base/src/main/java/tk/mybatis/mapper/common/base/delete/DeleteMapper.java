@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseDeleteProvider;
 
 /**
- * 通用Mapper接口,删除
+ * 일반 매퍼 인터페이스, 삭제
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface DeleteMapper<T> {
 
     /**
-     * 根据实体属性作为条件进行删除，查询条件使用等号
+     * 엔티티 속성을 조건으로 삭제하고 조회 조건에 등호를 사용합니다.
      *
      * @param record
      * @return

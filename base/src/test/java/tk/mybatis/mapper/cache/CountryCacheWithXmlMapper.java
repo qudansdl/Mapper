@@ -5,15 +5,15 @@ import tk.mybatis.mapper.base.Country;
 import tk.mybatis.mapper.common.Mapper;
 
 /**
- * 这个例子中，接口定义了缓存，对应的 XML 中引用这里的缓存
+ * 이 예에서 인터페이스는 캐시를 정의하고 캐시는 해당 XML에서 참조됩니다.
  *
- * TODO MyBatis 有 Bug，这种方式目前行不通
+ * TODO MyBatis 버그가 있습니다.이 방법은 현재 작동하지 않습니다.
  */
 @CacheNamespace
 public interface CountryCacheWithXmlMapper extends Mapper<Country> {
 
     /**
-     * 定义在 XML 中的方法
+     * XML로 정의 된 메서드
      *
      * @param id
      * @return

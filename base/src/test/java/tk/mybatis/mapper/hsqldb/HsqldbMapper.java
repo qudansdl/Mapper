@@ -31,14 +31,14 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import java.util.List;
 
 /**
- * 扩展例子
+ * 확장 된 예
  *
  * @author liuzh
  */
 @RegisterMapper
 public interface HsqldbMapper<T> {
     /**
-     * 单表分页查询
+     * 단일 테이블 페이징 조회
      *
      * @param object
      * @param offset

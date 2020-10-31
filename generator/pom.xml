@@ -34,7 +34,7 @@
     <packaging>jar</packaging>
 
     <name>mapper-generator</name>
-    <description>Mybatis 通用 Mapper 代码生成器</description>
+    <description>Mybatis 범용 매퍼 코드 생성기</description>
 
     <properties>
         <mapper-module.version>1.1.5</mapper-module.version>

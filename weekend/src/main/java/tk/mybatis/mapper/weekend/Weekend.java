@@ -74,9 +74,9 @@ public class Weekend<T> extends tk.mybatis.mapper.entity.Example {
     }
 
     /**
-     * 排除查询字段，优先级低于 selectProperties
+     * 조회 필드 제외, 우선 순위가 selectProperties보다 낮음
      *
-     * @param fns 属性名的可变参数
+     * @매개 변수 fns 속성 이름의 변수 매개 변수
      * @return
      */
     public Weekend<T> excludeProperties(Fn<T, ?>... fns) {
@@ -86,7 +86,7 @@ public class Weekend<T> extends tk.mybatis.mapper.entity.Example {
     }
 
     /**
-     * 指定要查询的属性列 - 这里会自动映射到表字段
+     * 조회 할 속성 열을 지정합니다. 여기서는 테이블 필드에 자동으로 매핑됩니다.
      *
      * @param fns
      * @return

@@ -31,16 +31,16 @@ import tk.mybatis.mapper.provider.base.BaseSelectProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,查询
+ * 일반 매퍼 인터페이스, 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectRowBoundsMapper<T> {
 
     /**
-     * 根据实体属性和RowBounds进行分页查询
+     * 엔터티 특성 및 RowBound를 기반으로하는 페이징 조회
      *
      * @param record
      * @param rowBounds

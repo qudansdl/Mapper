@@ -28,7 +28,7 @@ public class TestExampleBuilder {
             List<Country> countries = mapper.selectByExample(example);
             Assert.assertEquals(183, countries.size());
 
-            // 下面的查询会有缓存
+            // 다음 조회가 캐시됩니다.
             Example example0 = Example.builder(Country.class)
                     .select().build();
             List<Country> countries0 = mapper.selectByExample(example0);
@@ -49,7 +49,7 @@ public class TestExampleBuilder {
             List<Country> countries = mapper.selectByExample(example);
             Assert.assertEquals(183, countries.size());
 
-            // distinct和order by冲突问题
+            // 갈등에 의한 구별과 질서
             Example example0 = Example.builder(Country.class)
                     .selectDistinct("id", "countryname").build();
             List<Country> countries0 = mapper.selectByExample(example0);
@@ -144,8 +144,8 @@ public class TestExampleBuilder {
         }
     }
     /*
-    * @description: 单个where组合查询测试
-    * 直接把example的构造放到selectByExample()函数里
+    * @description: 결합 된 단일 조회 테스트
+    * 예제 구조를 selectByExample () 함수에 직접 넣습니다.
     * */
     @Test
     public void testWhereCompound0() {
@@ -182,7 +182,7 @@ public class TestExampleBuilder {
     }
 
     /*
-     * @description: 单个where组合查询测试
+     * @description: 결합 된 단일 조회 테스트
      * */
     @Test
     public void testWhereCompound1() {
@@ -203,7 +203,7 @@ public class TestExampleBuilder {
         }
     }
     /*
-    *   @description: 多个where连接的查询语句测试
+    *   @description: 다중 where 연결 조회 문 테스트
     * */
     @Test
     public void testWhereAndWhereCompound() {
@@ -228,7 +228,7 @@ public class TestExampleBuilder {
     }
 
     /*
-     *   @description: 多个where连接的查询语句测试
+     *   @description: 다중 where 연결 조회 문 테스트
      * */
     @Test
     public void testWhereOrWhereCompound() {
@@ -253,7 +253,7 @@ public class TestExampleBuilder {
     }
 
     /*
-     *   @description: 多个where连接的查询语句测试
+     *   @description: 다중 where 연결 조회 문 테스트
      * */
     @Test
     public void testMultiWhereCompound() {
@@ -290,8 +290,8 @@ public class TestExampleBuilder {
     }
 
     /*
-    *  @description: 测试order by
-    *  orderBy()默认为Asc（升序），与orderByAsc()一样
+    *  @description: 테스트order by
+    *  orderBy()기본값은 asc (오름차순)이며 orderByAsc ()와 동일합니다.
     * */
     @Test
     public void testOrderBy() {

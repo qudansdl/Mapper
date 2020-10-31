@@ -31,16 +31,16 @@ import tk.mybatis.mapper.provider.SpecialProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,特殊方法，批量插入，支持批量插入的数据库都可以使用，例如mysql,h2等
+ * 일반 Mapper 인터페이스, 특수 메소드, 배치 Insert, 배치 Insert을 지원하는 데이터베이스 (예 : mysql, h2 등)를 사용할 수 있습니다.
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface InsertListMapper<T> {
 
     /**
-     * 批量插入，支持批量插入的数据库可以使用，例如MySQL,H2等，另外该接口限制实体包含`id`属性并且必须为自增列
+     * 대량 Insert, MySQL, H2 등과 같이 대량 Insert을 지원하는 데이터베이스를 사용할 수 있습니다. 또한이 인터페이스는 엔티티가 id 속성을 포함하도록 제한하며 자동 증가 열이어야합니다.
      *
      * @param recordList
      * @return

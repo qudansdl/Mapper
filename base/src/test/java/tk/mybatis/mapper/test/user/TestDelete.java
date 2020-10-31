@@ -34,33 +34,33 @@ import tk.mybatis.mapper.model.UserLogin;
 import java.util.List;
 
 /**
- * 通过主键删除
+ * 기본 키로 삭제
  *
  * @author liuzh
  */
 public class TestDelete {
 
     /**
-     * 主要测试删除
+     * 메인 테스트 삭제
      */
     @Test
     public void testDynamicDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             UserLoginMapper mapper = sqlSession.getMapper(UserLoginMapper.class);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, mapper.selectCount(new UserLogin()));
             UserLogin userLogin = new UserLogin();
             userLogin.setUsername("test1");
             List<UserLogin> userLoginList = mapper.select(userLogin);
-            //批量删除
+            //일괄 삭제
             Assert.assertEquals(userLoginList.size(), mapper.delete(userLogin));
-            //循环插入
+            //루프 Insert
             for (int i = 0; i < userLoginList.size(); i++) {
                 Assert.assertEquals(1, mapper.insert(userLoginList.get(i)));
                 Assert.assertEquals(i + 1, (int) userLoginList.get(i).getLogid());
             }
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(10, mapper.selectCount(new UserLogin()));
         } finally {
             sqlSession.close();

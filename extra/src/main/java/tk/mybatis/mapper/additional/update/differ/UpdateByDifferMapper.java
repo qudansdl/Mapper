@@ -5,9 +5,9 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import tk.mybatis.mapper.annotation.RegisterMapper;
 
 /**
- * 差异更新
+ * 차이 업데이트
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  * @since 4.0.4
  */
@@ -15,7 +15,7 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 public interface UpdateByDifferMapper<T> {
 
     /**
-     * 根据 old 和 newer 进行差异更新，当对应某个字段值不同时才会更新
+     * 이전과 최신에 따라 차이를 업데이트하고 해당 필드 값이 다른 경우에만 업데이트
      *
      * @param old
      * @param newer

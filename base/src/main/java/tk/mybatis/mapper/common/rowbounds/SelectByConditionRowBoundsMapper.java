@@ -31,16 +31,16 @@ import tk.mybatis.mapper.provider.ConditionProvider;
 import java.util.List;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface SelectByConditionRowBoundsMapper<T> {
 
     /**
-     * 根据example条件和RowBounds进行分页查询，该方法和selectByExampleAndRowBounds完全一样，只是名字改成了Condition
+     * 예제 조건 및 RowBounds를 기반으로하는 페이징 조회입니다.이 메서드는 이름이 Condition으로 변경된다는 점을 제외하고 selectByExampleAndRowBounds와 정확히 동일합니다.
      *
      * @param condition
      * @param rowBounds

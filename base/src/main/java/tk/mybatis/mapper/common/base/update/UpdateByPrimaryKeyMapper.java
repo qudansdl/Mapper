@@ -29,16 +29,16 @@ import tk.mybatis.mapper.annotation.RegisterMapper;
 import tk.mybatis.mapper.provider.base.BaseUpdateProvider;
 
 /**
- * 通用Mapper接口,更新
+ * 일반 매퍼 인터페이스, 업데이트
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @RegisterMapper
 public interface UpdateByPrimaryKeyMapper<T> {
 
     /**
-     * 根据主键更新实体全部字段，null值会被更新
+     * 기본 키에 따라 엔터티의 모든 필드를 업데이트하면 null 값이 업데이트됩니다.
      *
      * @param record
      * @return

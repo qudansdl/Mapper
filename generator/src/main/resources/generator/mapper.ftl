@@ -3,7 +3,7 @@ package ${package};
 import ${tableClass.fullClassName};
 
 /**
-* 通用 Mapper 代码生成器
+* 범용 매퍼 코드 생성기
 *
 * @author mapper-generator
 */

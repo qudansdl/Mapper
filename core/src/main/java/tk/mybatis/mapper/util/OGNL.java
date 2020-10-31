@@ -36,16 +36,16 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * OGNL静态方法
+ * OGNL 정적 메서드
  *
  * @author liuzh
  */
 public abstract class OGNL {
-    public static final String SAFE_DELETE_ERROR = "通用 Mapper 安全检查: 对查询条件参数进行检查时出错!";
-    public static final String SAFE_DELETE_EXCEPTION = "通用 Mapper 安全检查: 当前操作的方法没有指定查询条件，不允许执行该操作!";
+    public static final String SAFE_DELETE_ERROR = "만능인 Mapper 安全检查: 对조회条件参数进行检查时出错!";
+    public static final String SAFE_DELETE_EXCEPTION = "만능인 Mapper 安全检查: 当前操作의方法没有指定조회条件，不允许수행该操作!";
 
     /**
-     * 校验通用 Example 的 entityClass 和当前方法是否匹配
+     * 일반 예제의 entityClass가 현재 메소드와 일치하는지 확인
      *
      * @param parameter
      * @param entityFullName
@@ -57,14 +57,14 @@ public abstract class OGNL {
             Class<?> entityClass = example.getEntityClass();
             if (!entityClass.getCanonicalName().equals(entityFullName)) {
                 throw new MapperException("当前 Example 方法对应实体为:" + entityFullName
-                        + ", 但是参数 Example 中的 entityClass 为:" + entityClass.getCanonicalName());
+                        + ", 그러나 Example 매개 변수의 entityClass는:" + entityClass.getCanonicalName());
             }
         }
         return true;
     }
 
     /**
-     * 检查 paremeter 对象中指定的 fields 是否全是 null，如果是则抛出异常
+     * 매개 변수 개체에 지정된 필드가 모두 null인지 확인하고, 그렇다면 예외를 throw합니다.
      *
      * @param parameter
      * @param fields
@@ -91,7 +91,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 校验集合类型参数不能为空
+     * 유효성 검사 컬렉션 유형 매개 변수는 필수.
      *
      * @param parameter
      * @param error
@@ -105,7 +105,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 检查 paremeter 对象中指定的 fields 是否全是 null，如果是则抛出异常
+     * 매개 변수 개체에 지정된 필드가 모두 null인지 확인하고, 그렇다면 예외를 throw합니다.
      *
      * @param parameter
      * @return
@@ -133,7 +133,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 是否包含自定义查询列
+     * 사용자 지정 조회 열 포함 여부
      *
      * @param parameter
      * @return
@@ -149,7 +149,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 是否包含自定义 Count 列
+     * 사용자 정의 개수 열 포함 여부
      *
      * @param parameter
      * @return
@@ -163,7 +163,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 是否包含 forUpdate
+     * forUpdate 포함 여부
      *
      * @param parameter
      * @return
@@ -177,7 +177,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 不包含自定义查询列
+     * 사용자 지정 조회 열을 포함하지 않습니다.
      *
      * @param parameter
      * @return
@@ -187,10 +187,10 @@ public abstract class OGNL {
     }
 
     /**
-     * 判断参数是否支持动态表名
+     * 매개 변수가 동적 테이블 이름을 지원하는지 여부 확인
      *
      * @param parameter
-     * @return true支持，false不支持
+     * @return 진정한 지원, 거짓 지원 안 함
      */
     public static boolean isDynamicParameter(Object parameter) {
         if (parameter != null && parameter instanceof IDynamicTableName) {
@@ -200,17 +200,17 @@ public abstract class OGNL {
     }
 
     /**
-     * 判断参数是否b支持动态表名
+     * 매개 변수 b가 동적 테이블 이름을 지원하는지 확인
      *
      * @param parameter
-     * @return true不支持，false支持
+     * @return true는 지원하지 않음, false는 지원함
      */
     public static boolean isNotDynamicParameter(Object parameter) {
         return !isDynamicParameter(parameter);
     }
 
     /**
-     * 判断条件是 and 还是 or
+     * 조건이 및 또는인지 확인 or
      *
      * @param parameter
      * @return
@@ -228,7 +228,7 @@ public abstract class OGNL {
     }
 
     /**
-     * 拼接逻辑删除字段的未删除查询条件
+     * 논리적으로 삭제 된 필드를 연결하기위한 삭제되지 않은 조회 조건
      *
      * @param parameter
      * @return
@@ -242,7 +242,7 @@ public abstract class OGNL {
             for (Map.Entry<String, EntityColumn> entry: propertyMap.entrySet()) {
                 EntityColumn column = entry.getValue();
                 if (column.getEntityField().isAnnotationPresent(LogicDelete.class)) {
-                    // 未逻辑删除的条件
+                    // 삭제 표시되지 않는 조건
                     result = "and " + column.getColumn() + " = " + SqlHelper.getLogicDeletedValue(column, false);
                 }
             }

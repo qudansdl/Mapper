@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 创建 selectKey
+ * 창조하다 selectKey
  *
  * @author liuzh
  * @since 2017/7/9.
@@ -47,7 +47,7 @@ import java.util.List;
 public class SelectKeyHelper {
 
     /**
-     * 新建SelectKey节点
+     * 새 SelectKey 노드
      *
      * @param ms
      * @param column
@@ -109,7 +109,7 @@ public class SelectKeyHelper {
                 //ignore
             }
             MappedStatement keyStatement = configuration.getMappedStatement(keyId, false);
-            //如果单独设置了 order，使用 column 提供的，否则使用全局的
+            //주문이 별도로 설정된 경우 제공된 열을 사용하고 그렇지 않으면 글로벌을 사용하십시오.
             keyGenerator = new SelectKeyGenerator(keyStatement, column.getOrder() != ORDER.DEFAULT ? (column.getOrder() == ORDER.BEFORE) : executeBefore);
             try {
                 configuration.addKeyGenerator(keyId, keyGenerator);

@@ -7,7 +7,7 @@ import tk.mybatis.mapper.mapperhelper.MapperHelper;
 import java.util.Properties;
 
 /**
- * 使用提供的 Configuration 可以在纯 Java 或者 Spring(mybatis-spring-1.3.0+) 模式中使用
+ * 제공된 구성은 순수 Java 또는 Spring(mybatis-spring-1.3.0+) 모드에서 사용
  *
  * @author liuzh
  */
@@ -16,7 +16,7 @@ public class Configuration extends org.apache.ibatis.session.Configuration {
     private MapperHelper mapperHelper;
 
     /**
-     * 直接注入 mapperHelper
+     * 직접 주입 mapperHelper
      *
      * @param mapperHelper
      */
@@ -25,7 +25,7 @@ public class Configuration extends org.apache.ibatis.session.Configuration {
     }
 
     /**
-     * 使用属性方式配置
+     * 속성 모드 구성 사용
      *
      * @param properties
      */
@@ -37,7 +37,7 @@ public class Configuration extends org.apache.ibatis.session.Configuration {
     }
 
     /**
-     * 使用 Config 配置
+     * Config를 사용하여 구성
      *
      * @param config
      */
@@ -52,13 +52,13 @@ public class Configuration extends org.apache.ibatis.session.Configuration {
     public void addMappedStatement(MappedStatement ms) {
         try {
             super.addMappedStatement(ms);
-            //没有任何配置时，使用默认配置
+            //구성이없는 경우 기본 구성 사용
             if (this.mapperHelper == null) {
                 this.mapperHelper = new MapperHelper();
             }
             this.mapperHelper.processMappedStatement(ms);
         } catch (IllegalArgumentException e) {
-            //这里的异常是导致 Spring 启动死循环的关键位置，为了避免后续会吞异常，这里直接输出
+            //여기서 예외는 Spring이 무한 루프를 시작하게하는 핵심 위치입니다. 후속 삼키는 예외를 방지하려면 여기에 직접 출력하십시오.
             e.printStackTrace();
             throw new RuntimeException(e);
         }

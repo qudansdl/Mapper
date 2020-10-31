@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * 通用Mapper属性配置
+ * 일반 매퍼 속성 구성
  *
  * @author liuzh
  */
@@ -49,45 +49,45 @@ public class Config {
     private String  seqFormat;
     private String  catalog;
     private String  schema;
-    //校验调用Example方法时，Example(entityClass)和Mapper<EntityClass>是否一致
+    //Example 메서드를 호출 할 때 Example (entityClass) 및 Mapper <EntityClass>가 동일한 지 확인합니다.
     private boolean checkExampleEntityClass;
-    //使用简单类型
-    //3.5.0 后默认值改为 true
+    //간단한 유형 사용
+    //3.5.기본값은 0 이후에 true로 변경됩니다.
     private boolean useSimpleType    = true;
     /**
      * @since 3.5.0
      */
     private boolean enumAsSimpleType;
     /**
-     * 是否支持方法上的注解，默认false
+     * 메소드에서 주석을 지원할지 여부, 기본값은 false입니다.
      */
     private boolean enableMethodAnnotation;
     /**
-     * 对于一般的getAllIfColumnNode，是否判断!=''，默认不判断
+     * 일반 getAllIfColumnNode의 경우 판단 여부!=''，기본적으로 판단 없음
      */
     private boolean notEmpty;
     /**
-     * 字段转换风格，默认驼峰转下划线
+     * 필드 변환 스타일, 기본 카멜 케이스를 밑줄로
      */
     private Style style;
     /**
-     * 处理关键字，默认空，mysql可以设置为 `{0}`, sqlserver 为 [{0}]，{0} 代表的列名
+     * 처리 키워드, 기본적으로 비어 있음, mysql은`{0}`로 설정 가능, sqlserver는 [{0}], {0}는 열 이름을 나타냄
      */
     private String wrapKeyword = "";
     /**
-     * 配置解析器
+     * 파서 구성
      */
     private Class<? extends EntityResolve> resolveClass;
     /**
-     * 安全删除，开启后，不允许删全表，如 delete from table
+     * 안전하게 삭제, 개봉 후 테이블 전체 삭제는 허용되지 않습니다. delete from table
      */
     private boolean safeDelete;
     /**
-     * 安全更新，开启后，不允许更新全表，如 update table set xx=?
+     * 보안 업데이트는 개봉 후 다음과 같은 전체 테이블을 업데이트 할 수 없습니다. update table set xx=?
      */
     private boolean safeUpdate;
     /**
-     * 是否设置 javaType
+     * javaType 설정 여부
      */
     private boolean useJavaType;
 
@@ -96,7 +96,7 @@ public class Config {
     }
 
     /**
-     * 设置全局的catalog,默认为空，如果设置了值，操作表时的sql会是catalog.tablename
+     * 글로벌 카탈로그를 설정합니다. 기본값은 비어 있고 값이 설정되면 테이블을 작동 할 때 SQL이 catalog.tablename이됩니다.
      *
      * @param catalog
      */
@@ -105,7 +105,7 @@ public class Config {
     }
 
     /**
-     * 获取主键自增回写SQL
+     * 기본 키 자동 증가 쓰기 저장 SQL 가져 오기
      *
      * @return
      */
@@ -113,12 +113,12 @@ public class Config {
         if (StringUtil.isNotEmpty(this.IDENTITY)) {
             return this.IDENTITY;
         }
-        //针对mysql的默认值
+        //mysql의 기본값
         return IdentityDialect.MYSQL.getIdentityRetrievalStatement();
     }
 
     /**
-     * 主键自增回写方法,默认值MYSQL,详细说明请看文档
+     * 기본 키 자동 증가 및 쓰기 되돌림 방법, 기본값은 MYSQL입니다. 자세한 내용은 문서를 참조하십시오.
      *
      * @param IDENTITY
      */
@@ -132,7 +132,7 @@ public class Config {
     }
 
     /**
-     * 获取表前缀，带catalog或schema
+     * 카탈로그 또는 스키마를 사용하여 테이블 접두사 가져 오기
      *
      * @return
      */
@@ -151,8 +151,8 @@ public class Config {
     }
 
     /**
-     * 设置全局的schema,默认为空，如果设置了值，操作表时的sql会是schema.tablename
-     * <br>如果同时设置了catalog,优先使用catalog.tablename
+     * 전역 스키마를 설정합니다. 기본값은 비어 있습니다. 값이 설정되면 테이블 작동시 SQL이schema.tablename
+     * <br>카탈로그가 동시에 설정된 경우 먼저 사용catalog.tablename
      *
      * @param schema
      */
@@ -161,7 +161,7 @@ public class Config {
     }
 
     /**
-     * 获取序列格式化模板
+     * 시퀀스 서식 템플릿 가져 오기
      *
      * @return
      */
@@ -173,8 +173,8 @@ public class Config {
     }
 
     /**
-     * 序列的获取规则,使用{num}格式化参数，默认值为{0}.nextval，针对Oracle
-     * <br>可选参数一共3个，对应0,1,2,3分别为SequenceName，ColumnName, PropertyName，TableName
+     * 시퀀스 획득 규칙, {num} 형식 지정 매개 변수 사용, Oracle의 경우 기본값은 {0} .nextval입니다.
+     * <br>각각 0,1,2,3에 해당하는 3 개의 선택적 매개 변수가 있습니다.SequenceName，ColumnName, PropertyName，TableName
      *
      * @param seqFormat
      */
@@ -199,7 +199,7 @@ public class Config {
     }
 
     /**
-     * 获取SelectKey的Order
+     * SelectKey 순서 가져 오기
      *
      * @return
      */
@@ -252,7 +252,7 @@ public class Config {
     }
 
     /**
-     * 主键自增回写方法执行顺序,默认AFTER,可选值为(BEFORE|AFTER)
+     * 기본 키 자동 증가 및 쓰기 되돌림 방법의 실행 순서, 기본값은 AFTER, 선택적 값(BEFORE|AFTER)
      *
      * @param order
      */
@@ -317,13 +317,13 @@ public class Config {
     }
 
     /**
-     * 配置属性
+     * 구성 속성
      *
      * @param properties
      */
     public void setProperties(Properties properties) {
         if (properties == null) {
-            //默认驼峰
+            //기본 혹
             this.style = Style.camelhump;
             return;
         }
@@ -344,7 +344,7 @@ public class Config {
             setSchema(schema);
         }
 
-        //ORDER 有三个属性名可以进行配置
+        //ORDER에는 구성 할 수있는 세 가지 속성 이름이 있습니다.
         String ORDER = properties.getProperty("ORDER");
         if (StringUtil.isNotEmpty(ORDER)) {
             setOrder(ORDER);
@@ -362,18 +362,18 @@ public class Config {
         this.notEmpty = Boolean.valueOf(properties.getProperty("notEmpty"));
         this.enableMethodAnnotation = Boolean.valueOf(properties.getProperty("enableMethodAnnotation"));
         this.checkExampleEntityClass = Boolean.valueOf(properties.getProperty("checkExampleEntityClass"));
-        //默认值 true，所以要特殊判断
+        //默인정 된 값이 사실이므로 특별한 판단이 필요합니다.
         String useSimpleTypeStr = properties.getProperty("useSimpleType");
         if (StringUtil.isNotEmpty(useSimpleTypeStr)) {
             this.useSimpleType = Boolean.valueOf(useSimpleTypeStr);
         }
         this.enumAsSimpleType = Boolean.valueOf(properties.getProperty("enumAsSimpleType"));
-        //注册新的基本类型，以逗号隔开，使用全限定类名
+        //注정규화 된 클래스 이름을 사용하여 쉼표로 구분 된 새로운 기본 유형
         String simpleTypes = properties.getProperty("simpleTypes");
         if (StringUtil.isNotEmpty(simpleTypes)) {
             SimpleTypeUtil.registerSimpleType(simpleTypes);
         }
-        //使用 8 种基本类型
+        //8 가지 기본 유형 사용
         if (Boolean.valueOf(properties.getProperty("usePrimitiveType"))) {
             SimpleTypeUtil.registerPrimitiveTypes();
         }
@@ -382,22 +382,22 @@ public class Config {
             try {
                 this.style = Style.valueOf(styleStr);
             } catch (IllegalArgumentException e) {
-                throw new MapperException(styleStr + "不是合法的Style值!");
+                throw new MapperException(styleStr + "법적 스타일 값이 아닙니다!");
             }
         } else {
-            //默认驼峰
+            //기본 혹
             this.style = Style.camelhump;
         }
-        //处理关键字
+        //처리 키워드
         String wrapKeyword = properties.getProperty("wrapKeyword");
         if (StringUtil.isNotEmpty(wrapKeyword)) {
             this.wrapKeyword = wrapKeyword;
         }
-        //安全删除
+        //안전하게 삭제
         this.safeDelete = Boolean.valueOf(properties.getProperty("safeDelete"));
-        //安全更新
+        //보안 업데이트
         this.safeUpdate = Boolean.valueOf(properties.getProperty("safeUpdate"));
-        //是否设置 javaType，true 时如 {id, javaType=java.lang.Long}
+        //다음과 같은 javaType을 설정할지 여부 {id, javaType=java.lang.Long}
         this.useJavaType = Boolean.valueOf(properties.getProperty("useJavaType"));
     }
 }

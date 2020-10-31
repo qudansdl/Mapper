@@ -36,7 +36,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * 测试增删改查
+ * 추가, 삭제, 수정 및 확인 테스트
  *
  * @author liuzh
  */
@@ -44,7 +44,7 @@ public class TestBasic {
 
 
     /**
-     * 新增
+     * 더하다
      */
     @Test
     public void testInsert() {
@@ -79,26 +79,26 @@ public class TestBasic {
     }
 
     /**
-     * 主要测试删除
+     * 메인 테스트 삭제
      */
     @Test
     public void testDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             UserInfoMapper mapper = sqlSession.getMapper(UserInfoMapper.class);
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(5, mapper.selectCount(new UserInfo()));
-            //查询100
+            //조회100
             UserInfo userInfo = mapper.selectByPrimaryKey(1);
 
 
-            //根据主键删除
+            //기본 키를 기반으로 삭제
             Assert.assertEquals(1, mapper.deleteByPrimaryKey(1));
 
 
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(4, mapper.selectCount(new UserInfo()));
-            //插入
+            //끼워 넣다
             Assert.assertEquals(1, mapper.insert(userInfo));
         } finally {
             sqlSession.rollback();
@@ -108,7 +108,7 @@ public class TestBasic {
 
 
     /**
-     * 查询
+     * 조회
      */
     @Test
     public void testSelect() {
@@ -125,7 +125,7 @@ public class TestBasic {
     }
 
     /**
-     * 根据主键全更新
+     * 기본 키를 기반으로 전체 업데이트
      */
     @Test
     public void testUpdateByPrimaryKey() {
@@ -136,7 +136,7 @@ public class TestBasic {
             Assert.assertNotNull(userInfo);
             userInfo.setUsertype(null);
             userInfo.setEmail("abel533@gmail.com");
-            //不会更新username
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKey(userInfo));
 
             userInfo = mapper.selectByPrimaryKey(userInfo);
@@ -149,7 +149,7 @@ public class TestBasic {
     }
 
     /**
-     * 根据主键更新非null
+     * 비 업데이트null
      */
     @Test
     public void testUpdateByPrimaryKeySelective() {
@@ -160,7 +160,7 @@ public class TestBasic {
             Assert.assertNotNull(userInfo);
             userInfo.setUsertype(null);
             userInfo.setEmail("abel533@gmail.com");
-            //不会更新username
+            //사용자 이름을 업데이트하지 않습니다.
             Assert.assertEquals(1, mapper.updateByPrimaryKeySelective(userInfo));
 
             userInfo = mapper.selectByPrimaryKey(1);

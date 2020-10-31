@@ -34,10 +34,10 @@
     <packaging>jar</packaging>
 
     <name>mapper</name>
-    <description>Mybatis 通用 Mapper Jar 集成</description>
+    <description>Mybatis 일반 Mapper Jar 통합</description>
 
     <dependencies>
-        <!--必须依赖-->
+        <!--의존해야 함-->
         <dependency>
             <groupId>javax.persistence</groupId>
             <artifactId>persistence-api</artifactId>

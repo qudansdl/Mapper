@@ -34,7 +34,7 @@ import tk.mybatis.mapper.mapper.MybatisHelper;
 import tk.mybatis.mapper.model.Country;
 
 /**
- * 由于主键的原因，这里实际只能更新一个，在没有主键的表中，可以更新多个
+ * 기본 키로 인해 실제로 여기에서 하나만 업데이트 할 수 있습니다. 기본 키가없는 테이블에서는 여러 업데이트를 수행 할 수 있습니다.
  *
  * @author liuzh
  */
@@ -49,7 +49,7 @@ public class TestUpdateByExample {
             example.createCriteria().andEqualTo("id", 35);
             Country country = new Country();
             //country.setDynamicTableName123("country_123");
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             country.setId(1000);
             int count = mapper.updateByExample(country, example);
             Assert.assertEquals(1, count);
@@ -70,7 +70,7 @@ public class TestUpdateByExample {
         try {
             CountryMapper mapper = sqlSession.getMapper(CountryMapper.class);
             Country country = new Country();
-            country.setCountryname("天朝");
+            country.setCountryname("천상의 왕조");
             country.setId(1000);
 
 

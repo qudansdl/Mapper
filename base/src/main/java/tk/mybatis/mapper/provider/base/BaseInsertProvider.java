@@ -32,7 +32,7 @@ import tk.mybatis.mapper.mapperhelper.*;
 import java.util.Set;
 
 /**
- * BaseInsertProvider实现类，基础方法实现类
+ * BaseInsertProvider 구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -45,7 +45,7 @@ public class BaseInsertProvider extends MapperTemplate {
     public String insert(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
         EntityColumn logicDeleteColumn = SqlHelper.getLogicDeleteColumn(entityClass);
         processKey(sql, entityClass, ms, columnList);
@@ -60,19 +60,19 @@ public class BaseInsertProvider extends MapperTemplate {
                 sql.append(SqlHelper.getLogicDeletedValue(column, false)).append(",");
                 continue;
             }
-            //优先使用传入的属性值,当原属性property!=null时，用原属性
-            //自增的情况下,如果默认有值,就会备份到property_cache中,所以这里需要先判断备份的值是否存在
+            //전달 된 속성 값을 먼저 원래 속성 속성으로 사용하십시오!=null 인 경우 원래 속성 사용
+            //자체 증가의 경우 기본적으로 값이 있으면 property_cache에 백업되므로 여기서 먼저 백업 값이 있는지 확인해야합니다.
             if (column.isIdentity()) {
                 sql.append(SqlHelper.getIfCacheNotNull(column, column.getColumnHolder(null, "_cache", ",")));
             } else {
-                //其他情况值仍然存在原property中
+                //다른 값은 원래 속성에 여전히 존재합니다.
                 sql.append(SqlHelper.getIfNotNull(column, column.getColumnHolder(null, null, ","), isNotEmpty()));
             }
-            //当属性为null时，如果存在主键策略，会自动获取值，如果不存在，则使用null
+            //속성이 null 인 경우 기본 키 전략이있는 경우 값이 자동으로 획득되고, 존재하지 않는 경우 null이 사용됩니다.
             if (column.isIdentity()) {
                 sql.append(SqlHelper.getIfCacheIsNull(column, column.getColumnHolder() + ","));
             } else {
-                //当null的时候，如果不指定jdbcType，oracle可能会报异常，指定VARCHAR不影响其他
+                //null 인 경우 jdbcType이 지정되지 않으면 oracle이 예외를보고 할 수 있습니다. VARCHAR을 지정해도 다른 사용자에게는 영향을주지 않습니다.
                 sql.append(SqlHelper.getIfIsNull(column, column.getColumnHolder(null, null, ","), isNotEmpty()));
             }
         }
@@ -83,7 +83,7 @@ public class BaseInsertProvider extends MapperTemplate {
     public String insertSelective(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
         StringBuilder sql = new StringBuilder();
-        //获取全部列
+        //모든 열 가져 오기
         Set<EntityColumn> columnList = EntityHelper.getColumns(entityClass);
         EntityColumn logicDeleteColumn = SqlHelper.getLogicDeleteColumn(entityClass);
         processKey(sql, entityClass, ms, columnList);
@@ -114,16 +114,16 @@ public class BaseInsertProvider extends MapperTemplate {
                 sql.append(SqlHelper.getLogicDeletedValue(column, false)).append(",");
                 continue;
             }
-            //优先使用传入的属性值,当原属性property!=null时，用原属性
-            //自增的情况下,如果默认有值,就会备份到property_cache中,所以这里需要先判断备份的值是否存在
+            //전달 된 속성 값을 먼저 원래 속성 속성으로 사용하십시오!=null 인 경우 원래 속성 사용
+            //자체 증가의 경우 기본적으로 값이 있으면 property_cache에 백업되므로 여기서 먼저 백업 값이 있는지 확인해야합니다.
             if (column.isIdentity()) {
                 sql.append(SqlHelper.getIfCacheNotNull(column, column.getColumnHolder(null, "_cache", ",")));
             } else {
-                //其他情况值仍然存在原property中
+                //다른 값은 원래 속성에 여전히 존재합니다.
                 sql.append(SqlHelper.getIfNotNull(column, column.getColumnHolder(null, null, ","), isNotEmpty()));
             }
-            //当属性为null时，如果存在主键策略，会自动获取值，如果不存在，则使用null
-            //序列的情况
+            //속성이 null 인 경우 기본 키 전략이있는 경우 값이 자동으로 획득되고, 존재하지 않는 경우 null이 사용됩니다.
+            //시퀀스 상황
             if (column.isIdentity()) {
                 sql.append(SqlHelper.getIfCacheIsNull(column, column.getColumnHolder() + ","));
             }
@@ -133,24 +133,24 @@ public class BaseInsertProvider extends MapperTemplate {
     }
 
     private void processKey(StringBuilder sql, Class<?> entityClass, MappedStatement ms, Set<EntityColumn> columnList){
-        //Identity列只能有一个
+        //ID 열은 하나만있을 수 있습니다.
         Boolean hasIdentityKey = false;
-        //先处理cache或bind节点
+        //먼저 캐시 또는 바인드 노드 처리
         for (EntityColumn column : columnList) {
             if (column.isIdentity()) {
-                //这种情况下,如果原先的字段有值,需要先缓存起来,否则就一定会使用自动增长
-                //这是一个bind节点
+                //이 경우 원래 필드에 값이 있으면 먼저 캐시해야합니다. 그렇지 않으면 확실히 자동 증가를 사용합니다.
+                //이것은 바인드 노드입니다
                 sql.append(SqlHelper.getBindCache(column));
-                //如果是Identity列，就需要插入selectKey
-                //如果已经存在Identity列，抛出异常
+                //ID 열인 경우 selectKey를 Insert해야합니다.
+                //ID 열이 이미있는 경우 예외 발생
                 if (hasIdentityKey) {
-                    //jdbc类型只需要添加一次
+                    //jdbc 유형은 한 번만 추가하면됩니다.
                     if (column.getGenerator() != null && "JDBC".equals(column.getGenerator())) {
                         continue;
                     }
-                    throw new MapperException(ms.getId() + "对应的实体类" + entityClass.getCanonicalName() + "中包含多个MySql的自动增长列,最多只能有一个!");
+                    throw new MapperException(ms.getId() + "해당 엔티티 클래스" + entityClass.getCanonicalName() + "中包含多个MySql의자동 성장기둥,最多只能有一个!");
                 }
-                //插入selectKey
+                //끼워 넣다selectKey
                 SelectKeyHelper.newSelectKeyMappedStatement(ms, column, entityClass, isBEFORE(), getIDENTITY(column));
                 hasIdentityKey = true;
             } else if(column.getGenIdClass() != null){

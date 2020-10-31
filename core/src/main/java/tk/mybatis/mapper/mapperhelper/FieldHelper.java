@@ -36,7 +36,7 @@ import java.lang.reflect.*;
 import java.util.*;
 
 /**
- * 类字段工具类
+ * 클래스 필드 도구
  *
  * @author liuzh
  * @since 2015-12-06 18:38
@@ -55,7 +55,7 @@ public class FieldHelper {
     }
 
     /**
-     * 获取全部的Field
+     * 모든 필드 가져 오기
      *
      * @param entityClass
      * @return
@@ -65,7 +65,7 @@ public class FieldHelper {
     }
 
     /**
-     * 获取全部的属性，通过方法名获取
+     * 모든 속성 가져 오기, 메소드 이름으로 가져 오기
      *
      * @param entityClass
      * @return
@@ -75,7 +75,7 @@ public class FieldHelper {
     }
 
     /**
-     * 获取全部的属性，包含字段和方法
+     * 필드 및 메소드를 포함한 모든 속성 가져 오기
      *
      * @param entityClass
      * @return
@@ -84,7 +84,7 @@ public class FieldHelper {
     public static List<EntityField> getAll(Class<?> entityClass) {
         List<EntityField> fields = fieldHelper.getFields(entityClass);
         List<EntityField> properties = fieldHelper.getProperties(entityClass);
-        //拼到一起，名字相同的合并
+        //함께 철자, 같은 이름으로 병합
         List<EntityField> all = new ArrayList<EntityField>();
         Set<EntityField> usedSet = new HashSet<EntityField>();
         for (EntityField field : fields) {
@@ -106,7 +106,7 @@ public class FieldHelper {
     }
     
     /**
-     * 判断是否已经包含同名的field
+     * 같은 이름의 필드가 이미 포함되어 있는지 확인
      * @param fieldList
      * @param filedName
      * @return
@@ -121,11 +121,11 @@ public class FieldHelper {
     }
 
     /**
-     * Field接口
+     * 필드 인터페이스
      */
     interface IFieldHelper {
         /**
-         * 获取全部的Field
+         * 모든 필드 가져 오기
          *
          * @param entityClass
          * @return
@@ -133,7 +133,7 @@ public class FieldHelper {
         List<EntityField> getFields(Class<?> entityClass);
 
         /**
-         * 获取全部的属性，通过方法名获取
+         * 모든 속성 가져 오기, 메소드 이름으로 가져 오기
          *
          * @param entityClass
          * @return
@@ -142,11 +142,11 @@ public class FieldHelper {
     }
 
     /**
-     * 支持jdk8
+     * jdk8 지원
      */
     static class Jdk8FieldHelper implements IFieldHelper {
         /**
-         * 获取全部的Field
+         * 모든 필드 가져 오기
          *
          * @param entityClass
          * @return
@@ -159,7 +159,7 @@ public class FieldHelper {
             for (EntityField field : fields) {
                 for (EntityField property : properties) {
                     if (!usedSet.contains(property) && field.getName().equals(property.getName())) {
-                        //泛型的情况下通过属性可以得到实际的类型
+                        //제네릭의 경우 속성을 통해 실제 유형을 얻을 수 있습니다.
                         field.setJavaType(property.getJavaType());
                         break;
                     }
@@ -169,7 +169,7 @@ public class FieldHelper {
         }
 
         /**
-         * 获取全部的Field，仅仅通过Field获取
+         * 모든 필드를 얻으십시오. 필드 만 통과하십시오.
          *
          * @param entityClass
          * @param fieldList
@@ -190,14 +190,14 @@ public class FieldHelper {
             int index = 0;
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
-                //排除静态字段，解决bug#2
+                //정적 필드 제외 및 버그 # 2 해결
                 if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers())) {
-                    //如果父类中包含与子类同名field，则跳过处理，允许子类进行覆盖
+                    //상위 클래스에 하위 클래스와 이름이 같은 필드가 포함 된 경우 처리를 건너 뛰고 하위 클래스가 재정의하도록 허용합니다.
                     if(FieldHelper.containFiled(fieldList,field.getName())) {
                         continue;
                     }
                     if (level.intValue() != 0) {
-                        //将父类的字段放在前面
+                        //부모 클래스의 필드를 앞에 놓습니다.
                         fieldList.add(index, new EntityField(field, null));
                         index++;
                     } else {
@@ -217,7 +217,7 @@ public class FieldHelper {
         }
 
         /**
-         * 通过方法获取属性
+         * 메서드를 통해 속성 가져 오기
          *
          * @param entityClass
          * @return
@@ -242,7 +242,7 @@ public class FieldHelper {
     }
 
     /**
-     * 支持jdk6,7
+     * 대기하다jdk6,7
      */
     static class Jdk6_7FieldHelper implements IFieldHelper {
 
@@ -254,7 +254,7 @@ public class FieldHelper {
         }
 
         /**
-         * 通过方法获取属性
+         * 메서드를 통해 속성 가져 오기
          *
          * @param entityClass
          * @return
@@ -297,7 +297,7 @@ public class FieldHelper {
          */
         private void _getFields(Class<?> entityClass, List<EntityField> fieldList, Map<String, Class<?>> genericMap, Integer level) {
             if (fieldList == null) {
-                throw new NullPointerException("fieldList参数不能为空!");
+                throw new NullPointerException("fieldList参数필수!");
             }
             if (level == null) {
                 level = 0;
@@ -308,24 +308,24 @@ public class FieldHelper {
             Field[] fields = entityClass.getDeclaredFields();
             int index = 0;
             for (Field field : fields) {
-                //忽略static和transient字段#106
+                //정적 및 일시적 필드 무시 # 106
                 if (!Modifier.isStatic(field.getModifiers()) && !Modifier.isTransient(field.getModifiers())) {
                     EntityField entityField = new EntityField(field, null);
                     if (field.getGenericType() != null && field.getGenericType() instanceof TypeVariable) {
                         if (genericMap == null || !genericMap.containsKey(((TypeVariable) field.getGenericType()).getName())) {
-                            throw new MapperException(entityClass + "字段" + field.getName() + "的泛型类型无法获取!");
+                            throw new MapperException(entityClass + "들" + field.getName() + "일반 유형을 얻을 수 없습니다!");
                         } else {
                             entityField.setJavaType(genericMap.get(((TypeVariable) field.getGenericType()).getName()));
                         }
                     } else {
                         entityField.setJavaType(field.getType());
                     }
-                      //如果父类中包含与子类同名field，则跳过处理，允许子类进行覆盖
+                      //상위 클래스에 하위 클래스와 이름이 같은 필드가 포함 된 경우 처리를 건너 뛰고 하위 클래스가 재정의하도록 허용합니다.
                     if(FieldHelper.containFiled(fieldList,field.getName())) {
                         continue;
                     }
                     if (level.intValue() != 0) {
-                        //将父类的字段放在前面
+                        //부모 클래스의 필드를 앞에 놓습니다.
                         fieldList.add(index, entityField);
                         index++;
                     } else {
@@ -333,9 +333,9 @@ public class FieldHelper {
                     }
                 }
             }
-            //获取父类和泛型信息
+            //부모 및 일반 정보 얻기
             Class<?> superClass = entityClass.getSuperclass();
-            //判断superClass
+            //심판superClass
             if (superClass != null
                     && !superClass.equals(Object.class)
                     && (superClass.isAnnotationPresent(Entity.class)
@@ -347,7 +347,7 @@ public class FieldHelper {
         }
 
         /**
-         * 获取所有泛型类型映射
+         * 모든 일반 유형 맵 가져 오기
          *
          * @param entityClass
          */
@@ -356,9 +356,9 @@ public class FieldHelper {
             if (entityClass == Object.class) {
                 return genericMap;
             }
-            //获取父类和泛型信息
+            //부모 및 일반 정보 얻기
             Class<?> superClass = entityClass.getSuperclass();
-            //判断superClass
+            //심판superClass
             if (superClass != null
                     && !superClass.equals(Object.class)
                     && (superClass.isAnnotationPresent(Entity.class)

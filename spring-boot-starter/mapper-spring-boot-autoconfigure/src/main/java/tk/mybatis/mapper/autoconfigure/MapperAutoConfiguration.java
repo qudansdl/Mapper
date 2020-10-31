@@ -218,7 +218,7 @@ public class MapperAutoConfiguration implements InitializingBean {
                 if(properties != null && properties.getBasePackages() != null && properties.getBasePackages().length > 0){
                     packages.addAll(Arrays.asList(properties.getBasePackages()));
                 } else {
-                    //设置了包名的情况下，不需要指定该注解
+                    //패키지 이름이 설정되면 주석을 지정할 필요가 없습니다.
                     scanner.setAnnotationClass(Mapper.class);
                 }
                 scanner.registerFilters();

@@ -13,7 +13,7 @@ import java.io.Reader;
 /**
  * @author liuzh
  */
-@Ignore("这个测试需要使用 MySql 数据库")
+@Ignore("这个테스트需要사용하다 MySql 数据库")
 public class GeneratedValueTest extends BaseTest {
 
     @Override

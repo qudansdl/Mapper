@@ -46,7 +46,7 @@ public class StringUtil {
     }
 
     /**
-     * 非空
+     * 비어 있지 않은
      *
      * @param str
      * @return
@@ -57,7 +57,7 @@ public class StringUtil {
 
 
     /**
-     * 根据指定的样式进行转换
+     * 지정된 스타일에 따라 변환
      *
      * @param str
      * @param style
@@ -82,7 +82,7 @@ public class StringUtil {
     }
 
     /**
-     * 将驼峰风格替换为下划线风格
+     * 낙타 케이스 스타일을 밑줄 스타일로 교체
      */
     public static String camelhumpToUnderline(String str) {
         final int size;
@@ -102,7 +102,7 @@ public class StringUtil {
     }
 
     /**
-     * 将下划线风格替换为驼峰风格
+     * 밑줄 스타일을 낙타 케이스 스타일로 교체
      */
     public static String underlineToCamelhump(String str) {
         Matcher matcher = UNDERLINE_TO_CAMELHUMP_PATTERN.matcher(str);

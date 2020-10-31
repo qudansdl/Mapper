@@ -1,72 +1,68 @@
-# MyBatis 通用 Mapper4
+# MyBatis Universal Mapper4
 
 [![Build Status](https://travis-ci.org/abel533/Mapper.svg?branch=master)](https://travis-ci.org/abel533/Mapper)
 [![Maven central](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper/badge.svg)](https://maven-badges.herokuapp.com/maven-central/tk.mybatis/mapper)
 
-通用Mapper都可以极大的方便开发人员。可以随意的按照自己的需要选择通用方法，还可以很方便的开发自己的通用方法。
+General Mapper는 개발자를 크게 지원할 수 있습니다. 필요에 따라 일반적인 방법을 마음대로 선택할 수 있으며 자신 만의 일반적인 방법을 매우 편리하게 개발할 수도 있습니다.
 
-极其方便的使用MyBatis单表的增删改查。
+MyBatis 단일 테이블을 사용하여 추가, 삭제, 수정 및 확인하는 것은 매우 편리합니다.
 
-支持单表操作，不支持通用的多表联合查询。
+단일 테이블 작업을 지원하고 일반 다중 테이블 공동 조회는 지원하지 않습니다.
 
-**通用 Mapper 支持 Mybatis-3.2.4 及以上版本。**
+**General Mapper는 Mybatis-3.2.4 이상을 지원합니다.**
 
-## [**快速入门 - MyBatis 为什么需要通用 Mapper ?**](https://blog.csdn.net/isea533/article/details/83045335)
+## [**빠른 시작 -MyBatis에 범용 매퍼가 필요한 이유는 무엇입니까? ?**](https://blog.csdn.net/isea533/article/details/83045335)
 
-简介: 在早期项目文档中有过类似主题的内容，但是最近我自己看文档的时候发现一个问题，文档虽然很详细，但是并不适合初次接触的人。为了方便第一次听说，第一次尝试的开发人员了解通用 Mapper，补充此文档。
+서론 : 초기 프로젝트 문서에도 비슷한 주제가 있지만 최근에 직접 문서를 읽었을 때 문제를 발견했는데, 문서는 매우 상세하지만 처음 접하는 사람에게는 적합하지 않습니다. 첫 번째 청문회를 용이하게하기 위해 처음 시도하는 개발자는 일반 Mapper를 이해하고이 문서를 보완합니다.
 
-强烈建议初学者阅读本文，先从整体上了解 通用 Mapper，然后再通过下面的文档更深入的了解。
+초보자는이 기사를 읽고 먼저 일반적인 Mapper를 전체적으로 이해 한 후 다음 문서를 통해 자세히 알아 보는 것이 좋습니다.
 
-## [**通用 Mapper 进阶实例：为什么好久都没更新了？**](https://blog.csdn.net/isea533/article/details/104776347)
+## [**일반 매퍼 고급 예제 : 왜 오랫동안 업데이트되지 않았습니까?**](https://blog.csdn.net/isea533/article/details/104776347)
 
-通过本文，希望读者能有收获，能根据自己的需要设计通用方法，不要只是为了偷懒将自己局限在已有的通用方法中。大而全的通用方法不一定适合自己，根据自己需要选择和设计的通用方法才更满足自己的需要。
+이 글을 통해 독자들이 자신의 필요에 따라 무언가를 얻고 일반적인 방법을 설계 할 수 있기를 바라며, 단지 게으 르기 위해 기존의 일반적인 방법에 국한되지 않기를 바랍니다. 크고 포괄적 인 일반 방법이 반드시 귀하에게 적합한 것은 아닙니다. 귀하의 필요에 따라 선택하고 설계된 일반적인 방법이 귀하의 요구를 더 잘 충족시킬 수 있습니다.
 
-## 项目文档
+## 프로젝트 문서
 
-- [文档 - Gitee](https://gitee.com/free/Mapper/wikis/Home)  
+- [문서 - Gitee](https://gitee.com/free/Mapper/wikis/Home)  
 
-- [文档 - GitHub](https://github.com/abel533/Mapper/wiki)
+- [문서 - GitHub](https://github.com/abel533/Mapper/wiki)
 
 - [JavaDoc](https://apidoc.gitee.com/free/Mapper/)
 
-- [更新日志 - Gitee](https://gitee.com/free/Mapper/wikis/changelog)
+- [Change Log - Gitee](https://gitee.com/free/Mapper/wikis/changelog)
 
-- [更新日志 - GitHub](https://github.com/abel533/Mapper/wiki/changelog)
+- [Change Log - GitHub](https://github.com/abel533/Mapper/wiki/changelog)
 
-## 作者信息
+## 개발자
    
-   MyBatis 工具网站:[https://mybatis.io](https://mybatis.io)
+   MyBatis 웹사이트:[https://mybatis.io](https://mybatis.io)
    
-   作者博客：http://blog.csdn.net/isea533
+   개발자 블로그：http://blog.csdn.net/isea533
    
-   作者邮箱： abel533@gmail.com
+   개발자 이메일： abel533@gmail.com
    
-   如需加群，请通过 https://mybatis.io 首页按钮加群。
+   그룹 추가가 필요한 경우 https://mybatis.io 首页按钮加群。
    
-   推荐使用Mybatis分页插件:[PageHelper分页插件](https://github.com/pagehelper/Mybatis-PageHelper)
+   Mybatis 페이징 플러그인:[PageHelper 페이징 플러그인](https://github.com/pagehelper/Mybatis-PageHelper)
    
-## 作者新书：《MyBatis 从入门到精通》
+## 도서：《MyBatis 시작에서 마스터까지》
 
 ![MyBatis 从入门到精通](https://github.com/mybatis-book/book/raw/master/book.png)
 
-### 简介
+### 소개
 
-本书中从一个简单的 MyBatis 查询入手，搭建起学习 MyBatis 的基础开发环境。
-通过全面的示例代码和测试讲解了在 MyBatis XML 方式和注解方式中进行增、删、改、查操作的基本用法，介绍了动态 SQL 在不同方面的应用以及在使用过程中的最佳实践方案。
-针对 MyBatis 高级映射、存储过程和类型处理器提供了丰富的示例，通过自下而上的方法使读者更好地理解和掌握MyBatis 的高级用法，同时针对 MyBatis 的代码生成器提供了详细的配置介绍。
-此外，本书还提供了缓存配置、插件开发、Spring、Spring Boot 集成的详细内容。
-最后通过介绍 Git 和 GitHub 让读者了解MyBatis 开源项目，通过对 MyBatis 源码和测试用例的讲解让读者更好掌握 MyBatis。
+이 책은 간단한 MyBatis 조회로 시작하여 MyBatis 학습을위한 기본 개발 환경을 구축합니다. 포괄적 인 샘플 코드 및 테스트를 통해 MyBatis XML 모드 및 어노테이션 모드에서 작업 추가, 삭제, 수정 및 확인의 기본 사용법을 설명하고 다양한 측면에서 동적 SQL의 적용과 사용 프로세스의 모범 사례 프로그램을 소개합니다. MyBatis 고급 매핑, 저장 프로 시저 및 유형 프로세서에 대한 다양한 예제를 제공합니다. 상향식 접근 방식을 통해 독자는 MyBatis의 고급 사용법을 더 잘 이해하고 마스터 할 수 있습니다. 동시에 MyBatis 코드 생성기에 대한 자세한 구성 소개가 제공됩니다. . 또한이 책은 캐시 구성, 플러그인 개발, Spring 및 Spring Boot 통합에 대한 세부 사항도 제공합니다. 마지막으로 독자가 MyBatis 오픈 소스 프로젝트를 이해할 수 있도록 Git 및 GitHub를 소개하고 독자가 MyBatis를 더 잘 익힐 수 있도록 MyBatis 소스 코드 및 테스트 사례를 설명합니다.
 
-### 购买地址：
+### 구매 주소：
 
-- [京东](https://item.jd.com/12103309.html)
+- [JD](https://item.jd.com/12103309.html)
 
-- [当当](http://product.dangdang.com/25098208.html)
+- [DangDang](http://product.dangdang.com/25098208.html)
 
-- [亚马逊](https://www.amazon.cn/MyBatis从入门到精通-刘增辉/dp/B072RC11DM/ref=sr_1_18?ie=UTF8&qid=1498007125&sr=8-18&keywords=mybatis)
+- [Amazon](https://www.amazon.cn/MyBatis从入门到精通-刘增辉/dp/B072RC11DM/ref=sr_1_18?ie=UTF8&qid=1498007125&sr=8-18&keywords=mybatis)
 
-### 相关介绍
+### 관련 링크
 
-- CSDN博客：http://blog.csdn.net/isea533/article/details/73555400
+- CSDN 블로그：http://blog.csdn.net/isea533/article/details/73555400
 
-- GitHub项目：https://github.com/mybatis-book/book
+- GitHub 프로젝트：https://github.com/mybatis-book/book

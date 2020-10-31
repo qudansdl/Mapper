@@ -32,7 +32,7 @@ import tk.mybatis.mapper.mapperhelper.SqlHelper;
 import tk.mybatis.mapper.util.MetaObjectUtil;
 
 /**
- * ExampleProvider实现类，基础方法实现类
+ * ExampleProvider 구현 클래스, 기본 메소드 구현 클래스
  *
  * @author liuzh
  */
@@ -43,7 +43,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example查询总数
+     * 예제 조회 총계에 따르면
      *
      * @param ms
      * @return
@@ -62,7 +62,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example删除
+     * 예에 따라 삭제
      *
      * @param ms
      * @return
@@ -73,7 +73,7 @@ public class ExampleProvider extends MapperTemplate {
         if (isCheckExampleEntityClass()) {
             sql.append(SqlHelper.exampleCheck(entityClass));
         }
-        //如果设置了安全删除，就不允许执行不带查询条件的 delete 方法
+        //안전한 삭제가 설정된 경우 조회 조건이없는 삭제 방법은 허용되지 않습니다.
         if (getConfig().isSafeDelete()) {
             sql.append(SqlHelper.exampleHasAtLeastOneCriteriaCheck("_parameter"));
         }
@@ -92,21 +92,21 @@ public class ExampleProvider extends MapperTemplate {
 
 
     /**
-     * 根据Example查询
+     * 예에 따른 조회
      *
      * @param ms
      * @return
      */
     public String selectByExample(MappedStatement ms) {
         Class<?> entityClass = getEntityClass(ms);
-        //将返回值修改为实体类型
+        //반환 값을 엔티티 유형으로 수정
         setResultType(ms, entityClass);
         StringBuilder sql = new StringBuilder("SELECT ");
         if (isCheckExampleEntityClass()) {
             sql.append(SqlHelper.exampleCheck(entityClass));
         }
         sql.append("<if test=\"distinct\">distinct</if>");
-        //支持查询指定列
+        //조회 지정 열 지원
         sql.append(SqlHelper.exampleSelectColumns(entityClass));
         sql.append(SqlHelper.fromTable(entityClass, tableName(entityClass)));
         sql.append(SqlHelper.exampleWhereClause());
@@ -116,7 +116,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example查询
+     * 예에 따른 조회
      *
      * @param ms
      * @return
@@ -126,7 +126,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example更新非null字段
+     * 예제에 따라 널이 아닌 필드 업데이트
      *
      * @param ms
      * @return
@@ -137,7 +137,7 @@ public class ExampleProvider extends MapperTemplate {
         if (isCheckExampleEntityClass()) {
             sql.append(SqlHelper.exampleCheck(entityClass));
         }
-        //安全更新，Example 必须包含条件
+        //보안 업데이트, 예에는 조건이 포함되어야합니다.
         if (getConfig().isSafeUpdate()) {
             sql.append(SqlHelper.exampleHasAtLeastOneCriteriaCheck("example"));
         }
@@ -148,7 +148,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example更新
+     * 예에 따라 업데이트
      *
      * @param ms
      * @return
@@ -159,7 +159,7 @@ public class ExampleProvider extends MapperTemplate {
         if (isCheckExampleEntityClass()) {
             sql.append(SqlHelper.exampleCheck(entityClass));
         }
-        //安全更新，Example 必须包含条件
+        //보안 업데이트, 예에는 조건이 포함되어야합니다.
         if (getConfig().isSafeUpdate()) {
             sql.append(SqlHelper.exampleHasAtLeastOneCriteriaCheck("example"));
         }
@@ -170,7 +170,7 @@ public class ExampleProvider extends MapperTemplate {
     }
 
     /**
-     * 根据Example查询一个结果
+     * 예에 따라 결과 조회
      *
      * @param ms
      * @return

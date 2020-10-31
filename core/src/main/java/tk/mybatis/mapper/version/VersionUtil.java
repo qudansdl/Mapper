@@ -39,7 +39,7 @@ public class VersionUtil {
     private static final ReentrantLock LOCK = new ReentrantLock();
 
     /**
-     * 获取下一个版本
+     * 다음 버전 받기
      *
      * @param nextVersionClass
      * @param current
@@ -64,7 +64,7 @@ public class VersionUtil {
             }
             return nextVersion.nextVersion(current);
         } catch (Exception e) {
-            throw new VersionException("获取下一个版本号失败!", e);
+            throw new VersionException("다음 버전 번호를 가져 오지 못했습니다!", e);
         }
     }
 

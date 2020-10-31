@@ -49,7 +49,7 @@ public class TestSelectRowBounds {
             example.createCriteria().andGreaterThan("id", 100).andLessThan("id", 151);
             example.or().andLessThan("id", 41);
             List<Country> countries = mapper.selectByExampleAndRowBounds(example, new RowBounds(10, 20));
-            //查询总数
+            //총 조회 수
             Assert.assertEquals(20, countries.size());
         } finally {
             sqlSession.close();

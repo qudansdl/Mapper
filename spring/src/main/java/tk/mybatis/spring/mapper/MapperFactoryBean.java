@@ -88,7 +88,7 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
                 ErrorContext.instance().reset();
             }
         }
-        //直接针对接口处理通用接口方法对应的 MappedStatement 是安全的，通用方法不会出现 IncompleteElementException 的情况
+        //인터페이스에 대한 일반 인터페이스 메소드에 해당하는 MappedStatement를 직접 처리하는 것이 안전하며 일반 메소드는 나타나지 않습니다. IncompleteElementException
         if (configuration.hasMapper(this.mapperInterface) && mapperHelper != null && mapperHelper.isExtendCommonMapper(this.mapperInterface)) {
             mapperHelper.processConfiguration(getSqlSession().getConfiguration(), this.mapperInterface);
         }
@@ -156,7 +156,7 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
     }
 
     /**
-     * 设置通用 Mapper 配置
+     * 일반 매퍼 구성 설정
      *
      * @param mapperHelper
      */

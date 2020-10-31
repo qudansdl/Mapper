@@ -40,29 +40,29 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 数据库表
+ * 데이터베이스 테이블
  *
  * @author liuzh
  */
 public class EntityTable {
     public static final Pattern DELIMITER = Pattern.compile("^[`\\[\"]?(.*?)[`\\]\"]?$");
-    //属性和列对应
+    //속성 및 열 대응
     protected Map<String, EntityColumn> propertyMap;
     private String name;
     private String catalog;
     private String schema;
     private String orderByClause;
     private String baseSelect;
-    //实体类 => 全部列属性
+    //엔티티 클래스 => 모든 열 속성
     private LinkedHashSet<EntityColumn> entityClassColumns;
-    //实体类 => 主键信息
+    //엔티티 클래스 => 기본 키 정보
     private LinkedHashSet<EntityColumn> entityClassPKColumns;
-    //useGenerator包含多列的时候需要用到
+    //useGenerator에 여러 열이 포함 된 경우 사용해야합니다.
     private List<String> keyProperties;
     private List<String> keyColumns;
-    //resultMap对象
+    //resultMap 객체
     private ResultMap resultMap;
-    //类
+    //수업
     private Class<?> entityClass;
 
     public EntityTable(Class<?> entityClass) {
@@ -70,7 +70,7 @@ public class EntityTable {
     }
 
     /**
-     * 生成当前实体的resultMap对象
+     * 현재 엔티티의 resultMap 객체 생성
      *
      * @param configuration
      * @return
@@ -85,7 +85,7 @@ public class EntityTable {
         List<ResultMapping> resultMappings = new ArrayList<ResultMapping>();
         for (EntityColumn entityColumn : entityClassColumns) {
             String column = entityColumn.getColumn();
-            //去掉可能存在的分隔符
+            //가능한 구분 기호 제거
             Matcher matcher = DELIMITER.matcher(column);
             if(matcher.find()){
                 column = matcher.group(1);
@@ -114,7 +114,7 @@ public class EntityTable {
     }
 
     /**
-     * 初始化 - Example 会使用
+     * 초기화 예제는
      */
     public void initPropertyMap() {
         propertyMap = new HashMap<String, EntityColumn>(getEntityClassColumns().size());
@@ -124,7 +124,7 @@ public class EntityTable {
     }
 
     /**
-     * 实例化TypeHandler
+     * TypeHandler 인스턴스화
      * @param javaTypeClass
      * @param typeHandlerClass
      * @return

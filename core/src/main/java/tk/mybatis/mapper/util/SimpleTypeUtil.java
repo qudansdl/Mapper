@@ -34,7 +34,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * 参考 org.apache.ibatis.type.SimpleTypeRegistry
+ * 참고 org.apache.ibatis.type.SimpleTypeRegistry
  */
 public class SimpleTypeUtil {
     public static final  String[]      JAVA8_DATE_TIME = {
@@ -52,7 +52,7 @@ public class SimpleTypeUtil {
     private static final Set<Class<?>> SIMPLE_TYPE_SET = new HashSet<Class<?>>();
 
     /**
-     * 特别注意：由于基本类型有默认值，因此在实体类中不建议使用基本类型作为数据库字段类型
+     * 주의：기본 유형에는 기본값이 있으므로 엔티티 클래스의 데이터베이스 필드 유형으로 기본 유형을 사용하지 않는 것이 좋습니다.
      */
     static {
         SIMPLE_TYPE_SET.add(byte[].class);
@@ -70,14 +70,14 @@ public class SimpleTypeUtil {
         SIMPLE_TYPE_SET.add(Class.class);
         SIMPLE_TYPE_SET.add(BigInteger.class);
         SIMPLE_TYPE_SET.add(BigDecimal.class);
-        //反射方式设置 java8 中的日期类型
+        //리플렉션으로 java8에서 날짜 유형 설정
         for (String time : JAVA8_DATE_TIME) {
             registerSimpleTypeSilence(time);
         }
     }
 
     /**
-     * 注册新的类型
+     * 새로운 유형 등록
      *
      * @param clazz
      */
@@ -86,7 +86,7 @@ public class SimpleTypeUtil {
     }
 
     /**
-     * 注册 8 种基本类型
+     * 8 가지 기본 유형 등록
      */
     public static void registerPrimitiveTypes(){
         registerSimpleType(boolean.class);
@@ -100,7 +100,7 @@ public class SimpleTypeUtil {
     }
 
     /**
-     * 注册新的类型
+     * 새로운 유형 등록
      *
      * @param classes
      */
@@ -111,14 +111,14 @@ public class SimpleTypeUtil {
                 try {
                     SIMPLE_TYPE_SET.add(Class.forName(c));
                 } catch (ClassNotFoundException e) {
-                    throw new MapperException("注册类型出错:" + c, e);
+                    throw new MapperException("등록 유형 오류 :" + c, e);
                 }
             }
         }
     }
 
     /**
-     * 注册新的类型，不存在时不抛出异常
+     * 새 유형을 등록하고 존재하지 않는 경우 예외를 발생시키지 마십시오.
      *
      * @param clazz
      */

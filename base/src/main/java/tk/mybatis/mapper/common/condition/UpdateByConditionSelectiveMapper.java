@@ -29,16 +29,16 @@ import org.apache.ibatis.annotations.UpdateProvider;
 import tk.mybatis.mapper.provider.ConditionProvider;
 
 /**
- * 通用Mapper接口,Condition查询
+ * 일반 매퍼 인터페이스, 조건 조회
  *
- * @param <T> 不能为空
+ * @param <T> 필수
  * @author liuzh
  */
 @tk.mybatis.mapper.annotation.RegisterMapper
 public interface UpdateByConditionSelectiveMapper<T> {
 
     /**
-     * 根据Condition条件更新实体`record`包含的不是null的属性值
+     * Condition에 따라 null이 아닌 엔티티`record`의 속성 값을 업데이트합니다.
      *
      * @param record
      * @param condition

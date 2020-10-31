@@ -27,7 +27,7 @@ public class TestLogicDelete {
 
             Assert.assertTrue(mapper.existsWithPrimaryKey(3));
 
-            // 删除已经被逻辑删除的数据，受影响行数为0
+            // 삭제 표시가 된 데이터를 삭제합니다. 영향을받는 행 수는 0입니다.
             Assert.assertEquals(0, logicDeleteMapper.deleteByPrimaryKey(9));
 
         } finally {
@@ -38,7 +38,7 @@ public class TestLogicDelete {
     }
 
     @Test
-    // 删除实体，会带上未删除的查询条件，并忽略实体类给逻辑删除字段设置的值
+    // 항목을 삭제하면 삭제되지 않은 조회 조건이 적용되고 항목 클래스에서 설정된 값이 논리적 삭제 필드에 무시됩니다.
     public void testLogicDelete() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
 
@@ -46,26 +46,26 @@ public class TestLogicDelete {
             TbUserMapper mapper = sqlSession.getMapper(TbUserMapper.class);
             TbUserLogicDeleteMapper logicDeleteMapper = sqlSession.getMapper(TbUserLogicDeleteMapper.class);
 
-            // 有2条username为test的数据，其中1条已经被标记为逻辑删除
+            // 사용자 이름이 test 인 데이터가 2 개 있으며 그 중 1 개가 논리적 삭제로 표시되었습니다.
             TbUserLogicDelete tbUserLogicDelete = new TbUserLogicDelete();
             tbUserLogicDelete.setUsername("test");
             Assert.assertTrue(logicDeleteMapper.existsWithPrimaryKey(8));
 
-            // 逻辑删除只会删除1条
+            // 삭제 표시는 1 만 삭제합니다.
             Assert.assertEquals(1, logicDeleteMapper.delete(tbUserLogicDelete));
             Assert.assertFalse(logicDeleteMapper.existsWithPrimaryKey(8));
 
-            // 未删除的一共有4条
+            // 총 4 개 삭제 취소됨
             Assert.assertEquals(4, logicDeleteMapper.selectAll().size());
 
             TbUser tbUser = new TbUser();
             tbUser.setUsername("test");
             Assert.assertEquals(2,  mapper.select(tbUser).size());
 
-            // 物理删除2条已经为逻辑删除状态的数据
+            // 논리적으로 삭제 된 데이터 2 개를 물리적으로 삭제
             Assert.assertEquals(2, mapper.delete(tbUser));
 
-            // 未删除的总数仍为4条
+            // 삭제되지 않은 총 개수는 여전히 4 개입니다.
             Assert.assertEquals(4, logicDeleteMapper.selectAll().size());
 
         } finally {
@@ -97,7 +97,7 @@ public class TestLogicDelete {
     }
 
     @Test
-    // 根据主键查询，逻辑删除注解查询时会使用未删除的查询条件
+    // 기본 키 조회에 따르면 삭제 표시 주석 조회는 삭제되지 않은 조회 조건을 사용합니다.
     public void testSelectByPrimaryKey() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
@@ -128,7 +128,7 @@ public class TestLogicDelete {
     }
 
     @Test
-    // 查询所有，逻辑删除注解查询时会使用未删除的查询条件
+    // 모두 조회, 삭제되지 않은 조회 조건이 삭제 표시 조회에 사용됩니다.
     public void testSelectAll() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
@@ -144,18 +144,18 @@ public class TestLogicDelete {
     }
 
     @Test
-    // 查询数量，会带上未删除的查询条件，并忽略实体类给逻辑删除字段设置的值
+    // 조회의 수는 삭제되지 않은 조회 조건을 가져오고 엔티티 클래스에서 설정된 값을 논리적 삭제 필드로 무시합니다.
     public void selectCount() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             TbUserLogicDeleteMapper logicDeleteMapper = sqlSession.getMapper(TbUserLogicDeleteMapper.class);
 
             TbUserLogicDelete tbUserLogicDelete = new TbUserLogicDelete();
-            // 实际有5条未删除的，4条已删除的，忽略设置的0值，查询出未删除的5条
+            // 실제로 삭제되지 않은 항목은 5 개, 삭제 된 항목은 4 개, 설정 값 0 무시, 삭제되지 않은 항목 5 개 조회
             tbUserLogicDelete.setIsValid(0);
             Assert.assertEquals(5, logicDeleteMapper.selectCount(tbUserLogicDelete));
 
-            // 没有逻辑删除注解的，根据指定条件查询
+            // 삭제 표시 주석이없는 경우 지정된 조건에 따라 조회
             TbUserMapper mapper = sqlSession.getMapper(TbUserMapper.class);
             TbUser tbUser = new TbUser();
             Assert.assertEquals(9, mapper.selectCount(tbUser));
@@ -168,14 +168,14 @@ public class TestLogicDelete {
     }
 
     @Test
-    // 根据实体查询，会带上未删除的查询条件，并忽略实体类给逻辑删除字段设置的值
+    // 엔티티 질의에 따라 삭제되지 않은 질의 조건을 가져 오며, 논리적 삭제 필드에 엔티티 클래스가 설정 한 값은 무시됩니다.
     public void testSelect() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {
             TbUserLogicDeleteMapper logicDeleteMapper = sqlSession.getMapper(TbUserLogicDeleteMapper.class);
 
             TbUserLogicDelete tbUserLogicDelete = new TbUserLogicDelete();
-            // 实际有5条未删除的，4条已删除的，忽略设置的0值，查询出未删除的5条
+            // 실제로 삭제되지 않은 항목은 5 개, 삭제 된 항목은 4 개, 설정 값 0 무시, 삭제되지 않은 항목 5 개 조회
             tbUserLogicDelete.setIsValid(0);
             Assert.assertEquals(5, logicDeleteMapper.select(tbUserLogicDelete).size());
 
@@ -185,7 +185,7 @@ public class TestLogicDelete {
 
             TbUserMapper mapper = sqlSession.getMapper(TbUserMapper.class);
             TbUser tbUser = new TbUser();
-            // 没有逻辑删除的注解，根据指定条件查询
+            // 삭제 표시 주석 없음, 지정된 조건에 따라 조회
             tbUser.setIsValid(0);
             Assert.assertEquals(4, mapper.select(tbUser).size());
 
@@ -322,12 +322,12 @@ public class TestLogicDelete {
         try {
             TbUserLogicDeleteMapper logicDeleteMapper = sqlSession.getMapper(TbUserLogicDeleteMapper.class);
 
-            // username为test的有两条  一条标记为已删除
+            // 사용자 이름이 테스트 인 두 개가 있으며, 하나는 삭제 된 것으로 표시됩니다.
             Example example = new Example(TbUserLogicDelete.class);
             example.createCriteria().andEqualTo("username", "test");
             Assert.assertEquals(1, logicDeleteMapper.selectByExample(example).size());
 
-            // password为dddd的已删除  username为test2的未删除
+            // 비밀번호 dddd로 삭제되고 사용자 이름 test2로 삭제되지 않음
             example.or().andEqualTo("password", "dddd").orEqualTo("username", "test2");
 
             Assert.assertEquals(2, logicDeleteMapper.selectByExample(example).size());
@@ -343,7 +343,7 @@ public class TestLogicDelete {
         try {
             TbUserLogicDeleteMapper logicDeleteMapper = sqlSession.getMapper(TbUserLogicDeleteMapper.class);
 
-            // username为test的有两条  一条标记为已删除
+            // 사용자 이름이 테스트 인 두 개가 있으며, 하나는 삭제 된 것으로 표시됩니다.
             Example example = new Example(TbUserLogicDelete.class);
             example.createCriteria().andEqualTo("username", "test");
 
@@ -389,7 +389,7 @@ public class TestLogicDelete {
     }
 
     @Test
-    // Example中没有条件的非正常情况，where条件应只有逻辑删除注解的未删除条件
+    // 예에서 조건이없는 비정상 조건, 조건은 논리적 삭제 주석의 삭제되지 않은 조건이어야합니다.
     public void testExampleWithNoCriteria() {
         SqlSession sqlSession = MybatisHelper.getSqlSession();
         try {

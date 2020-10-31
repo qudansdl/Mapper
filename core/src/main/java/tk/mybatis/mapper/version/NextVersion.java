@@ -31,7 +31,7 @@ package tk.mybatis.mapper.version;
 public interface NextVersion<T> {
 
     /**
-     * 返回下一个版本
+     * 다음 버전으로 돌아 가기
      *
      * @param current
      * @return
