@@ -28,13 +28,13 @@
     <parent>
         <groupId>tk.mybatis</groupId>
         <artifactId>mapper-modules</artifactId>
-        <version>1.1.5</version>
+        <version>1.1.5-kr</version>
     </parent>
     <artifactId>mapper-core</artifactId>
     <packaging>jar</packaging>
 
     <name>mapper-core</name>
-    <description>Mybatis 만능인 Mapper</description>
+    <description>Mybatis Mapper</description>
     <url>https://mybatis.io</url>
 
     <dependencies>
